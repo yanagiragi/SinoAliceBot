@@ -1,0 +1,42 @@
+﻿MikuMikuMoving64,   // 要尋找的視窗名稱, 32 bit 的用 "MikuMikuMoving"
+100,                // 預設 Short Delay
+2000,               // 預設 Long Delay
+27,                 // StartCoorX
+50,                 // StartCoorY
+13,                 // NewX
+90,                 // NewY
+200,                // LoadModelCoorX
+96,                 // LoadModelCoorY
+146,                // RenderPicCoorX
+103,                // RenderPicCoorY
+Render to Picture,  // RenderWindowName
+Completed,          // CompleteWindowName
+142,                // RenderPicOptInputCoorX
+40,                 // RenderPicOptInputCoorY
+184,                // RenderPicOptOKCoorX
+210,                // RenderPicOptOKCoorY
+100,                // 0 : 移動滑鼠到 開 Menu 的按鍵 後的delay
+600,                // 1 : 按下 開 Menu 的按鍵 後的delay
+100,                // 2 : 移動滑鼠到 開 New Project 的按鍵 後的delay
+200,                // 3 : 按下 開 New Project 的滑鼠按鍵 後的delay
+100,                // 4 : 按下 開 New Project 的Enter按鍵 後的delay
+2100,               // 5 : 移動滑鼠到 Load Model 的按鍵 後的delay
+2100,               // 6 : 按下 Load Model 的滑鼠按鍵 後的delay
+2100,               // 7 : 輸入模型名字 後的delay
+2100,               // 8 : 確認輸入模型名字 Enter 後的delay
+2100,               // 9 : 重複確認輸入模型名字 Enter 後的delay, 這是為了有些輸入法會有底線預覽功能，若沒有那也只是K一禎Tpose, Delay 較長讓模型 Load 進來
+4100,               // 10: 確認輸入模型資訊  Enter 後的delay
+100,                // 11: 移動滑鼠到 Render Pic 的按鍵 後的delay
+100,                // 12: 按下 Render Pic 的滑鼠按鍵 後的delay
+100,                // 13: 移動滑鼠到 Render Pic 視窗中輸入名字的欄位的按鍵 後的delay
+100,                // 14: 按下 Render Pic 視窗 的滑鼠按鍵 後的delay, Focus 到 Render Pic 的視窗
+100,                // 15: 按下 Render Pic 視窗中輸入名字的欄位 的 End 按鍵 後的delay
+100,                // 16: 按下 Render Pic 視窗中輸入名字的欄位 的 Shift + Home 按鍵 後的delay
+1010,               // 17: 按下 Render Pic 視窗中輸入名字的欄位 的 BackSpace 按鍵 後的delay, 刪掉之前的 Output File 路徑
+100,                // 18: 確認輸入模型名字 後的delay            
+2100,               // 19: 確認輸入模型名字 Enter 的delay       
+100,                // 20: 移動滑鼠到 Rendering 的按鍵 後的delay
+2100,               // 21: 按下 Rendering 的滑鼠按鍵 後的delay
+200,                // 22: 按下 Rendering 的 Enter 按鍵 (Render Completed 通知) 後的delay
+200,                // 23: 重複按下 Rendering 的 Enter 按鍵 (Render Completed 通知) 後的delay, 重複按下再次確認
+1000,               // 24: 完成 Delay, 請注意最後面也要有逗號
