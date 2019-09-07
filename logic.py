@@ -27,20 +27,36 @@ class Logic:
     def Update(self):
         frame = self.frame
 
-        """self.hasDetectGameplay, top_left, bottom_right = pattern.DetectGameplay(frame)
-        canEarlyBreak = self.hasDetectGameplay
-        if self.optimized and canEarlyBreak: # Early Break
-            return"""
-
     def QueryState(self):
-
-        # abstract state of flags
-        isBattle = None
-
         self.state = state.IDLE
     
     def StateAction(self, control):
-        [x for x in []]
+
+        return
+
+        def LeftClick(top_left, bottom_right):
+            # click center
+            localPosition = [int((top_left[0] + bottom_right[0])/2), int((top_left[1] + bottom_right[1])/2)]
+            control.MouseLeftClick(localPosition)            
+            control.MouseMove([0,0])
+        
+        self.hasDetectNext, top_left, bottom_right = pattern.Detect(self.frame, pattern.nextPattern, 0.8)
+        canEarlyBreak = self.hasDetectNext
+        if self.optimized and canEarlyBreak: # Early Break
+            LeftClick(top_left, bottom_right)
+            return
+
+        self.hasDetectOk, top_left, bottom_right = pattern.Detect(self.frame, pattern.okPattern, 0.4)
+        canEarlyBreak = self.hasDetectOk
+        if self.optimized and canEarlyBreak: # Early Break
+            LeftClick(top_left, bottom_right)
+            return
+
+        self.hasDetectStorySkip, top_left, bottom_right = pattern.Detect(self.frame, pattern.storySkipPattern, 0.8)
+        canEarlyBreak = self.hasDetectStorySkip
+        if self.optimized and canEarlyBreak: # Early Break
+            LeftClick(top_left, bottom_right)
+            return
             
     def Process(self, frame, control):
         self.Reset(frame)

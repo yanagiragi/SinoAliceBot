@@ -93,7 +93,7 @@ if __name__ == '__main__':
         SetupLogger()
         window = WindowScreen(windowsName, resizeFactor)
         control = Control(window)
-        logic = Logic(usingCombo=usingCombo)
+        logic = Logic()
 
         toaster.show_toast("SinoBot", "Start", duration=toastDuration, icon_path=toastIcon)     
 
@@ -115,11 +115,11 @@ if __name__ == '__main__':
             
             # img, frame = utils.LoadScreenFromImage('test.png')
             control.Update(window.top, window.left, window.bot, window.right)
-            """logicError = logic.Process(frame, control)
+            logicError = logic.Process(frame, control)
                     
             if logicError:
                 print(logicError)
-                logging.error(logicError)"""
+                logging.error(logicError)
             
             tEnd2 = time.time()
             deltaTime2 = (tEnd2- tEnd1)

@@ -10,6 +10,7 @@ storyPattern = utils.LoadPattern("Resources/story.PNG")
 homePattern = utils.LoadPattern("Resources/home.PNG")
 osoujiPattern = utils.LoadPattern("Resources/osouji.PNG")
 osoujiPattern2 = utils.LoadPattern("Resources/osouji2.PNG")
+osoujiPattern3 = utils.LoadPattern("Resources/osouji3.PNG")
 storySkipPattern = utils.LoadPattern("Resources/storySkip.PNG")
 
 nextPattern = utils.LoadPattern("Resources/next.PNG")
@@ -22,7 +23,6 @@ patterns = [
     [storyPattern, 0.8],
     [eventPattern, 0.8],
     [changeMissionBriefPattern, 0.8],
-    [okPattern, 0.4],
     
     [skipPattern, 0.8],
     [missionPattern, 0.8],
@@ -31,9 +31,10 @@ patterns = [
 
     [osoujiPattern, 0.8],
     [osoujiPattern2, 0.8],
+    [osoujiPattern3, 0.8],
 
     [nextPattern, 0.8],
-    [okPattern, 0.8],
+    [okPattern, 0.4],
 
     [stagePattern, 0.8]
 ]
