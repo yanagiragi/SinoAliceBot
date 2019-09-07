@@ -70,10 +70,31 @@ namespace YrSinoAliceBot
             
         }
 
+        public void ShowCursorPosition()
+        {
+            while (true)
+            {
+                Console.WriteLine(String.Format("Mouse Position = ({0}, {1})", MouseSimulator.Position.X, MouseSimulator.Position.Y));
+                Thread.Sleep(1000);
+            }
+        }
+
+        public void SingleLoop(int x, int y)
+        {
+            while (true)
+            {
+                MouseSimulator.Position = new Point(x, y);
+                MouseSimulator.Click(MouseButton.Right);
+                Thread.Sleep(10000);
+            }
+        }
+
         public void Run()
         {
             //Osouji();
-            LoopSingleStage();
+            //LoopSingleStage();
+            //ShowCursorPosition();
+            SingleLoop(2793, 792);
         }
 
         public void LoopSingleStage()
