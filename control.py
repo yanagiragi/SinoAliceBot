@@ -147,7 +147,6 @@ VK_CODE = {'backspace':0x08,
            "'":0xDE,
            '`':0xC0}
 
-# Not Epic Games ;-)
 class Control:
     def __init__(self, window):
         self.top = 0
@@ -177,7 +176,14 @@ class Control:
         win32api.SetCursorPos(globalPosition)
         time.sleep(self.delay)
 
-    def MouseLeftClick(self, localPosition):
+    # easier wrapper
+    def MouseLeftClick(self, top_left, bottom_right):
+        # click center
+        localPosition = [int((top_left[0] + bottom_right[0])/2), int((top_left[1] + bottom_right[1])/2)]
+        self.MouseLeftClick_Impl(localPosition)            
+        self.MouseMove([0,0])
+
+    def MouseLeftClick_Impl(self, localPosition):
         self.MouseMove(localPosition)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP | win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
         self.window.RestoreForeground()
@@ -194,112 +200,29 @@ class Control:
         win32api.keybd_event(VK_CODE[arg],0 ,win32con.KEYEVENTF_KEYUP ,0)
         self.window.RestoreForeground()
 
-    def ClickBattleRoyaleMission(self):
-        self.MouseLeftClick([1012, 179])
-
-    def ClickRequestMissionButton(self):
-        self.MouseLeftClick([1115, 680])
-
-    def ClickDialogButton(self):
-        self.MouseLeftClick([500, 500])
-
-    def ClickComfirmButton(self):
-        self.MouseLeftClick([500, 500])
-
-    def ClickLeaveButton(self):
-        self.MouseRightClick([500, 500])
-
-    def PressSelectMissionKey(self):
-        self.KeyPress('spacebar')
-    
-    def PressLeaveBattleRoyaleKey(self):
-        self.KeyPress('esc')
-
-    def AttackLeftButton(self, localPosition=[640, 360], delay=0.1):
-        self.MouseMove(localPosition)
+    def MouseLeftButtonDown(self, delay=0.1):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
-        time.sleep(delay)
+        time.sleep(delay)        
+
+    def MouseLeftButtonUp(self, delay=0.1):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
-
-    def AttackRightButton(self, localPosition=[640, 360], delay=0.1):
-        self.MouseMove(localPosition)
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
         time.sleep(delay)
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
 
-    # Arrow
-    def ComboType1(self):
-        self.AttackLeftButton()        
-        time.sleep(0.3)
-        self.AttackLeftButton()
-        time.sleep(0.5)
-        self.AttackLeftButton()
-        time.sleep(2)
-    
-    # Blade
-    def ComboType2(self):
-        self.AttackLeftButton()        
-        time.sleep(0.3)      
-        self.AttackLeftButton()        
-        time.sleep(0.3)
-        self.AttackLeftButton()        
-        time.sleep(0.3)
-        self.AttackLeftButton()
+    def OsoujiPathSlides(self, delay=0.05):
+        center = [177, 416]
+        osoujiPaths = [[214, 337], [277, 418], [280, 494], [260, 578], [163, 586], [79, 521], [64, 434], [114, 362]]
+
+        # Click first
+        self.MouseMove(center)
+        self.MouseLeftButtonDown(delay)
+        self.MouseLeftButtonUp(delay)
+
+        # Then loop the paths
+        self.MouseMove(osoujiPaths[0])
+        self.MouseLeftButtonDown(delay)
+        for osoujiPath in osoujiPaths:
+            self.MouseMove(osoujiPath)
+            time.sleep(delay)
+        self.MouseLeftButtonUp(delay)
+
         time.sleep(1)
-        self.AttackLeftButton()
-        time.sleep(2)
-    
-    # Sword
-    def ComboType3(self):
-        self.AttackLeftButton()        
-        time.sleep(0.3)
-        self.AttackLeftButton()
-        time.sleep(0.6)
-        self.AttackLeftButton()
-        time.sleep(4)
-    
-    # Fist
-    def ComboType4(self):
-        # WIP
-        self.AttackLeftButton()        
-        time.sleep(0.3)
-        self.AttackLeftButton()        
-        time.sleep(0.3)
-        self.AttackLeftButton()        
-        time.sleep(0.6)
-        self.AttackLeftButton()
-        time.sleep(3) 
-    
-    # Mage
-    def ComboType5(self):
-        self.AttackLeftButton()        
-        time.sleep(0.3)
-        self.AttackLeftButton()
-        time.sleep(0.6)
-        self.AttackLeftButton()
-        time.sleep(3)
-    
-    # Sword Blaster
-    def ComboType6(self):
-        self.AttackRightButton(delay=2)
-        time.sleep(0.3)
-        self.AttackRightButton(delay=2.5)
-        time.sleep(3)
-    
-    # Fist Charge Combo
-    def ComboType7(self):
-        localPosition = [640, 360]
-        self.MouseMove(localPosition)
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
-        time.sleep(3.5)
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
-        time.sleep(0.5)
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
-        time.sleep(0.6)
-        self.AttackLeftButton()
-        time.sleep(0.7)
-        self.AttackLeftButton()
-        time.sleep(2.6)
-        self.AttackLeftButton()
-        time.sleep(4.5)

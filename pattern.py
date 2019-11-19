@@ -1,42 +1,58 @@
 import cv2
 import utils
 
-startPattern = utils.LoadPattern("Resources/start.PNG")
-changeMissionBriefPattern = utils.LoadPattern("Resources/changeMissionBrief.PNG")
-eventPattern = utils.LoadPattern("Resources/event.PNG")
-skipPattern = utils.LoadPattern("Resources/skip.PNG")
-missionPattern = utils.LoadPattern("Resources/mission.PNG")
-storyPattern = utils.LoadPattern("Resources/story.PNG")
 homePattern = utils.LoadPattern("Resources/home.PNG")
+storyPattern = utils.LoadPattern("Resources/story.PNG")
+missionPattern = utils.LoadPattern("Resources/mission.PNG")
+changeMissionBriefPattern = utils.LoadPattern("Resources/changeMissionBrief.PNG")
+
+eventPattern = utils.LoadPattern("Resources/event.PNG")
+storySkipPattern = utils.LoadPattern("Resources/storySkip.PNG")
+skipPattern = utils.LoadPattern("Resources/skip.PNG")
+
 osoujiPattern = utils.LoadPattern("Resources/osouji.PNG")
 osoujiPattern2 = utils.LoadPattern("Resources/osouji2.PNG")
-osoujiPattern3 = utils.LoadPattern("Resources/osouji3.PNG")
-storySkipPattern = utils.LoadPattern("Resources/storySkip.PNG")
+osoujiTextPattern = utils.LoadPattern("Resources/osoujiText.PNG")
 
 nextPattern = utils.LoadPattern("Resources/next.PNG")
 okPattern = utils.LoadPattern("Resources/ok.PNG")
+rematchPattern = utils.LoadPattern("Resources/rematch.PNG")
+startPattern = utils.LoadPattern("Resources/start.PNG")
 
-stagePattern = utils.LoadPattern("Resources/stage.PNG")
+stagePattern = utils.LoadPattern("Resources/Stage/stage.PNG")
+levelPattern = utils.LoadPattern("Resources/Stage/level.PNG")
+
+osoujiBigLeftPattern = utils.LoadPattern("Resources/Osouji/enemy_big_left.PNG")
+osoujiLeftPattern = utils.LoadPattern("Resources/Osouji/enemy_left.PNG")
+osoujiRightPattern = utils.LoadPattern("Resources/Osouji/enemy_right.PNG")
+
+logPattern = utils.LoadPattern("Resources/log.PNG")
+pausePattern = utils.LoadPattern("Resources/pause.PNG")
 
 patterns = [
-    [startPattern, 0.8],
-    [storyPattern, 0.8],
-    [eventPattern, 0.8],
-    [changeMissionBriefPattern, 0.8],
+    ['start', startPattern, 0.7],
+    ['story', storyPattern, 0.8],
+    ['event', eventPattern, 0.65],
+    # ['changeMissionBrief', changeMissionBriefPattern, 0.8],
     
-    [skipPattern, 0.8],
-    [missionPattern, 0.8],
-    [homePattern, 0.8],
-    [storySkipPattern, 0.8],
+    ['skip', skipPattern, 0.8],
+    ['mission', missionPattern, 0.8],
+    # ['home', homePattern, 0.8],
+    ['storySkip', storySkipPattern, 0.6],
 
-    [osoujiPattern, 0.8],
-    [osoujiPattern2, 0.8],
-    [osoujiPattern3, 0.8],
+    ['osouji', osoujiPattern, 0.8],
+    ['osouji2', osoujiPattern2, 0.8],
+    ['osoujiText', osoujiTextPattern, 0.8],
 
-    [nextPattern, 0.8],
-    [okPattern, 0.4],
+    ['next', nextPattern, 0.8],
+    ['ok', okPattern, 0.4],
+    ['rematch', rematchPattern, 0.8],
 
-    [stagePattern, 0.8]
+    ['stage', stagePattern, 0.8],
+    ['level', levelPattern, 0.8],
+
+    ['log', logPattern, 0.8],
+    ['pause', pausePattern, 0.8]
 ]
 
 def Detect(frame, pattern, threshold=0.8):
@@ -92,7 +108,7 @@ def DebugDraw(img, frame, logic):
     # Convert to BGR for correct display rect color
     img = utils.RGBToBGR(img)
 
-    for pattern, threshold in patterns:
+    for name, pattern, threshold in patterns:
         isExist, top_left, bottom_right = Detect(frame, pattern, threshold)
         if isExist:
             cv2.rectangle(img, top_left, bottom_right, blue, 4)

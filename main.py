@@ -95,9 +95,14 @@ if __name__ == '__main__':
         control = Control(window)
         logic = Logic()
 
-        toaster.show_toast("SinoBot", "Start", duration=toastDuration, icon_path=toastIcon)     
-
+        toaster.show_toast("SinoBot", "Start", duration=toastDuration, icon_path=toastIcon)             
+        
         while shallQuit == False:
+
+            # Set width = 360px, height = 360 * 21 / 9 = 840px
+            hasError, errorMsg = window.ResizeWindow(width=360)
+            if hasError:
+                print(errorMsg)
 
             if shallPause == True:
                 continue
@@ -113,7 +118,7 @@ if __name__ == '__main__':
             tEnd1 = time.time()
             deltaTime1 = (tEnd1 - tStart)
             
-            # img, frame = utils.LoadScreenFromImage('test.png')
+            # img, frame = utils.LoadScreenFromImage('test.jpg')
             control.Update(window.top, window.left, window.bot, window.right)
             logicError = logic.Process(frame, control)
                     
@@ -165,7 +170,8 @@ if __name__ == '__main__':
             prevState = logic.state
 
             # output to console
-            print(outputStr, end='\r')
+            # print(outputStr, end='\r')
+            print(outputStr, end='\n')
 
     except Exception as e:
         print(e)

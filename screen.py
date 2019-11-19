@@ -29,7 +29,17 @@ class WindowScreen:
             return self.img, None
         except :
             return None, sys.exc_info()
-        
+
+    def ResizeWindow(self, width, height = None):
+        try :
+            self.left, self.top, self.right, self.bot = win32gui.GetWindowRect(self.instance)
+            if height is None:
+                height = float(width) * 21.0 / 9.0
+            win32gui.MoveWindow(self.instance, self.left, self.top, int(width), int(height), True)
+            return False, None
+        except :
+            return True, sys.exc_info()
+    
     @staticmethod
     def ListAllWindows():
         hWndList = []
