@@ -62,21 +62,14 @@ if __name__ == '__main__':
     freeze_support()
     toaster = ToastNotifier()
     
+    signal.signal(signal.SIGINT, SigCleanup)
+
     parser = argparse.ArgumentParser(description='SinoBot, Based On Python3.6 (32 Bit)')
     parser.add_argument('--debug', default='false', help='enable debug mode')
-    parser.add_argument('--keyboard', default='true', help='enable f9 as hotkey')
-    parser.add_argument('--combo', default='0', help='Perform combo when battle')
     args = parser.parse_args()
 
     isDebug = args.debug == 'true'
-    isEnableKeyboard = args.keyboard == 'true'
-    usingCombo = int(args.combo)
-
-    if usingCombo != 0:
-        print('using Combo: {}'.format(usingCombo))
-
-    signal.signal(signal.SIGINT, SigCleanup)
-
+    
     keyboard.hook(OnKeyPress)
     keywatchProcess = Process(target=keyboard.wait)
     keywatchProcess.start()
@@ -85,8 +78,9 @@ if __name__ == '__main__':
     windowsName = 'Galaxy S8+'
 
     battleCount = 0
+    osoujiCount = 0
     prevState = state.IDLE
-    waitTime = 0
+    waitTime = 0    
     lastBattleEndTime = time.time()
 
     try:
@@ -114,10 +108,6 @@ if __name__ == '__main__':
                 print('Window "{}" Not Found, raw = {}'.format(windowsName, error))
                 continue
             img, frame = utils.LoadScreen(img)
-            
-            tEnd1 = time.time()
-            deltaTime1 = (tEnd1 - tStart)
-            
             # img, frame = utils.LoadScreenFromImage('test.jpg')
             control.Update(window.top, window.left, window.bot, window.right)
             logicError = logic.Process(frame, control)
@@ -125,9 +115,6 @@ if __name__ == '__main__':
             if logicError:
                 print(logicError)
                 logging.error(logicError)
-            
-            tEnd2 = time.time()
-            deltaTime2 = (tEnd2- tEnd1)
             
             if isDebug:
                 img = pattern.DebugDraw(img, frame, logic)
@@ -144,22 +131,21 @@ if __name__ == '__main__':
             
             tEnd = time.time()
             deltaTime = (tEnd - tStart)
-            deltaTime3 = (tEnd - tEnd2)
             fps = 1.0 / deltaTime
             if battleCount == 0:
                 waitTimeStr = '00:00:00'
             else:
                 waitTimeStr =  str(datetime.timedelta(seconds=int(float(waitTime)/float(battleCount))))
 
-            if isDebug:
-                outputStr = '[{}] FPS = {:2.2f} ({:4.2f} ms, {:4.2f}/ {:4.2f}/ {:4.2f}), Accomplished = {}, Avg Time = {}, state = {:30}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, deltaTime * 1000, deltaTime1 * 1000, deltaTime2 * 1000, deltaTime3 * 1000, battleCount, waitTimeStr , logic.state.value)
-            else:
-                outputStr = '[{}] FPS = {:2.2f}, Accomplished = {}, Avg Time = {}, state = {:30}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, battleCount, waitTimeStr, logic.state.value)
+            outputStr = '[{}] FPS = {:2.2f}, Accomplished = {}, Avg Time = {}, state = {:30}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, battleCount, waitTimeStr, logic.state.value)
 
-            if prevState != logic.state and logic.state == state.END_BATTLE:
+            if prevState != logic.state and logic.state == state.REMATCH:
                 battleCount += 1
                 waitTime += tEnd - lastBattleEndTime
                 lastBattleEndTime = tEnd
+
+            elif prevState != logic.state and logic.state == state.OSOUJI_RESULT_COMFIRM:
+                osoujiCount += 1
             
             if isDebug:    
                 logging.info(outputStr)
