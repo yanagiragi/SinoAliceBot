@@ -399,7 +399,7 @@ class Control:
         control.MouseLeftButtonUp()
         time.sleep(3)
 
-     def BigPresident2020(self, control):
+    def BigPresident2020(self, control):
         # transition: app -> date
         self.switchApp(control, isSide=True)
         time.sleep(5)
