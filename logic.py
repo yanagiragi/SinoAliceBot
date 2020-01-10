@@ -127,7 +127,10 @@ class Logic:
 
             if self.state in statesShouldAction:
                 control.MouseLeftClick(top_left, bottom_right)
-                time.sleep(2.5)
+                if self.state == state.OSOUJI_RESULT_COMFIRM:
+                    time.sleep(5)
+                else:
+                    time.sleep(2.5)
             elif self.state == state.OSOUJI:
                 control.OsoujiPathSlides()
                 time.sleep(1)        

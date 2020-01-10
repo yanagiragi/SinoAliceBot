@@ -155,6 +155,18 @@ class Control:
         self.window = window
         self.delay = 0.05
 
+        # Tick Setting
+        self.width_step = 84 - 38
+        self.height_step = 581 - 552
+        self.startPos = [ 175, 531 ]
+        self.startYear = 2020
+        self.startMonth = 6
+        self.startDate = 3
+        self.currentPos = [self.startPos[0], self.startPos[1]]
+        self.isPassMonth = False
+        self.tickIdx = 0
+        self.isDate = True
+
     def Update(self, top, left, bottom, right):
         self.top = top
         self.left = left
@@ -226,3 +238,184 @@ class Control:
         self.MouseLeftButtonUp(delay)
 
         time.sleep(1)
+
+    def Tick(self, control, idx):
+        
+        i = idx // 7
+        j = idx % 7
+        
+        control.MouseMove(self.currentPos)
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()  
+
+        if j == 6:
+            self.currentPos[0] -= self.width_step * 6
+            self.currentPos[1] += self.height_step
+        else:
+            self.currentPos[0] += self.width_step  
+
+        if self.isPassMonth:
+            self.currentPos[1] = 536
+            time.sleep(1)
+            self.isPassMonth = False
+
+        if self.startMonth == 12 and self.startDate == 31:
+            self.startYear += 1
+            self.startMonth = 1
+            self.startDate = 1
+            self.isPassMonth = True
+        elif self.startMonth in [1,3,5,7,8,10,12] and self.startDate == 31:
+            self.startMonth += 1
+            self.startDate = 1
+            self.isPassMonth = True
+        elif self.startMonth == 2 and self.startYear % 4 == 0 and self.startDate == 29:
+            self.startMonth += 1
+            self.startDate = 1
+            self.isPassMonth = True
+        elif self.startMonth == 2 and self.startYear % 4 != 0 and self.startDate == 28:
+            self.startMonth += 1
+            self.startDate = 1
+            self.isPassMonth = True
+        elif self.startMonth not in [1,3,5,7,8,10,12] and self.startDate == 30:
+            self.startMonth += 1
+            self.startDate = 1
+            self.isPassMonth = True
+        else:
+            self.startDate += 1
+        time.sleep(1)
+
+    def incDate(self, control):
+        control.MouseMove([128, 276])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        self.Tick(control, self.tickIdx)
+        self.tickIdx += 1
+
+        control.MouseMove([255, 706])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+    def switchFromDateAndReOpenApp(self, control):
+    
+        control.MouseMove([190, 47])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(1)
+
+        control.MouseMove([89, 775])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(1)
+
+        control.MouseMove([193, 210])
+        control.MouseLeftButtonDown(2)
+        control.MouseLeftButtonUp()
+        time.sleep(1)
+
+        control.MouseMove([176, 295])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        control.MouseMove([272, 319])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(1)
+
+        control.MouseMove([250, 708])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(1)
+
+        control.MouseMove([190, 47])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(1)
+
+        control.MouseMove([89, 775])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(1)
+
+        control.MouseMove([21, 407])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(1)        
+
+    def switchApp(self, control, isSide=False):
+        # Swich Back
+        control.MouseMove([190, 47])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        control.MouseMove([89, 775])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        if isSide:
+            control.MouseMove([21, 407])
+        else:
+            control.MouseMove([168, 484])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+    def closeApp(self, control):
+    
+        # Close App
+        control.MouseMove([272, 319])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        control.MouseMove([250, 708])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+    def appAction(self, control):
+        control.MouseMove([182, 612])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        control.MouseMove([182, 713])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        control.MouseMove([49, 760])        
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(2)
+
+        control.MouseMove([178, 569])
+        control.MouseLeftButtonDown()
+        control.MouseLeftButtonUp()
+        time.sleep(3)
+
+     def BigPresident2020(self, control):
+        # transition: app -> date
+        self.switchApp(control, isSide=True)
+        time.sleep(5)
+        self.incDate(control)
+
+        # transition: date -> closeApp
+        self.switchApp(control, isSide=True)
+        time.sleep(5)
+        self.closeApp(control)
+        time.sleep(5)
+
+        # transition: closeApp -> app
+        self.switchApp(control, isSide=True)
+        time.sleep(20)
+        print(self.startYear, self.startMonth, self.startDate)
+
+        # app action
+        self.appAction(control)
+        time.sleep(5)
