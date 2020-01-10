@@ -4,9 +4,7 @@ from enum import Enum
 from control import *
 
 class state(Enum):
-    IDLE = 'idle'
-    END_BATTLE = 'END_BATTLE'
-    
+    IDLE = 'idle'    
     BATTLE = 'BATTLE'
     REMATCH = 'rematch'
     NO_AP = 'no ap'
@@ -105,6 +103,8 @@ class Logic:
             
             if currentDetected is not None:
                 self.localPosition = currentDetected['localPosition']
+        else:
+            self.state = state.IDLE
 
     def StateAction(self, control):
         
@@ -126,6 +126,7 @@ class Logic:
             ]
 
             if self.state in statesShouldAction:
+                
                 control.MouseLeftClick(top_left, bottom_right)
                 if self.state == state.OSOUJI_RESULT_COMFIRM:
                     time.sleep(5)
@@ -133,7 +134,9 @@ class Logic:
                     time.sleep(2.5)
             elif self.state == state.OSOUJI:
                 control.OsoujiPathSlides()
-                time.sleep(1)        
+                time.sleep(1)
+
+            # time.sleep(10)
             
         return
             
