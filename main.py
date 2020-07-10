@@ -1,5 +1,5 @@
 import cv2
-import sys, signal
+import sys, signal, traceback
 import time
 import logging, os, datetime
 import keyboard
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     keywatchProcess.start()
 
     resizeFactor = 1.0
-    windowsName = 'Galaxy S8+'
+    windowsName = 'SM-G955F'
 
     battleCount = 0
     osoujiCount = 0
@@ -94,7 +94,10 @@ if __name__ == '__main__':
         while shallQuit == False:
 
             # Set width = 360px, height = 360 * 21 / 9 = 840px
-            hasError, errorMsg = window.ResizeWindow(width=360)
+            #hasError, errorMsg = window.ResizeWindow(width=352)
+
+            hasError, errorMsg = None, ""
+
             if hasError:
                 print(errorMsg)
 
@@ -110,7 +113,12 @@ if __name__ == '__main__':
             img, frame = utils.LoadScreen(img)
             # img, frame = utils.LoadScreenFromImage('test.jpg')
             control.Update(window.top, window.left, window.bot, window.right)
-            logicError = logic.Process(frame, control)
+            
+            isDone, logicError = logic.Process(frame, control)
+            
+            if isDone == True:
+                print("Done All Tasks! Leaving ...")
+                shallQuit = True
                     
             if logicError:
                 print(logicError)
@@ -137,7 +145,7 @@ if __name__ == '__main__':
             else:
                 waitTimeStr =  str(datetime.timedelta(seconds=int(float(waitTime)/float(battleCount))))
 
-            outputStr = '[{}] FPS = {:2.2f}, Accomplished = {}, Avg Time = {}, state = {:30}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, battleCount, waitTimeStr, logic.state.value)
+            outputStr = '[{}] FPS = {:2.2f}, Accomplished = {}, Avg Time = {}, Now Level = {}, state = {:30}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, battleCount, waitTimeStr, logic.prevLevel, logic.state.value)
 
             if prevState != logic.state and logic.state == state.REMATCH:
                 battleCount += 1
@@ -148,9 +156,9 @@ if __name__ == '__main__':
                 osoujiCount += 1
             
             if isDebug:    
-                logging.info(outputStr)
+                logging.info(outputStr.encode("utf-8"))
             elif prevState != logic.state:
-                logging.info(outputStr)
+                logging.info(outputStr.encode("utf-8"))
 
             # Update State
             prevState = logic.state

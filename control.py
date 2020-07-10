@@ -221,9 +221,9 @@ class Control:
         time.sleep(delay)
 
     def OsoujiPathSlides(self, delay=0.05):
-        center = [177, 416]
-        osoujiPaths = [[214, 337], [277, 418], [280, 494], [260, 578], [163, 586], [79, 521], [64, 434], [114, 362]]
-
+        center = [177, 356]
+        osoujiPaths = [[198, 286], [267, 343], [265, 435], [246, 526], [166, 518], [86, 474], [75, 385], [126, 300]]
+        
         # Click first
         self.MouseMove(center)
         self.MouseLeftButtonDown(delay)

@@ -29,6 +29,25 @@ osoujiRightPattern = utils.LoadPattern("Resources/Osouji/enemy_right.PNG")
 logPattern = utils.LoadPattern("Resources/log.PNG")
 pausePattern = utils.LoadPattern("Resources/pause.PNG")
 
+stageHeaderPattern = utils.LoadPattern("Resources/stageHeader.PNG")
+
+hardPattern = utils.LoadPattern("Resources/Stage/hard.png")
+normalPattern = utils.LoadPattern("Resources/Stage/normal.png")
+
+levelPattern1 = utils.LoadPattern("Resources/Stage/level1.PNG")
+levelPattern2 = utils.LoadPattern("Resources/Stage/level2.PNG")
+levelPattern3 = utils.LoadPattern("Resources/Stage/level3.PNG")
+levelPattern4 = utils.LoadPattern("Resources/Stage/level4.PNG")
+levelPattern5 = utils.LoadPattern("Resources/Stage/level5.PNG")
+levelPattern6 = utils.LoadPattern("Resources/Stage/level6.PNG")
+levelPattern7 = utils.LoadPattern("Resources/Stage/level7.PNG")
+levelPattern8 = utils.LoadPattern("Resources/Stage/level8.PNG")
+levelPattern9 = utils.LoadPattern("Resources/Stage/level9.PNG")
+levelPattern10 = utils.LoadPattern("Resources/Stage/level10.PNG")
+
+levelPattern_exl = utils.LoadPattern("Resources/Stage/level_ex_l.PNG")
+levelPattern_cx = utils.LoadPattern("Resources/Stage/level_cx.PNG")
+
 patterns = [
     ['start', startPattern, 0.7],
     ['story', storyPattern, 0.8],
@@ -52,7 +71,25 @@ patterns = [
     ['level', levelPattern, 0.8],
 
     ['log', logPattern, 0.8],
-    ['pause', pausePattern, 0.8]
+    ['pause', pausePattern, 0.8],
+
+    # ['stage header', stageHeaderPattern, 0.95],
+    
+    ['hard', hardPattern, 0.8],
+    ['normal', normalPattern, 0.6],
+
+    ['level 1', levelPattern1, 0.9],
+    ['level 2', levelPattern2, 0.9],
+    ['level 3', levelPattern3, 0.9],
+    ['level 4', levelPattern4, 0.9],
+    ['level 5', levelPattern5, 0.9],
+    ['level 6', levelPattern6, 0.9],
+    ['level 7', levelPattern7, 0.9],
+    ['level 8', levelPattern8, 0.9],
+    ['level 9', levelPattern9, 0.9],
+    ['level 10', levelPattern10, 0.9],
+    ['level EX-L', levelPattern_exl, 0.9],
+    ['level CX', levelPattern_cx, 0.9],
 ]
 
 def Detect(frame, pattern, threshold=0.8):
@@ -105,13 +142,37 @@ def DebugDraw(img, frame, logic):
     cyan = (0, 242, 255)
     white = (255, 255, 255)
 
+    colors = [red, green, blue, purple, yellow, orange, cyan, white]
+
     # Convert to BGR for correct display rect color
     img = utils.RGBToBGR(img)
 
-    for name, pattern, threshold in patterns:
+    exists = []
+
+    for idx, (name, pattern, threshold) in enumerate(patterns):
         isExist, top_left, bottom_right = Detect(frame, pattern, threshold)
         if isExist:
-            cv2.rectangle(img, top_left, bottom_right, blue, 4)
+            cv2.rectangle(img, top_left, bottom_right, colors[idx % len(colors)], 4)
+            exists.append(name)
+        
+        """if name == 'stage header':
+            max_val, top_left, bottom_right = DetectTemplate(frame, pattern)
+            print(max_val, threshold)"""
+
+    print('Exists:', '[' + '], ['.join(exists) + ']')
+    
+    """
+    # stage debugging
+    heightIncrement = (352 - 220)
+    for i in range(3):
+        cv2.rectangle(img, (36, 188 + heightIncrement * i), (315, 266 + heightIncrement * i), cyan, 1)
+        
+    # level
+    heightIncrement = (330 - 252)
+    for i in range(4):
+        cv2.rectangle(img, (22, 252 + heightIncrement * i), (327, 317 + heightIncrement * i), cyan, 1)
+        cv2.rectangle(img, (117, 264 + heightIncrement * i), (144, 278 + heightIncrement * i), cyan, 1)
+    """ 
 
     img = utils.BGRToRGB(img)
     return img
