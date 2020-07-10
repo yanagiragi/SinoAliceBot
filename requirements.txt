@@ -15,5 +15,7 @@ pywin32==224
 pywin32-ctypes==0.2.0
 six==1.12.0
 win10toast==0.9
-win32core==221.36
-win32gui==221.6
+win32core==221.3
+toposort==1.5
+# win32gui==221.3
+pywin32==224 # use this to install win32gui python37 support
