@@ -1,0 +1,22 @@
+from enum import Enum
+
+class State(Enum):
+    IDLE = 'idle'    
+    BATTLE = 'BATTLE'
+    REMATCH = 'rematch'
+    NEXT = '次へ'
+    NO_AP = 'AP 回復 確認'
+    OSOUJI = 'お掃除'
+    OSOUJI_COMFIRM = 'お掃除 確認'
+    OSOUJI_RESULT_COMFIRM = 'お掃除 結果確認'
+    HOME = 'ホームページ'
+    SELECT_EVENT = '物語 選択'
+    SELECT_STAGE = 'イベント 選択'
+    SELECT_LEVEL = '章 選択'
+    OSOUJI_LEVEL_COMFIRM = 'お掃除 確認 (体力不足)'
+    SELECT_LEVEL_CONFIRM = '章 確認'
+    STORY_SKIP = 'STORY SKIP'
+    STAGE_LOOP_END = 'Stage loop end'
+    STAGE_NORMAL_IDLE = 'STAGE_NORMAL_IDLE'
+    STAGE_HARD_IDLE = 'STAGE_HARD_IDLE'
+    DONE = '完了'

@@ -1,5 +1,5 @@
 import cv2
-import sys, signal, traceback
+import sys, signal
 import time
 import logging, os, datetime
 import keyboard
@@ -12,7 +12,8 @@ from logic import *
 import screen
 
 import utils
-import pattern
+import Pattern
+from State import State
 
 # Global variable
 shallQuit = False
@@ -79,7 +80,7 @@ if __name__ == '__main__':
 
     battleCount = 0
     osoujiCount = 0
-    prevState = state.IDLE
+    prevState = State.IDLE
     waitTime = 0    
     lastBattleEndTime = time.time()
 
@@ -87,7 +88,7 @@ if __name__ == '__main__':
         SetupLogger()
         window = WindowScreen(windowsName, resizeFactor)
         control = Control(window)
-        logic = Logic()
+        logic = Logic('Main Logic', control)
 
         toaster.show_toast("SinoBot", "Start", duration=toastDuration, icon_path=toastIcon)             
         
@@ -114,7 +115,7 @@ if __name__ == '__main__':
             # img, frame = utils.LoadScreenFromImage('test.jpg')
             control.Update(window.top, window.left, window.bot, window.right)
             
-            isDone, logicError = logic.Process(frame, control)
+            isDone, logicError = logic.Process(frame)
             
             if isDone == True:
                 print("Done All Tasks! Leaving ...")
@@ -125,7 +126,7 @@ if __name__ == '__main__':
                 logging.error(logicError)
             
             if isDebug:
-                img = pattern.DebugDraw(img, frame, logic)
+                img = Pattern.DebugDraw(img, frame, logic)
                 cv2.namedWindow(windowsName, 0)
                 cv2.resizeWindow(windowsName, window.size)
                 cv2.imshow(windowsName, img)     
@@ -145,14 +146,14 @@ if __name__ == '__main__':
             else:
                 waitTimeStr =  str(datetime.timedelta(seconds=int(float(waitTime)/float(battleCount))))
 
-            outputStr = '[{}] FPS = {:2.2f}, Accomplished = {}, Avg Time = {}, Now Level = {}, state = {:30}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, battleCount, waitTimeStr, logic.prevLevel, logic.state.value)
+            outputStr = '[{}] FPS = {:2.2f}, Accomplished = {}, Avg Time = {}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, battleCount, waitTimeStr) + logic.GetMessage()
 
-            if prevState != logic.state and logic.state == state.REMATCH:
+            if prevState != logic.state and logic.state == State.REMATCH:
                 battleCount += 1
                 waitTime += tEnd - lastBattleEndTime
                 lastBattleEndTime = tEnd
 
-            elif prevState != logic.state and logic.state == state.OSOUJI_RESULT_COMFIRM:
+            elif prevState != logic.state and logic.state == State.OSOUJI_RESULT_COMFIRM:
                 osoujiCount += 1
             
             if isDebug:    
@@ -168,7 +169,7 @@ if __name__ == '__main__':
             print(outputStr, end='\n')
 
     except Exception as e:
-        print(e)
+        utils.printErr(e)
         logging.exception (e)
     
     finally:
