@@ -103,7 +103,7 @@ class Routine_LoopStage(Routine):
         if currentDetected is not None:
             self.localPosition = currentDetected.LocalPosition
 
-        self.DeterminPrevStage()
+        self.DeterminePrevStage()
 
     def StateAction(self):
         super().StateAction()
@@ -146,7 +146,7 @@ class Routine_LoopStage(Routine):
     def GetMessage(self):
         return super().GetMessage() + ', Now Level = {}, state = {:30}'.format(self.prevLevel, self.state.value)
 
-    def DeterminPrevStage(self):
+    def DeterminePrevStage(self):
         currentDetected = None
         checkList = [
             self.hasDetected['level 1'],

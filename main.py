@@ -1,11 +1,15 @@
-import cv2
-import sys, signal
+import os
+import sys
+import signal
+import subprocess
 import time
-import logging, os, datetime
+import logging
+import datetime
 import keyboard
 from multiprocessing import Process, freeze_support
 from win10toast import ToastNotifier
 import argparse
+import cv2
 
 from screen import *
 from logic import *
@@ -15,12 +19,17 @@ import utils
 import Pattern
 from State import State
 
+from LoopStage import Routine_LoopStage
+from LoopLevelByImage import Routine_LoopLevelByImage
+
 # Global variable
 shallQuit = False
 shallPause = False
 toaster = None # initialized after __init__ == "__main__"
 toastDuration = 2
 toastIcon = 'Resources/icon/icon.ico'
+ApplicationName = 'SinoBot'
+ConenctionExecutor = 'D:/_Programs/Programs/_Shortcuts/scrcpy-win64-v1.14/scrcpy.exe --window-height 720 --window-borderless -w'
 
 def OnKeyPress(event):
     global shallQuit, shallPause, toaster
@@ -29,12 +38,12 @@ def OnKeyPress(event):
     if event.name == 'f9':
         shallPause = not shallPause
         if shallPause == True:
-            toaster.show_toast("SinoBot", "Paused", duration=toastDuration, icon_path=toastIcon)
+            toaster.show_toast(ApplicationName, "Paused", duration=toastDuration, icon_path=toastIcon)
         else:
-            toaster.show_toast("SinoBot", "Resumed", duration=toastDuration, icon_path=toastIcon)
+            toaster.show_toast(ApplicationName, "Resumed", duration=toastDuration, icon_path=toastIcon)
         
     elif event.name == 'f10':
-        toaster.show_toast("SinoBot", "Exited", duration=toastDuration, icon_path=toastIcon)
+        toaster.show_toast(ApplicationName, "Exited", duration=toastDuration, icon_path=toastIcon)
         shallQuit = True
         shallPause = True
 
@@ -58,19 +67,103 @@ def SigCleanup(sig, frame):
     Cleanup()
     sys.exit(0)
 
-if __name__ == '__main__':
-
-    freeze_support()
-    toaster = ToastNotifier()
-    
-    signal.signal(signal.SIGINT, SigCleanup)
-
-    parser = argparse.ArgumentParser(description='SinoBot, Based On Python3.6 (32 Bit)')
+def SetupParser():
+    parser = argparse.ArgumentParser(description='SinoBot, Based On Python3.7.2 (32 Bit)')
     parser.add_argument('--debug', default='false', help='enable debug mode')
-    args = parser.parse_args()
+    return parser.parse_args()
 
+def MainLoop():    
+    SetupLogger() # Setup Logger
+    
+    window = WindowScreen(windowsName, resizeFactor) # Get window instance
+    control = Control(window) # Create controll instance
+
+    """
+
+    Select Your Main Routine:
+
+    Routine_LoopLevelByImage: Loop Single Level (matched with Resource/Stage/level.PNG), won't terminate
+
+    Routine_LoopStage: Explore All levels (normal & hard) in a stage, terminates if all levels are looped
+
+    """
+    routine = Routine_LoopLevelByImage('Routine.Loop_Level_By_Image', control, False)
+    # routine = Routine_LoopStage('Routine.Loop_Stage', control, False)
+
+    logic = Logic(routine, control) # Create Main Logic
+
+    toaster.show_toast(ApplicationName, "Start", duration=toastDuration, icon_path=toastIcon) # Show Notifcation
+    
+    while shallQuit == False:
+
+        # Set width = 360px, height = 360 * 21 / 9 = 840px
+        # hasError, errorMsg = window.ResizeWindow(width=352)
+        # hasError, errorMsg = None, ""
+        # if hasError:
+        #    print(errorMsg)
+
+        if shallPause == True:
+            continue
+
+        tStart = time.time() # Start Recording
+        
+        img, error = window.GetScreen()
+        if img == None:
+            print('Window "{}" Not Found, raw = {}'.format(windowsName, error))
+            continue
+
+        img, frame = utils.LoadScreen(img) # Get ScreenShot of img
+        # img, frame = utils.LoadScreenFromImage('test.jpg') # debug
+
+        control.Update(window.top, window.left, window.bot, window.right) # update internal position of control instance
+        
+        isDone, logicError = logic.Process(frame) # Procress Main Logic
+        
+        if isDone == True:
+            print("Done All Tasks! Leaving ...")
+            shallQuit = True
+                
+        elif logicError:
+            print(logicError)
+            logging.error(logicError)
+        
+        if isDebug:
+            img = Pattern.DebugDraw(img, frame, logic)
+            cv2.namedWindow(windowsName, 0)
+            cv2.resizeWindow(windowsName, window.size)
+            cv2.imshow(windowsName, img)     
+
+            if cv2.waitKey(30) == ord('q'):
+                # for visual apperance, re-print last output to avoid clear by 'Leaving ...'
+                print(outputStr, end='\n')
+                print('Leaving ...')
+                Cleanup()
+                break
+        
+        tEnd = time.time() # End Recording
+        deltaTime = (tEnd - tStart)
+        fps = 1.0 / deltaTime
+        outputStr = '[{}] FPS = {:2.2f}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps) + logic.GetMessage()
+        
+        if isDebug or prevState != logic.state:
+            logging.info(outputStr.encode("utf-8"))
+        
+        # output to console
+        # print(outputStr, end='\r')
+        print(outputStr, end='\n')
+
+if __name__ == '__main__':
+    
+    freeze_support()
+    
+    toaster = ToastNotifier() # Setup Toast Notification
+    
+    # Setup Parser
+    args = SetupParser() 
     isDebug = args.debug == 'true'
     
+    # Hook hotkey
+    signal.signal(signal.SIGINT, SigCleanup) 
     keyboard.hook(OnKeyPress)
     keywatchProcess = Process(target=keyboard.wait)
     keywatchProcess.start()
@@ -78,95 +171,8 @@ if __name__ == '__main__':
     resizeFactor = 1.0
     windowsName = 'SM-G955F'
 
-    battleCount = 0
-    osoujiCount = 0
-    prevState = State.IDLE
-    waitTime = 0    
-    lastBattleEndTime = time.time()
-
     try:
-        SetupLogger()
-        window = WindowScreen(windowsName, resizeFactor)
-        control = Control(window)
-        logic = Logic('Main Logic', control)
-
-        toaster.show_toast("SinoBot", "Start", duration=toastDuration, icon_path=toastIcon)             
-        
-        while shallQuit == False:
-
-            # Set width = 360px, height = 360 * 21 / 9 = 840px
-            #hasError, errorMsg = window.ResizeWindow(width=352)
-
-            hasError, errorMsg = None, ""
-
-            if hasError:
-                print(errorMsg)
-
-            if shallPause == True:
-                continue
-
-            tStart = time.time()
-            img, error = window.GetScreen()
-
-            if img == None:
-                print('Window "{}" Not Found, raw = {}'.format(windowsName, error))
-                continue
-            img, frame = utils.LoadScreen(img)
-            # img, frame = utils.LoadScreenFromImage('test.jpg')
-            control.Update(window.top, window.left, window.bot, window.right)
-            
-            isDone, logicError = logic.Process(frame)
-            
-            if isDone == True:
-                print("Done All Tasks! Leaving ...")
-                shallQuit = True
-                    
-            if logicError:
-                print(logicError)
-                logging.error(logicError)
-            
-            if isDebug:
-                img = Pattern.DebugDraw(img, frame, logic)
-                cv2.namedWindow(windowsName, 0)
-                cv2.resizeWindow(windowsName, window.size)
-                cv2.imshow(windowsName, img)     
-
-                if cv2.waitKey(30) == ord('q'):
-                    # for visual apperance, re-print last output to avoid clear by 'Leaving ...'
-                    print(outputStr, end='\n')
-                    print('Leaving ...')
-                    Cleanup()
-                    break
-            
-            tEnd = time.time()
-            deltaTime = (tEnd - tStart)
-            fps = 1.0 / deltaTime
-            if battleCount == 0:
-                waitTimeStr = '00:00:00'
-            else:
-                waitTimeStr =  str(datetime.timedelta(seconds=int(float(waitTime)/float(battleCount))))
-
-            outputStr = '[{}] FPS = {:2.2f}, Accomplished = {}, Avg Time = {}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps, battleCount, waitTimeStr) + logic.GetMessage()
-
-            if prevState != logic.state and logic.state == State.REMATCH:
-                battleCount += 1
-                waitTime += tEnd - lastBattleEndTime
-                lastBattleEndTime = tEnd
-
-            elif prevState != logic.state and logic.state == State.OSOUJI_RESULT_COMFIRM:
-                osoujiCount += 1
-            
-            if isDebug:    
-                logging.info(outputStr.encode("utf-8"))
-            elif prevState != logic.state:
-                logging.info(outputStr.encode("utf-8"))
-
-            # Update State
-            prevState = logic.state
-
-            # output to console
-            # print(outputStr, end='\r')
-            print(outputStr, end='\n')
+       MainLoop()
 
     except Exception as e:
         utils.printErr(e)

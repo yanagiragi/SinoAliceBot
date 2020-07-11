@@ -146,7 +146,6 @@ VK_CODE = {'backspace':0x08,
            ']':0xDD,
            "'":0xDE,
            '`':0xC0}
-
 class Control:
     def __init__(self, window):
         self.top = 0

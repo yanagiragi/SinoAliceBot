@@ -1,4 +1,5 @@
 import utils
+import time
 
 from enum import Enum
 from abc import ABCMeta, abstractmethod
@@ -16,6 +17,11 @@ class Routine(metaclass=ABCMeta):
         self.prevState = State.IDLE        
         self.localPosition = [[0, 0], [0, 0]]
         self.hasDetected = {}
+
+        self.doneCount = 0
+        self.lastDoneTime = None
+        self.accumulatedTime = None
+        self.averageTimeString = None
 
     @abstractmethod
     def Reset(self, frame):
@@ -38,7 +44,7 @@ class Routine(metaclass=ABCMeta):
 
     @abstractmethod
     def GetMessage(self):
-        return ''
+        return f', Avg time = {self.averageTimeString}'
 
     """
         return isError, errorMessage
@@ -46,10 +52,23 @@ class Routine(metaclass=ABCMeta):
     def Process(self, frame):
         try:
             if self.state != State.DONE:
+                tStart = time.time()
                 self.Reset(frame)
                 self.Update()
                 self.QueryState()
                 self.StateAction()
+                tEnd = time.time()
+
+                if self.accumulatedTime == None:
+                    self.accumulatedTime = (tEnd - tStart)
+                    self.averageTimeString = '00:00:00'
+                else:
+                    self.accumulatedTime += (tEnd - tStart)
+                    self.averageTimeString = str(datetime.timedelta(seconds=int(float(self.accumulatedTime)/float(self.doneCount))))
+
+                self.lastDoneTime = tEnd
+                self.doneCount += 1
+
                 return False, None
             else:
                 return True, None

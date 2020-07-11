@@ -6,7 +6,7 @@ import numpy as np
 from desktopmagic.screengrab_win32 import getRectAsImage
 
 class WindowScreen:
-    def __init__(self, name='KurtzPel:混沌的使者  ', factor='0.5'):
+    def __init__(self, name, factor='0.5'):
         self.name = name
         self.instance = win32gui.FindWindow(None, self.name)
         self.factor = factor

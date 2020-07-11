@@ -4,7 +4,7 @@
 
 Win10 (64bit)
 
-Python 3.6 (32 bit)
+Python 3.7.2 (64 bit)
 
 ## Prerequisites
 
@@ -14,11 +14,9 @@ Python 3.6 (32 bit)
 
 ## Run
 
-```python main.py [--debug]```
+Create scrspy instance: ```.\scrcpy.exe --window-height 720 --window-borderless -w```
 
-or
-
-```./main.exe [--debug]```
+Run: ```python main.py [--debug]``` or ```./main.exe [--debug]``` (for built executable)
 
 ## Build
 
