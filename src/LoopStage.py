@@ -1,10 +1,10 @@
 from enum import Enum
+import datetime
 
-from control import *
-
-from State import State
-from Routine import Routine
-from Detection import Detection
+from src.Control import Control
+from src.State import State
+from src.Routine import Routine
+from src.Detection import Detection
 
 class Routine_LoopStage(Routine):
     def __init__(self, name, control, optimized=True):

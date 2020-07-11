@@ -1,12 +1,11 @@
 from enum import Enum
-
-from control import *
-
-from State import State
-from Routine import Routine
-from Detection import Detection
-
+import time
 import datetime
+
+from src.Control import Control
+from src.State import State
+from src.Routine import Routine
+from src.Detection import Detection
 
 class Routine_LoopLevelByImage(Routine):
     def __init__(self, name, control, optimized=True):
@@ -77,8 +76,6 @@ class Routine_LoopLevelByImage(Routine):
         
         if currentDetected is not None:
             self.localPosition = currentDetected.LocalPosition
-
-
         
     def StateAction(self):
         super().StateAction()

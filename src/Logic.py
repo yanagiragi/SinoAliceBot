@@ -1,13 +1,11 @@
-import Pattern
 from enum import Enum
 
-from control import *
-
-from State import *
-
-from Routine import Routine
-from Detection import Detection
-
+import src.Pattern as Pattern
+import src.utils as utils
+from src.Control import Control
+from src.State import State
+from src.Routine import Routine
+from src.Detection import Detection
 
 class Routines(Enum):
     LOOP_SINGLE_LEVEL = 'LOOP LEVEL'

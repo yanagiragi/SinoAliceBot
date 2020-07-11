@@ -6,21 +6,18 @@ import time
 import logging
 import datetime
 import keyboard
-from multiprocessing import Process, freeze_support
-from win10toast import ToastNotifier
 import argparse
 import cv2
+from multiprocessing import Process, freeze_support
+from win10toast import ToastNotifier
 
-from screen import *
-from logic import *
-import screen
-
-import utils
-import Pattern
-from State import State
-
-from LoopStage import Routine_LoopStage
-from LoopLevelByImage import Routine_LoopLevelByImage
+from src.Control import Control
+from src.Logic import Logic
+from src.State import State
+from src.LoopLevelByImage import Routine_LoopLevelByImage
+from src.LoopStage import Routine_LoopStage
+from src.Screen import WindowScreen
+import src.utils as utils
 
 # Global variable
 shallQuit = False
@@ -74,7 +71,7 @@ def SetupParser():
 
 def MainLoop():    
     SetupLogger() # Setup Logger
-    
+    shallQuit = False # init shallQuit
     window = WindowScreen(windowsName, resizeFactor) # Get window instance
     control = Control(window) # Create controll instance
 
@@ -145,7 +142,7 @@ def MainLoop():
         fps = 1.0 / deltaTime
         outputStr = '[{}] FPS = {:2.2f}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps) + logic.GetMessage()
         
-        if isDebug or prevState != logic.state:
+        if isDebug or logic.prevState != logic.state:
             logging.info(outputStr.encode("utf-8"))
         
         # output to console

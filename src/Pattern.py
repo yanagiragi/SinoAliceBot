@@ -1,5 +1,5 @@
 import cv2
-import utils
+import src.utils as utils
 
 homePattern = utils.LoadPattern("Resources/home.PNG")
 storyPattern = utils.LoadPattern("Resources/story.PNG")
@@ -19,17 +19,17 @@ okPattern = utils.LoadPattern("Resources/ok.PNG")
 rematchPattern = utils.LoadPattern("Resources/rematch.PNG")
 startPattern = utils.LoadPattern("Resources/start.PNG")
 
-stagePattern = utils.LoadPattern("Resources/Stage/stage.PNG")
-levelPattern = utils.LoadPattern("Resources/Stage/level.PNG")
+stagePattern = utils.LoadPattern("Resources/Target/stage.PNG")
+levelPattern = utils.LoadPattern("Resources/Target/level.PNG")
 
-osoujiBigLeftPattern = utils.LoadPattern("Resources/Osouji/enemy_big_left.PNG")
-osoujiLeftPattern = utils.LoadPattern("Resources/Osouji/enemy_left.PNG")
-osoujiRightPattern = utils.LoadPattern("Resources/Osouji/enemy_right.PNG")
+#osoujiBigLeftPattern = utils.LoadPattern("Resources/Osouji/enemy_big_left.PNG")
+#osoujiLeftPattern = utils.LoadPattern("Resources/Osouji/enemy_left.PNG")
+#osoujiRightPattern = utils.LoadPattern("Resources/Osouji/enemy_right.PNG")
 
 logPattern = utils.LoadPattern("Resources/log.PNG")
 pausePattern = utils.LoadPattern("Resources/pause.PNG")
 
-stageHeaderPattern = utils.LoadPattern("Resources/stageHeader.PNG")
+#stageHeaderPattern = utils.LoadPattern("Resources/stageHeader.PNG")
 
 hardPattern = utils.LoadPattern("Resources/Stage/hard.png")
 normalPattern = utils.LoadPattern("Resources/Stage/normal.png")

@@ -1,9 +1,9 @@
-import utils
 import time
-
 from enum import Enum
 from abc import ABCMeta, abstractmethod
-from State import State
+
+from src.State import State
+import src.utils as utils
 
 class Routine(metaclass=ABCMeta):
     def __init__(self, name, control, optimized=True):
