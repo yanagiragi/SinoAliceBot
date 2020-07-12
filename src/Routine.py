@@ -36,7 +36,7 @@ class Routine(metaclass=ABCMeta):
         if self.state != self.prevState: # Update prevState        
             self.prevState = self.state
 
-        self.state = State.IDLE # Default state
+        # self.state = State.IDLE # Not set default state, using prev state instead
 
     @abstractmethod
     def StateAction(self):

@@ -11,6 +11,10 @@ class WindowScreen:
         self.instance = win32gui.FindWindow(None, self.name)
         self.factor = factor
         self.foreground = None
+        self.offsetX = 10
+        self.offsetY = 31
+        self.paddingX = 10
+        self.paddingY = 10
 
     def SetForeground(self):
         self.foreground = win32gui.GetForegroundWindow()
@@ -25,6 +29,10 @@ class WindowScreen:
         try :
             self.left, self.top, self.right, self.bot = win32gui.GetWindowRect(self.instance)
             self.img = getRectAsImage((self.left, self.top, self.right, self.bot))
+            
+            # w, h = self.img.size
+            # self.img = self.img.crop((offsetX, self.offsetY, w - self.paddingX, h - self.paddingY))
+            
             self.size = (int((self.right - self.left) * self.factor), int((self.bot - self.top) * self.factor))
             return self.img, None
         except :

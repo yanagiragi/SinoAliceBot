@@ -146,6 +146,7 @@ VK_CODE = {'backspace':0x08,
            ']':0xDD,
            "'":0xDE,
            '`':0xC0}
+
 class Control:
     def __init__(self, window):
         self.top = 0
@@ -218,6 +219,37 @@ class Control:
     def MouseLeftButtonUp(self, delay=0.1):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
         time.sleep(delay)
+
+    def SwipeUp(self, startLocalPosition, endLocalPosition, delay=0.05):        
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+        startY = float(startLocalPosition[1]) # bottom_right y
+        endY = float(endLocalPosition[1]) # bottom_right y
+        currentY = endY
+
+        while startY < currentY:
+            currentY -= 10
+            self.MouseMove([startLocalPosition[0], int(currentY)])
+            time.sleep(delay)
+        
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+        time.sleep(0.1)
+        self.window.RestoreForeground()
+
+    def SwipeDown(self, startLocalPosition, endLocalPosition, delay=0.05):        
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+        startY = float(startLocalPosition[1]) # bottom_right y
+        endY = float(endLocalPosition[1]) # bottom_right y
+        currentY = startY
+
+        while endY > currentY:
+            currentY += 10
+            self.MouseMove([startLocalPosition[0], int(currentY)])
+            time.sleep(delay)
+        
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+        time.sleep(0.1)
+        self.window.RestoreForeground()
+
 
     def OsoujiPathSlides(self, delay=0.05):
         center = [177, 356]

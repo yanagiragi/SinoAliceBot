@@ -75,14 +75,14 @@ class Routine_LoopStage(Routine):
             currentDetected = self.hasDetected['event']
 
         # Event, next action = stage
-        elif self.hasDetected['stage'].IsExist:
+        elif self.hasDetected['target stage'].IsExist:
             self.state = State.SELECT_STAGE
-            currentDetected = self.hasDetected['stage']
+            currentDetected = self.hasDetected['target stage']
     
         # Stage, next action = level
-        elif self.hasDetected['level'].IsExist:
+        elif self.hasDetected['target level'].IsExist:
             self.state = State.SELECT_LEVEL
-            currentDetected = self.hasDetected['level']
+            currentDetected = self.hasDetected['target level']
 
         elif self.hasDetected['start'].IsExist:
             self.state = State.SELECT_LEVEL_CONFIRM

@@ -29,7 +29,7 @@ levelPattern = utils.LoadPattern("Resources/Target/level.PNG")
 logPattern = utils.LoadPattern("Resources/log.PNG")
 pausePattern = utils.LoadPattern("Resources/pause.PNG")
 
-#stageHeaderPattern = utils.LoadPattern("Resources/stageHeader.PNG")
+stageHeaderPattern = utils.LoadPattern("Resources/stageHeader.PNG")
 
 hardPattern = utils.LoadPattern("Resources/Stage/hard.png")
 normalPattern = utils.LoadPattern("Resources/Stage/normal.png")
@@ -67,30 +67,32 @@ patterns = [
     ['ok', okPattern, 0.4],
     ['rematch', rematchPattern, 0.8],
 
-    ['stage', stagePattern, 0.8],
-    ['level', levelPattern, 0.8],
+    ['target stage', stagePattern, 0.8],
+    ['target level', levelPattern, 0.8],
 
     ['log', logPattern, 0.8],
     ['pause', pausePattern, 0.8],
 
-    # ['stage header', stageHeaderPattern, 0.95],
+    ['stage header', stageHeaderPattern, 0.95],
     
     ['hard', hardPattern, 0.8],
     ['normal', normalPattern, 0.6],
 
-    ['level 1', levelPattern1, 0.9],
-    ['level 2', levelPattern2, 0.9],
-    ['level 3', levelPattern3, 0.9],
-    ['level 4', levelPattern4, 0.9],
-    ['level 5', levelPattern5, 0.9],
-    ['level 6', levelPattern6, 0.9],
-    ['level 7', levelPattern7, 0.9],
-    ['level 8', levelPattern8, 0.9],
-    ['level 9', levelPattern9, 0.9],
-    ['level 10', levelPattern10, 0.9],
-    ['level EX-L', levelPattern_exl, 0.9],
-    ['level CX', levelPattern_cx, 0.9],
+    ['level 1', levelPattern1, 0.85],
+    ['level 2', levelPattern2, 0.85],
+    ['level 3', levelPattern3, 0.85],
+    ['level 4', levelPattern4, 0.85],
+    ['level 5', levelPattern5, 0.85],
+    ['level 6', levelPattern6, 0.85],
+    ['level 7', levelPattern7, 0.85],
+    ['level 8', levelPattern8, 0.85],
+    ['level 9', levelPattern9, 0.85],
+    ['level 10', levelPattern10, 0.85],
+    ['level EX-L', levelPattern_exl, 0.85],
+    ['level CX', levelPattern_cx, 0.85],
 ]
+
+existsPatternString = ''
 
 def Detect(frame, pattern, threshold=0.8):
     max_val, top_left, bottom_right = DetectTemplate(frame, pattern)
@@ -131,6 +133,7 @@ def DetectColorTemplate(frame, template):
     return max_val, top_left, bottom_right
 
 def DebugDraw(img, frame, logic):
+    global existsPatternString
 
     # Draw Debug Rects, note this function does not consider early break in logic.Update
     red = (255, 0, 0)
@@ -142,24 +145,28 @@ def DebugDraw(img, frame, logic):
     cyan = (0, 242, 255)
     white = (255, 255, 255)
 
-    colors = [red, green, blue, purple, yellow, orange, cyan, white]
+    colors = [red, green, blue, purple, yellow, orange, cyan]
 
     # Convert to BGR for correct display rect color
     img = utils.RGBToBGR(img)
 
     exists = []
-
     for idx, (name, pattern, threshold) in enumerate(patterns):
         isExist, top_left, bottom_right = Detect(frame, pattern, threshold)
         if isExist:
-            cv2.rectangle(img, top_left, bottom_right, colors[idx % len(colors)], 4)
+            if name[0:5] == ('target level'):
+                cv2.rectangle(img, top_left, bottom_right, white, 2)
+            else:
+                cv2.rectangle(img, top_left, bottom_right, colors[idx % len(colors)], 2)
             exists.append(name)
         
-        """if name == 'stage header':
+        if name == 'osoujiText':
             max_val, top_left, bottom_right = DetectTemplate(frame, pattern)
-            print(max_val, threshold)"""
-
-    print('Exists:', '[' + '], ['.join(exists) + ']')
+            
+    if len(exists) > 0:
+        existsPatternString = ', Exists: [' + '], ['.join(exists) + ']'
+    else:
+        existsPatternString = ''
     
     """
     # stage debugging

@@ -65,7 +65,7 @@ class Logic(Routine):
             return False, e
 
     def GetMessage(self):
-        return super().GetMessage() + self.routine.GetMessage()   
+        return self.routine.GetMessage()   
 
     def DealAction_Loop_SingleLevel(self, control):
         top_left, bottom_right = self.localPosition

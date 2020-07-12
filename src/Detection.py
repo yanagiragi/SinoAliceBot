@@ -7,7 +7,7 @@ class Detection:
     
     @property
     def Name(self):
-        return name
+        return self.name
 
     @property
     def IsExist(self):

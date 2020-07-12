@@ -53,14 +53,14 @@ class Routine_LoopLevelByImage(Routine):
             currentDetected = self.hasDetected['event']
 
         # Event, next action = stage
-        elif self.hasDetected['stage'].IsExist:
+        elif self.hasDetected['target stage'].IsExist:
             self.state = State.SELECT_STAGE
-            currentDetected = self.hasDetected['stage']
+            currentDetected = self.hasDetected['target stage']
     
         # Stage, next action = level
-        elif self.hasDetected['level'].IsExist:
+        elif self.hasDetected['target level'].IsExist:
             self.state = State.SELECT_LEVEL
-            currentDetected = self.hasDetected['level']
+            currentDetected = self.hasDetected['target level']
 
         elif self.hasDetected['start'].IsExist:
             self.state = State.SELECT_LEVEL_CONFIRM
@@ -76,6 +76,8 @@ class Routine_LoopLevelByImage(Routine):
         
         if currentDetected is not None:
             self.localPosition = currentDetected.LocalPosition
+
+        self.UpdateState()
         
     def StateAction(self):
         super().StateAction()
@@ -95,11 +97,12 @@ class Routine_LoopLevelByImage(Routine):
             State.SELECT_LEVEL_CONFIRM
         ]
 
-        if self.state in statesShouldAction:            
-            self.control.MouseLeftClick(top_left, bottom_right)
+        if self.state in statesShouldAction:
             if self.state == State.OSOUJI_RESULT_COMFIRM:
                 time.sleep(5)
+                self.control.MouseLeftClick(top_left, bottom_right)
             else:
+                self.control.MouseLeftClick(top_left, bottom_right)
                 time.sleep(2.5)
         elif self.state == State.OSOUJI:
             self.control.OsoujiPathSlides()
@@ -120,4 +123,4 @@ class Routine_LoopLevelByImage(Routine):
             self.waitTimeString = str(datetime.timedelta(seconds=int(float(self.accumulatedTime)/float(self.battleCount))))
 
         # note we don't call super().GetMessage()
-        return f', Accomplished = {self.battleCount}, Avg Time = {self.waitTimeString}, state = {self.state.value}'
+        return f', Accomplished = {self.battleCount}, Avg Battle Time = {self.waitTimeString}, state = {self.state.value}'

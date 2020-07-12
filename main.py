@@ -1,5 +1,6 @@
 import os
 import sys
+import io
 import signal
 import subprocess
 import time
@@ -11,13 +12,18 @@ import cv2
 from multiprocessing import Process, freeze_support
 from win10toast import ToastNotifier
 
+import src.Pattern as Pattern
 from src.Control import Control
 from src.Logic import Logic
 from src.State import State
 from src.LoopLevelByImage import Routine_LoopLevelByImage
+from src.LoopLevelByName import Routine_LoopLevelByName
 from src.LoopStage import Routine_LoopStage
 from src.Screen import WindowScreen
 import src.utils as utils
+
+#sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
+#sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
 # Global variable
 shallQuit = False
@@ -50,7 +56,7 @@ def SetupLogger():
 
     log_filename = datetime.datetime.now().strftime("log/%Y-%m-%d_%H_%M_%S.log")
     print ('Logging File: {}'.format(log_filename))
-    logging.basicConfig(level=logging.DEBUG, format='%(levelname)s %(message)s', datefmt='%m-%d %H:%M:%S', filename=log_filename)
+    logging.basicConfig(level=logging.DEBUG, format='%(levelname)s %(message)s', datefmt='%m-%d %H:%M:%S', handlers=[logging.FileHandler(log_filename, 'w', 'utf-8')])
 
 def Cleanup(frame=None):
     print("\nClose.")
@@ -67,6 +73,9 @@ def SigCleanup(sig, frame):
 def SetupParser():
     parser = argparse.ArgumentParser(description='SinoBot, Based On Python3.7.2 (32 Bit)')
     parser.add_argument('--debug', default='false', help='enable debug mode')
+    parser.add_argument('--routine', help='routine schema')
+    parser.add_argument('--target', help='level to loop')
+    parser.add_argument('--count', default=0, help='level to loop')
     return parser.parse_args()
 
 def MainLoop():    
@@ -84,8 +93,12 @@ def MainLoop():
     Routine_LoopStage: Explore All levels (normal & hard) in a stage, terminates if all levels are looped
 
     """
-    routine = Routine_LoopLevelByImage('Routine.Loop_Level_By_Image', control, False)
-    # routine = Routine_LoopStage('Routine.Loop_Stage', control, False)
+    if targetRoutine == 'Loop_Stage':
+        routine = Routine_LoopStage('Routine.Loop_Stage', control, False)
+    elif targetRoutine == 'Loop_Level_By_Image':
+        routine = Routine_LoopLevelByImage('Routine.Loop_Level_By_Image', control, False)
+    elif targetRoutine == 'Loop_Level_By_Name':    
+        routine = Routine_LoopLevelByName('Routine.Loop_Level_By_Name', control, targetLevel, targetCount, False)
 
     logic = Logic(routine, control) # Create Main Logic
 
@@ -94,7 +107,7 @@ def MainLoop():
     while shallQuit == False:
 
         # Set width = 360px, height = 360 * 21 / 9 = 840px
-        # hasError, errorMsg = window.ResizeWindow(width=352)
+        # hasError, errorMsg = window.ResizeWindow(width=350)
         # hasError, errorMsg = None, ""
         # if hasError:
         #    print(errorMsg)
@@ -115,6 +128,7 @@ def MainLoop():
         control.Update(window.top, window.left, window.bot, window.right) # update internal position of control instance
         
         isDone, logicError = logic.Process(frame) # Procress Main Logic
+        # isDone, logicError = False, None # Freeze Logic for Debugging
         
         if isDone == True:
             print("Done All Tasks! Leaving ...")
@@ -124,12 +138,20 @@ def MainLoop():
             print(logicError)
             logging.error(logicError)
         
+        tEnd = time.time() # End Recording
+        deltaTime = (tEnd - tStart)
+        fps = 1.0 / deltaTime
+        outputStr = '[{}] FPS = {:2.2f}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps) + logic.GetMessage()
+        
         if isDebug:
             img = Pattern.DebugDraw(img, frame, logic)
-            cv2.namedWindow(windowsName, 0)
-            cv2.resizeWindow(windowsName, window.size)
-            cv2.imshow(windowsName, img)     
-
+            displayWindowsName = f'{windowsName} (Debug Mode)'
+            cv2.namedWindow(displayWindowsName, 0)
+            cv2.resizeWindow(displayWindowsName, window.size)
+            cv2.imshow(displayWindowsName, img)     
+            
+            outputStr += Pattern.existsPatternString # Call after Pattern.DebugDraw()
+            
             if cv2.waitKey(30) == ord('q'):
                 # for visual apperance, re-print last output to avoid clear by 'Leaving ...'
                 print(outputStr, end='\n')
@@ -137,33 +159,34 @@ def MainLoop():
                 Cleanup()
                 break
         
-        tEnd = time.time() # End Recording
-        deltaTime = (tEnd - tStart)
-        fps = 1.0 / deltaTime
-        outputStr = '[{}] FPS = {:2.2f}'.format(time.strftime('%Y/%m/%d %H:%M:%S'), fps) + logic.GetMessage()
-        
         if isDebug or logic.prevState != logic.state:
-            logging.info(outputStr.encode("utf-8"))
+            logging.info(outputStr)
         
-        # output to console
+        # output to console, currently only works with utf-8 console
         # print(outputStr, end='\r')
-        print(outputStr, end='\n')
+        try:
+            print(outputStr, end='\n')
+        except e:
+            print(outputStr.encoding('utf-8'), end='\n')
 
 if __name__ == '__main__':
     
     freeze_support()
     
     toaster = ToastNotifier() # Setup Toast Notification
-    
-    # Setup Parser
-    args = SetupParser() 
-    isDebug = args.debug == 'true'
-    
+
     # Hook hotkey
     signal.signal(signal.SIGINT, SigCleanup) 
     keyboard.hook(OnKeyPress)
     keywatchProcess = Process(target=keyboard.wait)
     keywatchProcess.start()
+
+    # Setup Parser
+    args = SetupParser() 
+    isDebug = args.debug == 'true'
+    targetLevel = args.target
+    targetRoutine = args.routine
+    targetCount = int(args.count)
 
     resizeFactor = 1.0
     windowsName = 'SM-G955F'
