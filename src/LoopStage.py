@@ -1,4 +1,5 @@
 from enum import Enum
+import time
 import datetime
 
 from src.Control import Control
@@ -43,6 +44,7 @@ class Routine_LoopStage(Routine):
 
         elif self.hasDetected['storySkip'].IsExist:
             currentDetected = self.hasDetected['storySkip']
+            currentDetected = Detection("", True, (300, 400), (300, 400) )
             self.state = State.STORY_SKIP
         
         elif self.hasDetected['osoujiText'].IsExist:
