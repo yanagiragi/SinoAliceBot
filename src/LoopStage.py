@@ -146,7 +146,7 @@ class Routine_LoopStage(Routine):
             time.sleep(1)
     
     def GetMessage(self):
-        return super().GetMessage() + ', Now Level = {}, state = {:30}'.format(self.prevLevel, self.state.value)
+        return super().GetMessage() + ', Now Level = {}, state = {}'.format(self.prevLevel, self.state.value)
 
     def DeterminePrevStage(self):
         currentDetected = None

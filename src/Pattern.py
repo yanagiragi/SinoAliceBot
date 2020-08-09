@@ -46,6 +46,7 @@ levelPattern9 = utils.LoadPattern("Resources/Stage/level9.PNG")
 levelPattern10 = utils.LoadPattern("Resources/Stage/level10.PNG")
 
 levelPattern_exl = utils.LoadPattern("Resources/Stage/level_ex_l.PNG")
+levelPattern_ex = utils.LoadPattern("Resources/Stage/level_ex.PNG")
 levelPattern_cx = utils.LoadPattern("Resources/Stage/level_cx.PNG")
 
 patterns = [
@@ -89,6 +90,7 @@ patterns = [
     ['level 9', levelPattern9, 0.85],
     ['level 10', levelPattern10, 0.85],
     ['level EX-L', levelPattern_exl, 0.85],
+    ['level EX', levelPattern_ex, 0.85],
     ['level CX', levelPattern_cx, 0.85],
 ]
 

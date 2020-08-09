@@ -1,5 +1,7 @@
 import win32api, win32con, win32gui, time
 
+from src.IControl import IControl
+
 VK_CODE = {'backspace':0x08,
            'tab':0x09,
            'clear':0x0C,
@@ -147,7 +149,7 @@ VK_CODE = {'backspace':0x08,
            "'":0xDE,
            '`':0xC0}
 
-class Control:
+class Control(IControl):
     def __init__(self, window):
         self.top = 0
         self.left = 0

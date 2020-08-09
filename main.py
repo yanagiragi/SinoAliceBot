@@ -14,6 +14,7 @@ from win10toast import ToastNotifier
 
 import src.Pattern as Pattern
 from src.Control import Control
+from src.ControlAdb import ControlAdb
 from src.Logic import Logic
 from src.State import State
 from src.LoopLevelByImage import Routine_LoopLevelByImage
@@ -82,7 +83,8 @@ def MainLoop():
     SetupLogger() # Setup Logger
     shallQuit = False # init shallQuit
     window = WindowScreen(windowsName, resizeFactor) # Get window instance
-    control = Control(window) # Create controll instance
+    #control = Control(window) # Create controll instance
+    control = ControlAdb(window) # Create controll instance
 
     """
 
@@ -93,6 +95,7 @@ def MainLoop():
     Routine_LoopStage: Explore All levels (normal & hard) in a stage, terminates if all levels are looped
 
     """
+    routine = None
     if targetRoutine == 'Loop_Stage':
         routine = Routine_LoopStage('Routine.Loop_Stage', control, False)
     elif targetRoutine == 'Loop_Level_By_Image':
@@ -133,6 +136,7 @@ def MainLoop():
         if isDone == True:
             print("Done All Tasks! Leaving ...")
             shallQuit = True
+            break
                 
         elif logicError:
             print(logicError)

@@ -167,6 +167,7 @@ class Routine_LoopLevelByName(Routine):
             self.hasDetected['level 9'],
             self.hasDetected['level 10'],
             self.hasDetected['level EX-L'],
+            self.hasDetected['level EX'],
             self.hasDetected['level CX'],
         ]
         targetLevel = list(x for x in enumerate(checkList) if x[1].Name == self.target)[0][0] + 1 # 0 for id
