@@ -161,6 +161,7 @@ class Routine_LoopStage(Routine):
             self.hasDetected['level 8'],
             self.hasDetected['level 9'],
             self.hasDetected['level 10'],
+            # self.hasDetected['level EX-S'],
             self.hasDetected['level EX-L'],
             self.hasDetected['level CX'],
         ]

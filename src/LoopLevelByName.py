@@ -93,7 +93,10 @@ class Routine_LoopLevelByName(Routine):
             currentDetected = self.hasDetected['story']
 
         # Check for Stage Finding
-        found = self.FindTargetStage()
+        if not self.hasDetected['start'].IsExist:
+            found = self.FindTargetStage()
+            if found is not None:
+                currentDetected = found
 
         # update doneCount
         if self.state == State.REMATCH and self.prevState == State.BATTLE_RESULT_COMFIRM:
@@ -142,12 +145,11 @@ class Routine_LoopLevelByName(Routine):
 
         if self.state in statesShouldAction:
             if self.state == State.OSOUJI_RESULT_COMFIRM:
-                time.sleep(3)
+                time.sleep(2)
                 self.control.MouseLeftClick(top_left, bottom_right)
-                time.sleep(3)
             else:
                 self.control.MouseLeftClick(top_left, bottom_right)
-                time.sleep(2.5)
+                time.sleep(2.7)
         elif self.state == State.OSOUJI:
             self.control.OsoujiPathSlides()
             time.sleep(1)

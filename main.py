@@ -83,7 +83,7 @@ def MainLoop():
     SetupLogger() # Setup Logger
     shallQuit = False # init shallQuit
     window = WindowScreen(windowsName, resizeFactor) # Get window instance
-    #control = Control(window) # Create controll instance
+    # control = Control(window) # Create controll instance
     control = ControlAdb(window) # Create controll instance
 
     """
@@ -126,6 +126,7 @@ def MainLoop():
             continue
 
         img, frame = utils.LoadScreen(img) # Get ScreenShot of img
+        img, frame = img[58:-10, 10:-10], frame[58:-10, 10:-10] # slice out window title
         # img, frame = utils.LoadScreenFromImage('test.jpg') # debug
 
         control.Update(window.top, window.left, window.bot, window.right) # update internal position of control instance
@@ -167,7 +168,6 @@ def MainLoop():
             logging.info(outputStr)
         
         # output to console, currently only works with utf-8 console
-        # print(outputStr, end='\r')
         try:
             print(outputStr, end='\n')
         except e:
