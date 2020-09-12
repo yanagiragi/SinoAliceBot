@@ -31,7 +31,6 @@ class ControlAdb(IControl):
 
     def MouseLeftClick(self, top_left, bottom_right):
         localPosition = [int((top_left[0] + bottom_right[0])/2), int((top_left[1] + bottom_right[1])/2)] # click on center
-        print(localPosition)
         localPosition = self.TransformCoordinate(localPosition)
         self.Tap(localPosition)
 

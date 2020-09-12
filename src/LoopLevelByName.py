@@ -137,19 +137,28 @@ class Routine_LoopLevelByName(Routine):
         
         if self.state == State.TARGET_LEVEL_NOT_FOUND or self.state == State.TARGET_STAGE_NOT_FOUND:
             aboveLocalPosition = [int((top_left[0] + bottom_right[0])/2), int((top_left[1] + bottom_right[1])/2) - self.difference]
-            belowLocalPosition = [ aboveLocalPosition[0], aboveLocalPosition[1] + self.difference ]            
+            belowLocalPosition = [ aboveLocalPosition[0], aboveLocalPosition[1] + self.difference ]
+
+            aboveLocalPosition = [0, 1300]
+            belowLocalPosition = [0, 1000]
+            
             if self.ShouldSwipeUp:
                 self.control.SwipeUp(aboveLocalPosition, belowLocalPosition)
             else:
                 self.control.SwipeDown(aboveLocalPosition, belowLocalPosition)
+            time.sleep(2)
 
         if self.state in statesShouldAction:
             if self.state == State.OSOUJI_RESULT_COMFIRM:
                 time.sleep(2)
                 self.control.MouseLeftClick(top_left, bottom_right)
+            if self.state == State.SELECT_STAGE:
+                self.control.MouseLeftClick(top_left, bottom_right)
+                time.sleep(3)
             else:
                 self.control.MouseLeftClick(top_left, bottom_right)
-                time.sleep(2.7)
+                time.sleep(3)
+
         elif self.state == State.OSOUJI:
             self.control.OsoujiPathSlides()
             time.sleep(1)

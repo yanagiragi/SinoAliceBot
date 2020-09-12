@@ -192,6 +192,12 @@ if __name__ == '__main__':
     targetRoutine = args.routine
     targetCount = int(args.count)
 
+    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name']:
+        print('Error Arguments. Abort.')
+        print('')
+        print('Examples:')
+        print('python main.py --debug true --routine Loop_Level_By_Name --target "level EX-L" --count 10')
+
     resizeFactor = 1.0
     windowsName = 'SM-G955F'
 
