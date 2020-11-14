@@ -17,7 +17,6 @@ from src.Control import Control
 from src.ControlAdb import ControlAdb
 from src.Logic import Logic
 from src.State import State
-from src.LoopLevelByImage import Routine_LoopLevelByImage
 from src.LoopLevelByName import Routine_LoopLevelByName
 from src.LoopStage import Routine_LoopStage
 from src.Screen import WindowScreen
