@@ -31,3 +31,4 @@ class State(Enum):
     INFO = 'お知らせ'
     COOP_NOT_PICK_GUILD_MEMBER_PANEL = '共鬪 (ランダム)'
     COOP_PICK_GUILD_MEMBER_PANEL = '共鬪 (ギルドメンバー)'
+    COOP_SELECT_STAGE = '共鬪 (選ぶ)'

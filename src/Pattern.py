@@ -59,6 +59,7 @@ coopPattern = utils.LoadPattern("Resources/coop.PNG")
 
 refreshPattern = utils.LoadPattern("Resources/refresh.PNG")
 guildMemberPattern = utils.LoadPattern("Resources/guildMember.PNG")
+coopStagePattern = utils.LoadPattern("Resources/Target/coopStage.PNG")
 
 patterns = [
     ['start', startPattern, 0.7],
@@ -116,6 +117,7 @@ patterns = [
 
     ['refresh', refreshPattern, 0.8],
     ['guild Member', guildMemberPattern, 0.8],
+    ['coop stage', coopStagePattern, 0.8]
 ]
 
 existsPatternString = ''
