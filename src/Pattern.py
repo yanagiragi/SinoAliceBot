@@ -49,6 +49,9 @@ levelPattern_exl = utils.LoadPattern("Resources/Stage/level_ex_l.PNG")
 levelPattern_ex = utils.LoadPattern("Resources/Stage/level_ex.PNG")
 levelPattern_cx = utils.LoadPattern("Resources/Stage/level_cx.PNG")
 
+sinoaliceTextPattern = utils.LoadPattern("Resources/sinoaliceText.PNG")
+sinoaliceDownloadingPattern = utils.LoadPattern("Resources/downloading.PNG")
+
 patterns = [
     ['start', startPattern, 0.7],
     ['story', storyPattern, 0.8],
@@ -92,6 +95,9 @@ patterns = [
     ['level EX-L', levelPattern_exl, 0.85],
     ['level EX', levelPattern_ex, 0.85],
     ['level CX', levelPattern_cx, 0.85],
+
+    ['Sinoalice Text', sinoaliceTextPattern, 0.85],
+    ['Downloading', sinoaliceDownloadingPattern, 0.85]
 ]
 
 existsPatternString = ''

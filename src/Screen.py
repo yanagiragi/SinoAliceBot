@@ -49,6 +49,12 @@ class WindowScreen:
             return True, sys.exc_info()
     
     @staticmethod
+    def GetAllWindows():
+        hWndList = []
+        win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWndList)
+        return [win32gui.GetWindowText(hWnd) for hWnd in hWndList]
+
+    @staticmethod
     def ListAllWindows():
         hWndList = []
         win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWndList)

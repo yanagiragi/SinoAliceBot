@@ -19,6 +19,7 @@ from src.Logic import Logic
 from src.State import State
 from src.LoopLevelByName import Routine_LoopLevelByName
 from src.LoopStage import Routine_LoopStage
+from src.StartSinoalice import Routine_StartSinoalice
 from src.Screen import WindowScreen
 import src.utils as utils
 
@@ -78,31 +79,44 @@ def SetupParser():
     parser.add_argument('--count', default=0, help='level to loop')
     return parser.parse_args()
 
+"""
+    Select Your Main Routine:
+    Routine_LoopLevelByImage: Loop Single Level (matched with Resource/Stage/level.PNG), won't terminate
+    Routine_LoopStage: Explore All levels (normal & hard) in a stage, terminates if all levels are looped
+""" 
+def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
+    if targetRoutine == 'Loop_Stage':
+        return Routine_LoopStage('Routine.Loop_Stage', control, False)
+    elif targetRoutine == 'Loop_Level_By_Image':
+        return Routine_LoopLevelByImage('Routine.Loop_Level_By_Image', control, False)
+    elif targetRoutine == 'Loop_Level_By_Name':    
+        return Routine_LoopLevelByName('Routine.Loop_Level_By_Name', control, targetLevel, targetCount, False)
+    return None
+
 def MainLoop():    
     SetupLogger() # Setup Logger
     shallQuit = False # init shallQuit
-    window = WindowScreen(windowsName, resizeFactor) # Get window instance
-    # control = Control(window) # Create controll instance
-    control = ControlAdb(window) # Create controll instance
 
-    """
+    dmmWindow = WindowScreen('DMM GAME PLAYER', resizeFactor)
+    sinoaliceWindow = WindowScreen(windowsName, resizeFactor) # Get window instance
 
-    Select Your Main Routine:
+    window = dmmWindow
+    control = Control(window) # Create controll instance
+    # control = ControlAdb(window) # Create controll instance
 
-    Routine_LoopLevelByImage: Loop Single Level (matched with Resource/Stage/level.PNG), won't terminate
+    dmmRoutine = Routine_StartSinoalice('Routine.StartSinoalice', control)
+    sinoaliceRoutine = SelectRoutine(targetRoutine, control, targetLevel, targetCount)
 
-    Routine_LoopStage: Explore All levels (normal & hard) in a stage, terminates if all levels are looped
-
-    """
-    routine = None
-    if targetRoutine == 'Loop_Stage':
-        routine = Routine_LoopStage('Routine.Loop_Stage', control, False)
-    elif targetRoutine == 'Loop_Level_By_Image':
-        routine = Routine_LoopLevelByImage('Routine.Loop_Level_By_Image', control, False)
-    elif targetRoutine == 'Loop_Level_By_Name':    
-        routine = Routine_LoopLevelByName('Routine.Loop_Level_By_Name', control, targetLevel, targetCount, False)
+    # set dmm logic: start sinoalice
+    routine = dmmRoutine
 
     logic = Logic(routine, control) # Create Main Logic
+
+    isDev = True
+    if isDev:
+        window = sinoaliceWindow
+        control = Control(window)
+        routine = sinoaliceRoutine
 
     toaster.show_toast(ApplicationName, "Start", duration=toastDuration, icon_path=toastIcon) # Show Notifcation
     
@@ -113,6 +127,13 @@ def MainLoop():
         # hasError, errorMsg = None, ""
         # if hasError:
         #    print(errorMsg)
+
+        if routine == dmmRoutine and routine.isDone == True:
+            window = sinoaliceWindow
+            control = Control(window)
+            routine = sinoaliceRoutine
+            print('Sinoalice App has started!')
+            continue
 
         if shallPause == True:
             continue
@@ -125,7 +146,7 @@ def MainLoop():
             continue
 
         img, frame = utils.LoadScreen(img) # Get ScreenShot of img
-        img, frame = img[58:-10, 10:-10], frame[58:-10, 10:-10] # slice out window title
+        # img, frame = img[58:-10, 10:-10], frame[58:-10, 10:-10] # slice out window title
         # img, frame = utils.LoadScreenFromImage('test.jpg') # debug
 
         control.Update(window.top, window.left, window.bot, window.right) # update internal position of control instance
@@ -151,7 +172,9 @@ def MainLoop():
             img = Pattern.DebugDraw(img, frame, logic)
             displayWindowsName = f'{windowsName} (Debug Mode)'
             cv2.namedWindow(displayWindowsName, 0)
-            cv2.resizeWindow(displayWindowsName, window.size)
+            _w, _h = window.size
+            displayDivideFactor = 2
+            cv2.resizeWindow(displayWindowsName, _w // displayDivideFactor, _h // displayDivideFactor)
             cv2.imshow(displayWindowsName, img)     
             
             outputStr += Pattern.existsPatternString # Call after Pattern.DebugDraw()
@@ -198,9 +221,13 @@ if __name__ == '__main__':
         print('python main.py --debug true --routine Loop_Level_By_Name --target "level EX-L" --count 10')
 
     resizeFactor = 1.0
-    windowsName = 'SM-G955F'
+    # windowsName = 'SM-G955F'
+    windowsName = 'SINoALICE'
 
-    try:
+    MainLoop()
+    Cleanup()
+
+    """try:
        MainLoop()
 
     except Exception as e:
@@ -209,4 +236,4 @@ if __name__ == '__main__':
     
     finally:
         # Clean up resources    
-        Cleanup()
+        Cleanup()"""

@@ -24,3 +24,5 @@ class State(Enum):
     TARGET_LEVEL_NOT_FOUND = 'ターゲット章節 検索中'
     TARGET_STAGE_NOT_FOUND = 'ターゲットイベント 検索中',
     BATTLE_RESULT_COMFIRM = '周回 完了'
+    DOWNLOADING = 'ダウンロード 中'
+    ONSTART = '起動 中'
