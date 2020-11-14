@@ -61,6 +61,11 @@ refreshPattern = utils.LoadPattern("Resources/refresh.PNG")
 guildMemberPattern = utils.LoadPattern("Resources/guildMember.PNG")
 coopStagePattern = utils.LoadPattern("Resources/Target/coopStage.PNG")
 
+storyLevelPattern = utils.LoadPattern("Resources/storyLevel.PNG")
+storyMidStagePattern = utils.LoadPattern("Resources/Target/storyMidStage.PNG")
+storyStagePattern = utils.LoadPattern("Resources/Target/storyStage.PNG")
+
+
 patterns = [
     ['start', startPattern, 0.7],
     ['story', storyPattern, 0.8],
@@ -79,7 +84,7 @@ patterns = [
     ['osoujiText', osoujiTextPattern, 0.8],
 
     ['next', nextPattern, 0.8],
-    ['ok', okPattern, 0.4],
+    ['ok', okPattern, 0.5],
     
     ['close', closePattern, 0.6],
     ['rematch', rematchPattern, 0.8],
@@ -117,7 +122,11 @@ patterns = [
 
     ['refresh', refreshPattern, 0.8],
     ['guild Member', guildMemberPattern, 0.8],
-    ['coop stage', coopStagePattern, 0.8]
+    ['coop stage', coopStagePattern, 0.8],
+
+    ['story Level', storyLevelPattern, 0.8],
+    ['story MidStage', storyMidStagePattern, 0.8],
+    ['story Stage', storyStagePattern, 0.8]
 ]
 
 existsPatternString = ''

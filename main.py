@@ -21,6 +21,7 @@ from src.LoopLevelByName import Routine_LoopLevelByName
 from src.LoopStage import Routine_LoopStage
 from src.StartSinoalice import Routine_StartSinoalice
 from src.GuildCoop import Routine_GuildCoop
+from src.GuildStory import Routine_GuildStory
 from src.Screen import WindowScreen
 import src.utils as utils
 
@@ -35,8 +36,7 @@ toastDuration = 2
 toastIcon = 'Resources/icon/icon.ico'
 ApplicationName = 'SinoBot'
 ConenctionExecutor = 'D:/_Programs/Programs/_Shortcuts/scrcpy-win64-v1.14/scrcpy.exe --window-height 720 --window-borderless -w'
-
-displayDivideFactor = 2
+endtime = datetime.datetime.utcnow() + datetime.timedelta(seconds = 300)
 
 def OnKeyPress(event):
     global shallQuit, shallPause, toaster
@@ -96,6 +96,8 @@ def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
         return Routine_LoopLevelByName('Routine.Loop_Level_By_Name', control, targetLevel, targetCount, False)
     elif targetRoutine == 'Guild_Coop':    
         return Routine_GuildCoop('Routine.Guild_Coop', control, False)
+    elif targetRoutine == 'Guild_Story':    
+        return Routine_GuildStory('Routine.Guild_Story', control, False)
     return None
 
 def MainLoop():    
@@ -116,10 +118,13 @@ def MainLoop():
     routine = dmmRoutine
 
     logic = Logic(routine, control) # Create Main Logic
+    window.SetForeground()
 
-    isDev = True
+    isDev = False
+    displayDivideFactor = 2
+
     if isDev == True:
-        window = sinoaliceWindow
+        window = WindowScreen(windowsName, resizeFactor) # Get window instance
         control = Control(window)
         routine = sinoaliceRoutine
         routine.control = control # update new control instance
@@ -130,6 +135,9 @@ def MainLoop():
     
     while shallQuit == False:
 
+        if datetime.datetime.utcnow() > endtime: # if more than two seconds has elapsed
+            break
+
         # Set width = 360px, height = 360 * 21 / 9 = 840px
         # hasError, errorMsg = window.ResizeWindow(width=350)
         # hasError, errorMsg = None, ""
@@ -137,9 +145,11 @@ def MainLoop():
         #    print(errorMsg)
 
         if routine == dmmRoutine and routine.isDone == True:
-            window = sinoaliceWindow
+            window = window = WindowScreen(windowsName, resizeFactor) 
             control = Control(window)
             routine = sinoaliceRoutine
+            routine.control = control # update new control instance
+            logic = Logic(routine, control)
             displayDivideFactor = 1
             print('Sinoalice App has started!')
             continue
@@ -203,6 +213,24 @@ def MainLoop():
         except e:
             print(outputStr.encoding('utf-8'), end='\n')
 
+    window.Close()
+
+def Main():
+    
+    MainLoop()
+    Cleanup()
+
+    """try:
+       MainLoop()
+
+    except Exception as e:
+        utils.printErr(e)
+        logging.exception (e)
+    
+    finally:
+        # Clean up resources    
+        Cleanup()"""
+
 if __name__ == '__main__':
     
     freeze_support()
@@ -222,7 +250,7 @@ if __name__ == '__main__':
     targetRoutine = args.routine
     targetCount = int(args.count)
 
-    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name', 'Guild_Coop']:
+    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name', 'Guild_Coop', 'Guild_Story']:
         print('Error Arguments. Abort.')
         print('')
         print('Examples:')
@@ -232,16 +260,4 @@ if __name__ == '__main__':
     # windowsName = 'SM-G955F'
     windowsName = 'SINoALICE'
 
-    MainLoop()
-    Cleanup()
-
-    """try:
-       MainLoop()
-
-    except Exception as e:
-        utils.printErr(e)
-        logging.exception (e)
-    
-    finally:
-        # Clean up resources    
-        Cleanup()"""
+    Main()

@@ -192,12 +192,10 @@ class Control(IControl):
 
     # easier wrapper
     def MouseLeftClick(self, top_left, bottom_right):
-        
-        print(self.top, self.left, self.bottom)
         # click center
         localPosition = [int((top_left[0] + bottom_right[0])/2), int((top_left[1] + bottom_right[1])/2)]
         self.MouseLeftClick_Impl(localPosition)            
-        self.MouseMove([0,0])
+        #self.MouseMove([0,0])
 
     def MouseLeftClick_Impl(self, localPosition):
         self.MouseMove(localPosition)

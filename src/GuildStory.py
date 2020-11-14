@@ -7,7 +7,7 @@ from src.State import State
 from src.Routine import Routine
 from src.Detection import Detection
 
-class Routine_GuildCoop(Routine):
+class Routine_GuildStory(Routine):
     def __init__(self, name, control, optimized=True):
         super().__init__(name, control, optimized)
 
@@ -41,21 +41,21 @@ class Routine_GuildCoop(Routine):
             currentDetected = self.hasDetected['story']
 
         # Story, next action = Coop
-        elif self.hasDetected['refresh'].IsExist:
-            if self.hasDetected['coop stage'].IsExist:
-                self.state = State.COOP_SELECT_STAGE
-                currentDetected = self.hasDetected['coop stage']
-            elif self.hasDetected['guild Member'].IsExist:
-                self.state = State.COOP_NOT_PICK_GUILD_MEMBER_PANEL
-                currentDetected = self.hasDetected['guild Member']
-            else:
-                self.state = State.COOP_PICK_GUILD_MEMBER_PANEL
-                currentDetected = self.hasDetected['refresh']
-
-        # Story, next action = Coop
-        elif self.hasDetected['coop'].IsExist:
+        elif self.hasDetected['story Level'].IsExist:
             self.state = State.SELECT_EVENT
-            currentDetected = self.hasDetected['coop']
+            currentDetected = self.hasDetected['story Level']
+
+        elif self.hasDetected['story MidStage'].IsExist:
+            self.state = State.SELECT_EVENT
+            currentDetected = self.hasDetected['story MidStage']
+            storyMidStageLocalPosition_topLeft, storyMidStageLocalPosition_bottomRight = currentDetected.LocalPosition
+            storyMidStageLocalPosition_PositionYOffset = 45
+            self.localPosition = [(storyMidStageLocalPosition_topLeft[0], storyMidStageLocalPosition_topLeft[1] + storyMidStageLocalPosition_PositionYOffset), (storyMidStageLocalPosition_bottomRight[0], storyMidStageLocalPosition_bottomRight[1] + storyMidStageLocalPosition_PositionYOffset)]
+            return    
+
+        elif self.hasDetected['story Stage'].IsExist:
+            self.state = State.SELECT_EVENT
+            currentDetected = self.hasDetected['story Stage']
 
         elif self.hasDetected['start'].IsExist:
             self.state = State.SELECT_LEVEL_CONFIRM

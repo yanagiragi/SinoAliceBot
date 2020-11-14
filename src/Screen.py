@@ -1,6 +1,6 @@
 import sys
 import cv2
-import win32gui, win32com.client
+import win32gui, win32com.client, win32con
 import numpy as np
 
 from desktopmagic.screengrab_win32 import getRectAsImage
@@ -63,6 +63,9 @@ class WindowScreen:
         hWndList = []
         win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWndList)
         print([win32gui.GetWindowText(hWnd) for hWnd in hWndList])
+    
+    def Close(self):  
+        win32gui.PostMessage(self.instance, win32con.WM_CLOSE ,0 ,0)
     
 if __name__ == '__main__':
     WindowScreen.ListAllWindows()
