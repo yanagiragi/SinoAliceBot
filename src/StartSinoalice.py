@@ -22,7 +22,7 @@ class Routine_StartSinoalice(Routine):
     
     def QueryState(self):
         super().QueryState()
-        
+
         if self.hasDetected['Downloading'].IsExist:
             currentDetected = None
             self.localPosition = None
@@ -41,6 +41,10 @@ class Routine_StartSinoalice(Routine):
             allWindows = WindowScreen.GetAllWindows()
             if allWindows != None and 'SINoALICE' in allWindows:
                 self.isDone = True
+            elif self.hasDetected['Update App'].IsExist:
+                currentDetected = self.hasDetected['Update App']
+                self.localPosition = currentDetected.LocalPosition
+                self.state = State.DOWNLOADPOPOUT
         
     def StateAction(self):
         super().StateAction()
@@ -50,9 +54,10 @@ class Routine_StartSinoalice(Routine):
 
         top_left, bottom_right = self.localPosition
 
-        if self.state == State.ONSTART:
+        if self.state == State.ONSTART or self.state == State.DOWNLOADPOPOUT:
             self.control.MouseLeftClick(top_left, bottom_right)
             time.sleep(3)
+            
 
     def GetMessage(self):
-        return super().GetMessage() + f', state = {self.state.value}, isClicked = {self.isClicked}'
+        return super().GetMessage() + f', state = {self.state.value}, isClicked = {self.hasClicked}'

@@ -192,6 +192,8 @@ class Control(IControl):
 
     # easier wrapper
     def MouseLeftClick(self, top_left, bottom_right):
+        
+        print(self.top, self.left, self.bottom)
         # click center
         localPosition = [int((top_left[0] + bottom_right[0])/2), int((top_left[1] + bottom_right[1])/2)]
         self.MouseLeftClick_Impl(localPosition)            
@@ -199,7 +201,9 @@ class Control(IControl):
 
     def MouseLeftClick_Impl(self, localPosition):
         self.MouseMove(localPosition)
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP | win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+        # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP | win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+        self.MouseLeftButtonDown()
+        self.MouseLeftButtonUp()
         self.window.RestoreForeground()
 
     def MouseRightClick(self, localPosition):

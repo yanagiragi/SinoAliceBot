@@ -16,6 +16,7 @@ osoujiTextPattern = utils.LoadPattern("Resources/osoujiText.PNG")
 
 nextPattern = utils.LoadPattern("Resources/next.PNG")
 okPattern = utils.LoadPattern("Resources/ok.PNG")
+closePattern = utils.LoadPattern("Resources/close.PNG")
 rematchPattern = utils.LoadPattern("Resources/rematch.PNG")
 startPattern = utils.LoadPattern("Resources/start.PNG")
 
@@ -51,11 +52,20 @@ levelPattern_cx = utils.LoadPattern("Resources/Stage/level_cx.PNG")
 
 sinoaliceTextPattern = utils.LoadPattern("Resources/sinoaliceText.PNG")
 sinoaliceDownloadingPattern = utils.LoadPattern("Resources/downloading.PNG")
+dmmUpdatePattern = utils.LoadPattern("Resources/dmmUpdate.PNG")
+
+supportPattern = utils.LoadPattern("Resources/support.PNG")
+coopPattern = utils.LoadPattern("Resources/coop.PNG")
+
+refreshPattern = utils.LoadPattern("Resources/refresh.PNG")
+guildMemberPattern = utils.LoadPattern("Resources/guildMember.PNG")
 
 patterns = [
     ['start', startPattern, 0.7],
     ['story', storyPattern, 0.8],
     ['event', eventPattern, 0.65],
+    
+    ['coop', coopPattern, 0.65],
     # ['changeMissionBrief', changeMissionBriefPattern, 0.8],
     
     ['skip', skipPattern, 0.8],
@@ -69,6 +79,8 @@ patterns = [
 
     ['next', nextPattern, 0.8],
     ['ok', okPattern, 0.4],
+    
+    ['close', closePattern, 0.6],
     ['rematch', rematchPattern, 0.8],
 
     ['target stage', stagePattern, 0.8],
@@ -97,7 +109,13 @@ patterns = [
     ['level CX', levelPattern_cx, 0.85],
 
     ['Sinoalice Text', sinoaliceTextPattern, 0.85],
-    ['Downloading', sinoaliceDownloadingPattern, 0.85]
+    ['Downloading', sinoaliceDownloadingPattern, 0.85],
+    ['Update App', dmmUpdatePattern, 0.85],
+
+    ['support', supportPattern, 0.8],
+
+    ['refresh', refreshPattern, 0.8],
+    ['guild Member', guildMemberPattern, 0.8],
 ]
 
 existsPatternString = ''

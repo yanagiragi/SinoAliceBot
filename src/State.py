@@ -25,4 +25,9 @@ class State(Enum):
     TARGET_STAGE_NOT_FOUND = 'ターゲットイベント 検索中',
     BATTLE_RESULT_COMFIRM = '周回 完了'
     DOWNLOADING = 'ダウンロード 中'
+    DOWNLOADPOPOUT = 'ダウンロード 提示'
     ONSTART = '起動 中'
+    APPSTART = '開始'
+    INFO = 'お知らせ'
+    COOP_NOT_PICK_GUILD_MEMBER_PANEL = '共鬪 (ランダム)'
+    COOP_PICK_GUILD_MEMBER_PANEL = '共鬪 (ギルドメンバー)'

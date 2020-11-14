@@ -20,6 +20,7 @@ from src.State import State
 from src.LoopLevelByName import Routine_LoopLevelByName
 from src.LoopStage import Routine_LoopStage
 from src.StartSinoalice import Routine_StartSinoalice
+from src.GuildCoop import Routine_GuildCoop
 from src.Screen import WindowScreen
 import src.utils as utils
 
@@ -34,6 +35,8 @@ toastDuration = 2
 toastIcon = 'Resources/icon/icon.ico'
 ApplicationName = 'SinoBot'
 ConenctionExecutor = 'D:/_Programs/Programs/_Shortcuts/scrcpy-win64-v1.14/scrcpy.exe --window-height 720 --window-borderless -w'
+
+displayDivideFactor = 2
 
 def OnKeyPress(event):
     global shallQuit, shallPause, toaster
@@ -91,6 +94,8 @@ def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
         return Routine_LoopLevelByImage('Routine.Loop_Level_By_Image', control, False)
     elif targetRoutine == 'Loop_Level_By_Name':    
         return Routine_LoopLevelByName('Routine.Loop_Level_By_Name', control, targetLevel, targetCount, False)
+    elif targetRoutine == 'Guild_Coop':    
+        return Routine_GuildCoop('Routine.Guild_Coop', control, False)
     return None
 
 def MainLoop():    
@@ -113,10 +118,13 @@ def MainLoop():
     logic = Logic(routine, control) # Create Main Logic
 
     isDev = True
-    if isDev:
+    if isDev == True:
         window = sinoaliceWindow
         control = Control(window)
         routine = sinoaliceRoutine
+        routine.control = control # update new control instance
+        logic = Logic(routine, control)
+        displayDivideFactor = 1
 
     toaster.show_toast(ApplicationName, "Start", duration=toastDuration, icon_path=toastIcon) # Show Notifcation
     
@@ -132,6 +140,7 @@ def MainLoop():
             window = sinoaliceWindow
             control = Control(window)
             routine = sinoaliceRoutine
+            displayDivideFactor = 1
             print('Sinoalice App has started!')
             continue
 
@@ -173,7 +182,6 @@ def MainLoop():
             displayWindowsName = f'{windowsName} (Debug Mode)'
             cv2.namedWindow(displayWindowsName, 0)
             _w, _h = window.size
-            displayDivideFactor = 2
             cv2.resizeWindow(displayWindowsName, _w // displayDivideFactor, _h // displayDivideFactor)
             cv2.imshow(displayWindowsName, img)     
             
@@ -214,7 +222,7 @@ if __name__ == '__main__':
     targetRoutine = args.routine
     targetCount = int(args.count)
 
-    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name']:
+    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name', 'Guild_Coop']:
         print('Error Arguments. Abort.')
         print('')
         print('Examples:')

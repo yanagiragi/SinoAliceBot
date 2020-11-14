@@ -1,6 +1,6 @@
 import sys
 import cv2
-import win32gui
+import win32gui, win32com.client
 import numpy as np
 
 from desktopmagic.screengrab_win32 import getRectAsImage
@@ -18,6 +18,10 @@ class WindowScreen:
 
     def SetForeground(self):
         self.foreground = win32gui.GetForegroundWindow()
+        
+        # https://stackoverflow.com/questions/14295337/win32gui-setactivewindow-error-the-specified-procedure-could-not-be-found
+        shell = win32com.client.Dispatch("WScript.Shell")
+        shell.SendKeys('%')
         win32gui.SetForegroundWindow(self.instance)
 
     def RestoreForeground(self):
