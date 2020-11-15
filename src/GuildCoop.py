@@ -6,6 +6,7 @@ from src.Control import Control
 from src.State import State
 from src.Routine import Routine
 from src.Detection import Detection
+import requests
 
 class Routine_GuildCoop(Routine):
     def __init__(self, name, control, optimized=True):
@@ -44,7 +45,10 @@ class Routine_GuildCoop(Routine):
         elif self.hasDetected['refresh'].IsExist:
             if self.hasDetected['coop stage'].IsExist:
                 self.state = State.COOP_SELECT_STAGE
-                currentDetected = self.hasDetected['coop stage']
+                currentDetected = None
+                _t, _b = self.hasDetected['coop stage'].LocalPosition
+                shift = 72
+                self.localPosition = [(_t[0] + shift, _t[1]), (_b[0] + shift, _b[1])]
             elif self.hasDetected['guild Member'].IsExist:
                 self.state = State.COOP_NOT_PICK_GUILD_MEMBER_PANEL
                 currentDetected = self.hasDetected['guild Member']
@@ -68,7 +72,8 @@ class Routine_GuildCoop(Routine):
         elif self.hasDetected['ok'].IsExist:
             currentDetected = self.hasDetected['ok']
             if self.prevState == State.BATTLE:
-                self.state = State.DONE                
+                self.state = State.DONE
+                r = requests.post('http://pref.csie.io:3007/bot', data={})
 
         if currentDetected is not None:
             self.localPosition = currentDetected.LocalPosition
@@ -101,7 +106,7 @@ class Routine_GuildCoop(Routine):
 
         if self.state in statesShouldAction:
             self.control.MouseLeftClick(top_left, bottom_right)
-            time.sleep(3)
+            time.sleep(5)
 
     def GetMessage(self):
         return super().GetMessage() + f', state = {self.state.value}'

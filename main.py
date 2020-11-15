@@ -136,7 +136,7 @@ def MainLoop():
     while shallQuit == False:
 
         if datetime.datetime.utcnow() > endtime: # if more than two seconds has elapsed
-            break
+            shallQuit = True
 
         # Set width = 360px, height = 360 * 21 / 9 = 840px
         # hasError, errorMsg = window.ResizeWindow(width=350)
@@ -204,23 +204,26 @@ def MainLoop():
                 Cleanup()
                 break
         
-        if isDebug or logic.prevState != logic.state:
-            logging.info(outputStr)
+        #if isDebug or logic.prevState != logic.state:
+        #    logging.info(outputStr)
+        logging.info(outputStr)
         
         # output to console, currently only works with utf-8 console
         try:
             print(outputStr, end='\n')
-        except e:
+        except Exception as e:
             print(outputStr.encoding('utf-8'), end='\n')
-
-    window.Close()
+    try:
+        window.Close()
+    except Exception as e:
+        logging.exception (e)
 
 def Main():
     
-    MainLoop()
-    Cleanup()
+    #MainLoop()
+    #Cleanup()
 
-    """try:
+    try:
        MainLoop()
 
     except Exception as e:
@@ -229,7 +232,7 @@ def Main():
     
     finally:
         # Clean up resources    
-        Cleanup()"""
+        Cleanup()
 
 if __name__ == '__main__':
     
