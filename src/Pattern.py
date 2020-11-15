@@ -65,6 +65,8 @@ storyLevelPattern = utils.LoadPattern("Resources/storyLevel.PNG")
 storyMidStagePattern = utils.LoadPattern("Resources/Target/storyMidStage.PNG")
 storyStagePattern = utils.LoadPattern("Resources/Target/storyStage.PNG")
 
+maintencePattern = utils.LoadPattern("Resources/maintence.PNG")
+crossPattern = utils.LoadPattern("Resources/cross.PNG")
 
 patterns = [
     ['start', startPattern, 0.7],
@@ -84,7 +86,7 @@ patterns = [
     ['osoujiText', osoujiTextPattern, 0.8],
 
     ['next', nextPattern, 0.8],
-    ['ok', okPattern, 0.5],
+    ['ok', okPattern, 0.6],
     
     ['close', closePattern, 0.6],
     ['rematch', rematchPattern, 0.8],
@@ -126,7 +128,10 @@ patterns = [
 
     ['story Level', storyLevelPattern, 0.8],
     ['story MidStage', storyMidStagePattern, 0.8],
-    ['story Stage', storyStagePattern, 0.8]
+    ['story Stage', storyStagePattern, 0.8],
+
+    ['maintence', maintencePattern, 0.8],
+    ['cross', crossPattern, 0.8]
 ]
 
 existsPatternString = ''

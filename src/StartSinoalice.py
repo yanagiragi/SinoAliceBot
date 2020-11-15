@@ -23,7 +23,14 @@ class Routine_StartSinoalice(Routine):
     def QueryState(self):
         super().QueryState()
 
-        if self.hasDetected['Downloading'].IsExist:
+        if self.hasDetected['maintence'].IsExist and self.hasDetected['cross'].IsExist:
+            currentDetected = self.hasDetected['cross']
+            self.localPosition = currentDetected.LocalPosition
+            self.state = State.ONSTART
+            self.hasClicked = False
+            return
+
+        elif self.hasDetected['Downloading'].IsExist:
             currentDetected = None
             self.localPosition = None
             self.state = State.DOWNLOADING

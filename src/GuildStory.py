@@ -65,7 +65,7 @@ class Routine_GuildStory(Routine):
             self.state = State.BATTLE
             currentDetected = None
 
-        elif self.hasDetected['ok'].IsExist:
+        if self.hasDetected['ok'].IsExist:
             currentDetected = self.hasDetected['ok']
             if self.prevState == State.BATTLE:
                 self.state = State.DONE                
