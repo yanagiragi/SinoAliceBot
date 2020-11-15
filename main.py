@@ -22,6 +22,7 @@ from src.LoopStage import Routine_LoopStage
 from src.StartSinoalice import Routine_StartSinoalice
 from src.GuildCoop import Routine_GuildCoop
 from src.GuildStory import Routine_GuildStory
+from src.Guild import Routine_Guild
 from src.Screen import WindowScreen
 import src.utils as utils
 
@@ -98,6 +99,8 @@ def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
         return Routine_GuildCoop('Routine.Guild_Coop', control, False)
     elif targetRoutine == 'Guild_Story':    
         return Routine_GuildStory('Routine.Guild_Story', control, False)
+    elif targetRoutine == 'Guild':    
+        return Routine_Guild('Routine.Guild', control, False)
     return None
 
 def MainLoop():    
@@ -253,7 +256,7 @@ if __name__ == '__main__':
     targetRoutine = args.routine
     targetCount = int(args.count)
 
-    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name', 'Guild_Coop', 'Guild_Story']:
+    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name', 'Guild_Coop', 'Guild_Story', 'Guild']:
         print('Error Arguments. Abort.')
         print('')
         print('Examples:')

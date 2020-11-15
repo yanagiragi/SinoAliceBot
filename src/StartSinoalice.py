@@ -62,6 +62,7 @@ class Routine_StartSinoalice(Routine):
         top_left, bottom_right = self.localPosition
 
         if self.state == State.ONSTART or self.state == State.DOWNLOADPOPOUT:
+            time.sleep(1)
             self.control.MouseLeftClick(top_left, bottom_right)
             time.sleep(3)
             
