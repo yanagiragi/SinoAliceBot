@@ -84,7 +84,7 @@ patterns = [
     ['osoujiText', osoujiTextPattern, 0.8],
 
     ['next', nextPattern, 0.8],
-    ['ok', okPattern, 0.5],
+    ['ok', okPattern, 0.6],
     
     ['close', closePattern, 0.6],
     ['rematch', rematchPattern, 0.8],
