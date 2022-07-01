@@ -1,1 +1,0 @@
-bash -c "cd /mnt/d/_Repository/Github\ Projects/SinoAliceBot && /mnt/c/Users/Ragi/AppData/Local/Programs/Python/Python37/python.exe main.py --routine Guild_Coop --debug true"
