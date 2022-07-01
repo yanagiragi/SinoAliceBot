@@ -6,7 +6,8 @@ from src.Control import Control
 from src.State import State
 from src.Routine import Routine
 from src.Detection import Detection
-from src.Screen import WindowScreen
+from src.Window import Window
+
 
 class Routine_StartSinoalice(Routine):
     def __init__(self, name, control, optimized=True):
@@ -19,7 +20,7 @@ class Routine_StartSinoalice(Routine):
 
     def Update(self):
         pass
-    
+
     def QueryState(self):
         super().QueryState()
 
@@ -40,19 +41,21 @@ class Routine_StartSinoalice(Routine):
         if self.hasClicked == False:
             if self.hasDetected['Sinoalice Text'].IsExist:
                 currentDetected = None
-                sinoliceTextLocalPosition_topLeft, sinoliceTextLocalPosition_bottomRight = self.hasDetected['Sinoalice Text'].LocalPosition
+                sinoliceTextLocalPosition_topLeft, sinoliceTextLocalPosition_bottomRight = self.hasDetected[
+                    'Sinoalice Text'].LocalPosition
                 sinoliceTextLocalPositionYOffset = -100
-                self.localPosition = [(sinoliceTextLocalPosition_topLeft[0], sinoliceTextLocalPosition_topLeft[1] + sinoliceTextLocalPositionYOffset), (sinoliceTextLocalPosition_bottomRight[0], sinoliceTextLocalPosition_bottomRight[1] + sinoliceTextLocalPositionYOffset)]
+                self.localPosition = [(sinoliceTextLocalPosition_topLeft[0], sinoliceTextLocalPosition_topLeft[1] + sinoliceTextLocalPositionYOffset),
+                                      (sinoliceTextLocalPosition_bottomRight[0], sinoliceTextLocalPosition_bottomRight[1] + sinoliceTextLocalPositionYOffset)]
                 self.state = State.ONSTART
         else:
-            allWindows = WindowScreen.GetAllWindows()
+            allWindows = Window.GetAllWindows()
             if allWindows != None and 'SINoALICE' in allWindows:
                 self.isDone = True
             elif self.hasDetected['Update App'].IsExist:
                 currentDetected = self.hasDetected['Update App']
                 self.localPosition = currentDetected.LocalPosition
                 self.state = State.DOWNLOADPOPOUT
-        
+
     def StateAction(self):
         super().StateAction()
 
@@ -65,7 +68,6 @@ class Routine_StartSinoalice(Routine):
             time.sleep(1)
             self.control.MouseLeftClick(top_left, bottom_right)
             time.sleep(3)
-            
 
     def GetMessage(self):
         return super().GetMessage() + f', state = {self.state.value}, isClicked = {self.hasClicked}'
