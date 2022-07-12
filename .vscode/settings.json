@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "C:\\Users\\Ragi\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe"
+    "python.pythonPath": "C:\\Users\\Ragi\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe",
+    "python.linting.flake8Args": [
+        "--ignore=E501",
+    ],
+    "python.linting.flake8Enabled": true
 }

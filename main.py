@@ -228,7 +228,7 @@ def MainLoop():
     logic = Logic(routine, control)  # Create Main Logic
 
     patternPrefix = "PC" if isPc else "Android"
-    patternPrefix = f'{patternPrefix}/1920x1080/'
+    patternPrefix = f'{patternPrefix}/1920x1080'
     Pattern.patterns = Pattern.LoadPatterns(patternPrefix)
 
     window.SetForeground()

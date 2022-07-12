@@ -10,134 +10,67 @@ def LoadPatterns(resourcePrefix):
 
     print(f"Load pattern with prefix: {resourcePrefix}")
 
-    homePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/home.PNG")                                 # noqa
-    storyPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/story.PNG")                               # noqa
-    missionPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/mission.PNG")                           # noqa
-    changeMissionBriefPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/changeMissionBrief.PNG")     # noqa
+    config = [
+        ['start', 'start.png', 0.7],
+        ['story', 'story.png', 0.8],
+        ['event', 'event.png', 0.65],
+        ['coop', 'coop.png', 0.65],
+        ['mission', 'mission.png', 0.8],
+        ['storySkip', 'storySkip.png', 0.6],
+        ['next', 'next.png', 0.8],
+        ['ok', 'ok.png', 0.6],
+        ['log', 'log.png', 0.8],
 
-    eventPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/event.PNG")                               # noqa
-    storySkipPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/storySkip.PNG")                       # noqa
-    skipPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/skip.PNG")                                 # noqa
+        ['skip', 'skip.png', 0.8],  # NOT OK
 
-    osoujiPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/osouji.PNG")                             # noqa
-    osoujiPattern2 = utils.LoadPattern(f"Resources/{resourcePrefix}/osouji2.PNG")                           # noqa
-    osoujiTextPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/osoujiText.PNG")                     # noqa
+        ['osouji', 'osouji.png', 0.8],
+        ['osouji2', 'osouji2.png', 0.8],
+        ['osoujiText', 'osoujiText.png', 0.8],
 
-    nextPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/next.PNG")                                 # noqa
-    okPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/ok.PNG")                                     # noqa
-    closePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/close.PNG")                               # noqa
-    rematchPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/rematch.PNG")                           # noqa
-    startPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/start.PNG")                               # noqa
+        ['close', 'close.png', 0.6],
+        ['rematch', 'rematch.png', 0.8],
 
-    stagePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Target/stage.PNG")                        # noqa
-    levelPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Target/level.PNG")                        # noqa
+        ['target stage', 'Target/stage.png', 0.8],
+        ['target level', 'Target/level.png', 0.8],
 
-    #osoujiBigLeftPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Osouji/enemy_big_left.PNG")      # noqa
-    #osoujiLeftPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Osouji/enemy_left.PNG")             # noqa
-    #osoujiRightPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Osouji/enemy_right.PNG")           # noqa
+        ['pause', 'pause.png', 0.8],
 
-    logPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/log.PNG")                                   # noqa
-    pausePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/pause.PNG")                               # noqa
+        ['stage header', 'stageHeader.png', 0.95],
 
-    stageHeaderPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/stageHeader.PNG")                   # noqa
+        ['hard', 'Stage/hard.png', 0.8],
+        ['normal', 'Stage/normal.png', 0.6],
+        ['level 1', 'Stage/level1.png', 0.85],
+        ['level 2', 'Stage/level2.png', 0.85],
+        ['level 3', 'Stage/level3.png', 0.85],
+        ['level 4', 'Stage/level4.png', 0.85],
+        ['level 5', 'Stage/level5.png', 0.85],
+        ['level 6', 'Stage/level6.png', 0.85],
+        ['level 7', 'Stage/level7.png', 0.85],
+        ['level 8', 'Stage/level8.png', 0.85],
+        ['level 9', 'Stage/level9.png', 0.85],
+        ['level 10', 'Stage/level10.png', 0.85],
+        ['level EX-L', 'Stage/level_ex_l.png', 0.85],
+        ['level EX', 'Stage/level_ex.png', 0.85],
+        ['level CX', 'Stage/level_cx.png', 0.85],
 
-    hardPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/hard.png")                           # noqa
-    normalPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/normal.png")                       # noqa
+        ['Sinoalice Text', 'sinoaliceText.png', 0.85],
+        ['Downloading', 'downloading.png', 0.85],
+        ['Update App', 'dmmUpdate.png', 0.85],
 
-    levelPattern1 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level1.PNG")                       # noqa
-    levelPattern2 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level2.PNG")                       # noqa
-    levelPattern3 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level3.PNG")                       # noqa
-    levelPattern4 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level4.PNG")                       # noqa
-    levelPattern5 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level5.PNG")                       # noqa
-    levelPattern6 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level6.PNG")                       # noqa
-    levelPattern7 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level7.PNG")                       # noqa
-    levelPattern8 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level8.PNG")                       # noqa
-    levelPattern9 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level9.PNG")                       # noqa
-    levelPattern10 = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level10.PNG")                     # noqa
+        ['support', 'support.png', 0.8],
+        ['refresh', 'refresh.png', 0.8],
 
-    levelPattern_exl = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level_ex_l.PNG")                # noqa
-    levelPattern_ex = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level_ex.PNG")                   # noqa
-    levelPattern_cx = utils.LoadPattern(f"Resources/{resourcePrefix}/Stage/level_cx.PNG")                   # noqa
+        ['guild Member', 'guildMember.png', 0.8],
+        ['coop stage', 'Target/coopStage.png', 0.8],
+        ['story Level', 'Target/level.png', 0.8],
+        ['story MidStage', 'Target/storyMidStage.png', 0.8],
+        ['story Stage', 'Target/storyStage.png', 0.8],
 
-    sinoaliceTextPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/sinoaliceText.PNG")               # noqa
-    sinoaliceDownloadingPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/downloading.PNG")          # noqa
-    dmmUpdatePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/dmmUpdate.PNG")                       # noqa
-
-    supportPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/support.PNG")                           # noqa
-    coopPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/coop.PNG")                                 # noqa
-
-    refreshPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/refresh.PNG")                           # noqa
-    guildMemberPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/guildMember.PNG")                   # noqa
-    coopStagePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Target/coopStage.PNG")                # noqa
-
-    storyLevelPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/storyLevel.PNG")                     # noqa
-    storyMidStagePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Target/storyMidStage.PNG")        # noqa
-    storyStagePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/Target/storyStage.PNG")              # noqa
-
-    maintencePattern = utils.LoadPattern(f"Resources/{resourcePrefix}/maintence.PNG")                       # noqa
-    crossPattern = utils.LoadPattern(f"Resources/{resourcePrefix}/cross.PNG")                               # noqa
-
-    return [
-        ['start', startPattern, 0.7],
-        ['story', storyPattern, 0.8],
-        ['event', eventPattern, 0.65],
-        ['coop', coopPattern, 0.65],
-        ['mission', missionPattern, 0.8],
-        ['storySkip', storySkipPattern, 0.6],
-        ['next', nextPattern, 0.8],
-        ['ok', okPattern, 0.6],
-        ['log', logPattern, 0.8],
-
-        ['skip', skipPattern, 0.8],  # NOT OK
-
-        ['osouji', osoujiPattern, 0.8],
-        ['osouji2', osoujiPattern2, 0.8],
-        ['osoujiText', osoujiTextPattern, 0.8],
-
-        ['close', closePattern, 0.6],
-        ['rematch', rematchPattern, 0.8],
-
-        ['target stage', stagePattern, 0.8],
-        ['target level', levelPattern, 0.8],
-
-        ['pause', pausePattern, 0.8],
-
-        ['stage header', stageHeaderPattern, 0.95],
-
-        ['hard', hardPattern, 0.8],
-        ['normal', normalPattern, 0.6],
-
-        ['level 1', levelPattern1, 0.85],
-        ['level 2', levelPattern2, 0.85],
-        ['level 3', levelPattern3, 0.85],
-        ['level 4', levelPattern4, 0.85],
-        ['level 5', levelPattern5, 0.85],
-        ['level 6', levelPattern6, 0.85],
-        ['level 7', levelPattern7, 0.85],
-        ['level 8', levelPattern8, 0.85],
-        ['level 9', levelPattern9, 0.85],
-        ['level 10', levelPattern10, 0.85],
-        ['level EX-L', levelPattern_exl, 0.85],
-        ['level EX', levelPattern_ex, 0.85],
-        ['level CX', levelPattern_cx, 0.85],
-
-        ['Sinoalice Text', sinoaliceTextPattern, 0.85],
-        ['Downloading', sinoaliceDownloadingPattern, 0.85],
-        ['Update App', dmmUpdatePattern, 0.85],
-
-        ['support', supportPattern, 0.8],
-
-        ['refresh', refreshPattern, 0.8],
-        ['guild Member', guildMemberPattern, 0.8],
-        ['coop stage', coopStagePattern, 0.8],
-
-        ['story Level', storyLevelPattern, 0.8],
-        ['story MidStage', storyMidStagePattern, 0.8],
-        ['story Stage', storyStagePattern, 0.8],
-
-        ['maintence', maintencePattern, 0.8],
-        ['cross', crossPattern, 0.8]
+        ['maintence', 'maintence.png', 0.8],
+        ['cross', 'cross.png', 0.8]
     ]
+
+    return [[c[0], utils.LoadPattern(f"Resources/{resourcePrefix}/{c[1]}"), c[2]] for c in config]
 
 
 def Detect(frame, pattern, threshold=0.8):
@@ -202,7 +135,8 @@ def DebugDraw(img, frame, logic):
 
     exists = []
     for idx, (name, pattern, threshold) in enumerate(patterns):
-        isExist, val, top_left, bottom_right = Detect(frame, pattern, threshold)  # noqa
+        isExist, val, top_left, bottom_right = Detect(
+            frame, pattern, threshold)
         if isExist:
             if name[0:5] == ('target level'):
                 cv2.rectangle(img, top_left, bottom_right, white, 2)
