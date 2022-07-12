@@ -228,6 +228,7 @@ def MainLoop():
     logic = Logic(routine, control)  # Create Main Logic
 
     patternPrefix = "PC" if isPc else "Android"
+    patternPrefix = f'{patternPrefix}/1920x1080/'
     Pattern.patterns = Pattern.LoadPatterns(patternPrefix)
 
     window.SetForeground()
@@ -277,5 +278,6 @@ if __name__ == '__main__':
         print('')
         print('Examples:')
         print('python main.py --debug true --routine Loop_Level_By_Name --target "level EX-L" --count 10')
-
-    Main()
+        Cleanup()
+    else:
+        Main()
