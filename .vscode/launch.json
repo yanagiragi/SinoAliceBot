@@ -4,14 +4,33 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
-            "name": "Main.py",
+            "name": "Debug Guild_Coop",
             "type": "python",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": ["--debug", "true", "--routine", "Guild_Coop"]
+            "args": [
+                "--debug",
+                "true",
+                "--routine",
+                "Guild_Coop"
+            ]
+        },
+        {
+            "name": "Debug Loop_Level_By_Name",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--debug",
+                "true",
+                "--routine",
+                "Loop_Level_By_Name",
+                "--target",
+                "level 10"
+            ]
         }
     ]
 }

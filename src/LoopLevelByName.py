@@ -7,6 +7,7 @@ from src.State import State
 from src.Routine import Routine
 from src.Detection import Detection
 
+
 class Routine_LoopLevelByName(Routine):
     def __init__(self, name, control, target, accumulateCount, optimized=True):
         super().__init__(name, control, optimized)
@@ -15,7 +16,7 @@ class Routine_LoopLevelByName(Routine):
             raise Exception("target cannot be None")
 
         self.target = target
-        self.difference = 100
+        self.difference = 200
         self.ShouldSwipeUp = False
         self.accumulateCount = accumulateCount
 
@@ -24,7 +25,7 @@ class Routine_LoopLevelByName(Routine):
 
     def Update(self):
         pass
-    
+
     def QueryState(self):
         super().QueryState()
 
@@ -33,7 +34,7 @@ class Routine_LoopLevelByName(Routine):
         if self.hasDetected['stage header'].IsExist and self.hasDetected['target stage'].IsExist == False:
             self.state = State.TARGET_STAGE_NOT_FOUND
             self.ShouldSwipeUp = True
-            
+
         elif self.hasDetected['rematch'].IsExist:
             currentDetected = self.hasDetected['rematch']
             self.state = State.REMATCH
@@ -52,7 +53,7 @@ class Routine_LoopLevelByName(Routine):
                 self.state = State.OSOUJI_RESULT_COMFIRM
             elif self.prevState == State.SELECT_LEVEL:
                 self.state = State.OSOUJI_LEVEL_COMFIRM
-        
+
         # HomePage, next action = story
         elif self.hasDetected['mission'].IsExist:
             self.state = State.HOME
@@ -67,7 +68,7 @@ class Routine_LoopLevelByName(Routine):
         elif self.hasDetected['target stage'].IsExist:
             self.state = State.SELECT_STAGE
             currentDetected = self.hasDetected['target stage']
-    
+
         # Stage, next action = level
         elif self.hasDetected['target level'].IsExist:
             self.state = State.SELECT_LEVEL
@@ -102,7 +103,7 @@ class Routine_LoopLevelByName(Routine):
         if self.state == State.REMATCH and self.prevState == State.BATTLE_RESULT_COMFIRM:
             self.doneCount += 1
         elif self.state == State.NO_AP and self.state == State.REMATCH:
-            self.doneCount -= 1 # minus "additional add" in last frame
+            self.doneCount -= 1  # minus "additional add" in last frame
 
         # check if is done right after doneCount is called
         if self.accumulateCount != 0 and self.doneCount >= self.accumulateCount:
@@ -111,11 +112,11 @@ class Routine_LoopLevelByName(Routine):
                 currentDetected = self.hasDetected['ok']
             else:
                 self.state = State.DONE
-  
+
         # update Local Position
         if currentDetected is not None:
             self.localPosition = currentDetected.LocalPosition
-        
+
     def StateAction(self):
         super().StateAction()
         top_left, bottom_right = self.localPosition
@@ -134,14 +135,13 @@ class Routine_LoopLevelByName(Routine):
             State.BATTLE_RESULT_COMFIRM,
             State.CLEANUP_BEFORE_DONE
         ]
-        
-        if self.state == State.TARGET_LEVEL_NOT_FOUND or self.state == State.TARGET_STAGE_NOT_FOUND:
-            aboveLocalPosition = [int((top_left[0] + bottom_right[0])/2), int((top_left[1] + bottom_right[1])/2) - self.difference]
-            belowLocalPosition = [ aboveLocalPosition[0], aboveLocalPosition[1] + self.difference ]
 
-            aboveLocalPosition = [0, 1300]
-            belowLocalPosition = [0, 1000]
-            
+        if self.state == State.TARGET_LEVEL_NOT_FOUND or self.state == State.TARGET_STAGE_NOT_FOUND:
+            aboveLocalPosition = [int((top_left[0] + bottom_right[0])/2),
+                                  int((top_left[1] + bottom_right[1])/2) - self.difference]
+            belowLocalPosition = [aboveLocalPosition[0],
+                                  aboveLocalPosition[1] + self.difference]
+
             if self.ShouldSwipeUp:
                 self.control.SwipeUp(aboveLocalPosition, belowLocalPosition)
             else:
@@ -177,11 +177,12 @@ class Routine_LoopLevelByName(Routine):
             self.hasDetected['level 8'],
             self.hasDetected['level 9'],
             self.hasDetected['level 10'],
-            self.hasDetected['level EX-L'],
-            self.hasDetected['level EX'],
-            self.hasDetected['level CX'],
+            # self.hasDetected['level EX-L'],
+            # self.hasDetected['level EX'],
+            # self.hasDetected['level CX'],
         ]
-        targetLevel = list(x for x in enumerate(checkList) if x[1].Name == self.target)[0][0] + 1 # 0 for id
+        targetLevel = list(x for x in enumerate(checkList)
+                           if x[1].Name == self.target)[0][0] + 1  # 0 for id
 
         for idx, check in enumerate(checkList):
             if check.IsExist:
@@ -189,13 +190,13 @@ class Routine_LoopLevelByName(Routine):
                 prevLevel = (idx + 1)
                 if currentDetected.Name == self.target:
                     break
-        
-        if currentDetected is not None: # Currently on the page that select levels
-            self.localPosition = currentDetected.LocalPosition # Update self.localPosition
-            if prevLevel != targetLevel: # target does not exists in current frame
+
+        if currentDetected is not None:  # Currently on the page that select levels
+            self.localPosition = currentDetected.LocalPosition  # Update self.localPosition
+            if prevLevel != targetLevel:  # target does not exists in current frame
                 self.ShouldSwipeUp = (prevLevel < targetLevel)
                 self.state = State.TARGET_LEVEL_NOT_FOUND
-            else:                 
+            else:
                 self.state = State.SELECT_LEVEL
                 if self.prevState == State.STAGE_LOOP_END:
                     self.state = State.DONE

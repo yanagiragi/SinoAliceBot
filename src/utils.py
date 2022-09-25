@@ -42,9 +42,11 @@ def LoadScreen(img):
 
 
 def LoadPattern(path):
+    print(f'Read {path} ...', end='')
     img = cv2.imread(path)
     img_np = np.array(img)
     x, y, c = img_np.shape
+    print('Done.')
     return ToGrayScale(img_np)
     # return img_np
 

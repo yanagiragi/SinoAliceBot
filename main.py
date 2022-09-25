@@ -46,6 +46,7 @@ ConenctionExecutor = 'D:/_Programs/Programs/_Shortcuts/scrcpy-win64-v1.14/scrcpy
 shallQuit = False
 shallPause = False
 toaster = None  # initialized after __init__ == "__main__"
+resultion = '1920x1080'
 
 
 def OnKeyPress(event):
@@ -127,7 +128,7 @@ def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
 
 def OpenSinoalice():
     window = Window(dmmTitle, resizeFactor)
-    control = Control(window)
+    control = Control(window, resultion)
     routine = Routine_StartSinoalice('Routine.StartSinoalice', control)
     logic = Logic(routine, control)  # Create Main Logic
     window.SetForeground()
@@ -222,13 +223,13 @@ def MainLoop():
     global shallQuit
 
     window = Window(windowsName, resizeFactor)
-    control = Control(window)  # Create controll instance
+    control = Control(window, resultion)  # Create controll instance
     # control = ControlAdb(window) # Create controll instance
     routine = SelectRoutine(targetRoutine, control, targetLevel, targetCount)
     logic = Logic(routine, control)  # Create Main Logic
 
     patternPrefix = "PC" if isPc else "Android"
-    patternPrefix = f'{patternPrefix}/1920x1080'
+    patternPrefix = f'{patternPrefix}/{resultion}'
     Pattern.patterns = Pattern.LoadPatterns(patternPrefix)
 
     window.SetForeground()
