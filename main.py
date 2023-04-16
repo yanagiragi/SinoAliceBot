@@ -17,7 +17,7 @@ from src.Logic import Logic
 from src.Window import Window
 import src.utils as utils
 
-from src.Routines.OpenBlueArchive import Routine_OpenBlueArchive
+from src.Routines import *
 
 # Const settings
 isPc = False
@@ -40,9 +40,10 @@ shallQuit = False
 shallPause = False
 toaster = None  # initialized after __init__ == "__main__"
 
-predefined_routines = [
-    'OpenBlueArchive'
-]
+predefined_routines = {
+    'BlueArchiveDaily': lambda control, targetLevel, targetCount: BlueArchiveDaily.Routine_BlueArchiveDaily('Open Blue Archive', control),
+    'HeavenBurnsRedDaily': lambda control, targetLevel, targetCount: HeavenBurnsRedDaily.Routine_HeavenBurnsRedDaily('Open Heaven Burns Red', control)
+}
 
 
 def OnKeyPress(event):
@@ -98,23 +99,9 @@ def SetupParser():
     parser.add_argument('--count', default=0, help='level to loop')
     return parser.parse_args()
 
+
 def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
-    """
-    if targetRoutine == 'Loop_Stage':
-        return Routine_LoopStage('Routine.Loop_Stage', control, False)
-    elif targetRoutine == 'Loop_Level_By_Image':
-        return Routine_LoopLevelByImage('Routine.Loop_Level_By_Image', control, False)
-    elif targetRoutine == 'Loop_Level_By_Name':
-        return Routine_LoopLevelByName('Routine.Loop_Level_By_Name', control, targetLevel, targetCount, False)
-    elif targetRoutine == 'Guild_Coop':
-        return Routine_GuildCoop('Routine.Guild_Coop', control, False)
-    elif targetRoutine == 'Guild_Story':
-        return Routine_GuildStory('Routine.Guild_Story', control, False)
-    elif targetRoutine == 'Guild':
-        return Routine_Guild('Routine.Guild', control, False)
-    """
-    return Routine_OpenBlueArchive('Open Blue Archive', control)
-    return None
+    return predefined_routines[targetRoutine](control, targetLevel, targetCount)
 
 
 """def OpenSinoalice():
@@ -266,9 +253,10 @@ if __name__ == '__main__':
 
     SetupLogger()  # Setup Logger
 
-    if targetRoutine not in predefined_routines:
+    if targetRoutine not in predefined_routines.keys():
         print('Error Arguments. Abort.')
         print('')
+        print('Possible values = ' + ','.join(predefined_routines.keys()))
         print('Examples:')
         print('python main.py --debug true --routine Loop_Level_By_Name --target "level EX-L" --count 10')
         Cleanup()

@@ -13,5 +13,60 @@
         "name": "project_sekai icon", 
         "pattern": "projectSekai.png",
         "threshold": 0.8
+    },
+    {
+        "name": "close_all_tasks", 
+        "pattern": "closeAll.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "mission_control", 
+        "pattern": "missionControl.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red criware", 
+        "pattern": "HeavenBurnsRed/criware.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red battleResult", 
+        "pattern": "HeavenBurnsRed/battleResult.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red downloadAll", 
+        "pattern": "HeavenBurnsRed/downloadAll.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red inherit", 
+        "pattern": "HeavenBurnsRed/inherit.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red loginBonus", 
+        "pattern": "HeavenBurnsRed/loginBonus.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red ok", 
+        "pattern": "HeavenBurnsRed/ok.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red home", 
+        "pattern": "HeavenBurnsRed/home.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red menu", 
+        "pattern": "HeavenBurnsRed/menu.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red okaeri", 
+        "pattern": "HeavenBurnsRed/okaeri.png",
+        "threshold": 0.8
     }
 ]

@@ -31,4 +31,12 @@ class State(Enum):
     INFO = 'お知らせ'
     COOP_NOT_PICK_GUILD_MEMBER_PANEL = '共鬪 (ランダム)'
     COOP_PICK_GUILD_MEMBER_PANEL = '共鬪 (ギルドメンバー)'
-    COOP_SELECT_STAGE = '共鬪 (選ぶ)'
+    COOP_SELECT_STAGE = '共鬪 (選ぶ)', 
+    OS_ABOUNT_TO_CLOSE_ALL_TASKS = 'OS - 已開啟程式 (主畫面過渡)'
+    OS_CLOSE_ALL_TASKS = 'OS - 已開啟程式'
+    OS_HOME = 'OS - 主畫面'
+    HEAVEN_BURNS_RED_APP_HOME = 'HBD - 開始畫面'
+    HEAVEN_BURNS_RED_HOME = 'HBD - 主畫面',
+    HEAVEN_BURNS_RED_LOGIN_BONUS = 'HBD - 登入獎勵',
+    HEAVEN_BURNS_RED_COMFIRM = 'HBD - 待確認項目',
+    HEAVEN_BURNS_RED_DOWNLOAD = 'HBD - 下載資源'

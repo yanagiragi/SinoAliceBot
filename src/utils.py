@@ -53,7 +53,7 @@ def LoadPattern(path):
 
 def printErr(e):
     error_class = e.__class__.__name__              # 取得錯誤類型
-    detail = e.args[0]                              # 取得詳細內容
+    detail = e.args[0] if len(e.args) > 0 else None  # 取得詳細內容
     cl, exc, tb = sys.exc_info()                    # 取得Call Stack
     lastCallStack = traceback.extract_tb(tb)[-1]    # 取得Call Stack的最後一筆資料
     fileName = lastCallStack[0]                     # 取得發生的檔案名稱

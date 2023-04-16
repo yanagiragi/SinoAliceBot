@@ -8,13 +8,9 @@ from src.Routine import Routine
 from src.Detection import Detection
 
 
-class Routine_OpenBlueArchive(Routine):
+class Routine_BlueArchiveDaily(Routine):
     def __init__(self, name, control, optimized=True):
         super().__init__(name, control, optimized)
-
-        self.difference = 200
-        self.ShouldSwipeUp = False
-        self.accumulateCount = 0
 
     def Reset(self, frame):
         pass
@@ -24,8 +20,13 @@ class Routine_OpenBlueArchive(Routine):
 
     def QueryState(self):
         super().QueryState()
-
+        
+        self.state = State.IDLE
         currentDetected = None
+
+        if self.hasDetected['blue_archive icon'].IsExist:
+            self.state = State.BLUE_ARCHIVE_HOME
+            currentDetected = self.hasDetected['blue_archive icon']
 
         # update Local Position
         if currentDetected is not None:
@@ -35,5 +36,13 @@ class Routine_OpenBlueArchive(Routine):
         super().StateAction()
         top_left, bottom_right = self.localPosition
 
+        statesShouldAction = [
+            State.BLUE_ARCHIVE_HOME,
+        ]
+
+        if self.state in statesShouldAction:
+            self.control.MouseLeftClick(top_left, bottom_right)
+            time.sleep(3)
+
     def GetMessage(self):
-        return super().GetMessage() + f', Accomplished = {self.doneCount}/{self.accumulateCount}, state = {self.state.value}'
+        return super().GetMessage() + f', state = {self.state.value}'

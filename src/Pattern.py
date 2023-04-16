@@ -1,7 +1,6 @@
 import cv2
 import src.utils as utils
 import json
-import hashlib
 
 # Global variables
 existsPatternString = ''
@@ -15,14 +14,14 @@ def LoadPatterns(resourcePrefix):
     raw = open('src/pattern.json')
     config = json.load(raw)
 
-    print(config)
-    parse_config = lambda config: [
-            config['name'], 
-            utils.LoadPattern(f"Resources/{resourcePrefix}/{config['pattern']}"), 
+    def parse_config(config):
+        return [
+            config['name'],
+            utils.LoadPattern(f"Resources/{resourcePrefix}/{config['pattern']}"),
             config['threshold']
         ]
 
-    return [ parse_config(c) for c in config]
+    return [parse_config(c) for c in config]
 
 
 def Detect(frame, pattern, threshold=0.8):
