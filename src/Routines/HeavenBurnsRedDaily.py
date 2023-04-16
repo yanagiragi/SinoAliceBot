@@ -1,11 +1,8 @@
-from enum import Enum
 import time
-import datetime
 
-from src.Control import Control
 from src.State import State
 from src.Routine import Routine
-from src.Detection import Detection
+from src.utils import SaveScreenshot
 
 
 class Routine_HeavenBurnsRedDaily(Routine):
@@ -13,6 +10,7 @@ class Routine_HeavenBurnsRedDaily(Routine):
         super().__init__(name, control, optimized)
 
     def Reset(self, frame):
+        self.frame = frame
         pass
 
     def Update(self):
@@ -20,7 +18,7 @@ class Routine_HeavenBurnsRedDaily(Routine):
 
     def QueryState(self):
         super().QueryState()
-        
+    
         self.state = State.IDLE
         currentDetected = None
 
@@ -40,12 +38,12 @@ class Routine_HeavenBurnsRedDaily(Routine):
             currentDetected = self.hasDetected['heaven_burns_red criware']
 
         elif self.hasDetected['heaven_burns_red battleResult'].IsExist or \
-            self.hasDetected['heaven_burns_red okaeri'].IsExist or \
-            self.hasDetected['heaven_burns_red home'].IsExist or \
-            self.hasDetected['heaven_burns_red menu'].IsExist:
+                self.hasDetected['heaven_burns_red okaeri'].IsExist or \
+                self.hasDetected['heaven_burns_red home'].IsExist or \
+                self.hasDetected['heaven_burns_red menu'].IsExist:
             self.state = State.HEAVEN_BURNS_RED_HOME
             currentDetected = None
-        
+   
         elif self.hasDetected['heaven_burns_red loginBonus'].IsExist:
             self.state = State.HEAVEN_BURNS_RED_LOGIN_BONUS
             currentDetected = self.hasDetected['heaven_burns_red loginBonus']
@@ -59,8 +57,8 @@ class Routine_HeavenBurnsRedDaily(Routine):
             currentDetected = self.hasDetected['heaven_burns_red downloadAll']
 
         if self.prevState == State.HEAVEN_BURNS_RED_HOME and \
-            self.state == State.OS_HOME and \
-            self.hasDetected['mission_control'].IsExist:
+                self.state == State.OS_HOME and \
+                self.hasDetected['mission_control'].IsExist:
             self.state = State.OS_ABOUNT_TO_CLOSE_ALL_TASKS
             currentDetected = self.hasDetected['mission_control']
 
@@ -90,6 +88,10 @@ class Routine_HeavenBurnsRedDaily(Routine):
             # press mission control button
             self.control.ReturnToHome()
             time.sleep(3)
+
+        if self.state != self.prevState:
+            SaveScreenshot(self.frame, 'HBR-', f'-{self.state}') # no unicode support!
+        
 
     def GetMessage(self):
         return super().GetMessage() + f', state = {self.state.value}'

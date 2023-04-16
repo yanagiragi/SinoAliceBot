@@ -2,6 +2,8 @@ import numpy as np
 import cv2
 import sys
 import traceback
+from datetime import datetime
+import os
 
 
 def ToGrayScale(img):
@@ -49,6 +51,19 @@ def LoadPattern(path):
     print('Done.')
     return ToGrayScale(img_np)
     # return img_np
+
+
+def SaveScreenshot(frame, prefix = '', postfix = ''):
+    if not os.path.exists('ScreenShots'):
+        os.makedirs('ScreenShots')
+    now = datetime.now()
+    nowStr = datetime.strftime(now, '%Y-%m-%d-%H-%M-%S')
+    outputStr = f'ScreenShots/ScreenShot-{prefix}{nowStr}{postfix}.png'
+    success = cv2.imwrite(outputStr, frame)
+    if success:
+        print(f'Save {outputStr}.')
+    else:
+        print(f'Save {outputStr} Failed.')
 
 
 def printErr(e):
