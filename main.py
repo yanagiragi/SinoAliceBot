@@ -39,6 +39,7 @@ isDebug = True
 shallQuit = False
 shallPause = False
 toaster = None  # initialized after __init__ == "__main__"
+lastFrame = None
 
 predefined_routines = {
     # 'BlueArchiveDaily': lambda control, targetLevel, targetCount: BlueArchiveDaily.Routine_BlueArchiveDaily('Open Blue Archive', control),
@@ -83,11 +84,12 @@ def Cleanup(frame=None):
         keywatchProcess.terminate()
     cv2.destroyAllWindows()
     if frame is not None:
-        cv2.imwrite('screenshot.png', frame)
+        utils.SaveScreenshot(frame, 'Cleanup-')
 
 
-def SigCleanup(sig, frame):
-    Cleanup()
+def SigCleanup():
+    global lastFrame
+    Cleanup(lastFrame)
     sys.exit(0)
 
 
@@ -130,7 +132,8 @@ Returns shall quit or not
 
 
 def Tick(window, logic, control) -> bool:
-
+    global lastFrame
+    
     if shallQuit is True:
         return True
 
@@ -147,6 +150,8 @@ def Tick(window, logic, control) -> bool:
     img, frame = utils.LoadScreen(img)  # Get ScreenShot of img
     # img, frame = img[58:-10, 10:-10], frame[58:-10, 10:-10] # slice out window title
     # img, frame = utils.LoadScreenFromImage('test.jpg') # debug
+
+    lastFrame = frame
 
     # update internal position of control instance
     control.Update(window.top, window.left, window.bot, window.right)
@@ -183,7 +188,7 @@ def Tick(window, logic, control) -> bool:
             # for visual apperance, re-print last output to avoid clear by 'Leaving ...'
             print(outputStr, end='\n')
             print('Leaving ...')
-            Cleanup()
+            Cleanup(lastFrame)
             return True
 
     # if isDebug or logic.prevState != logic.state:
@@ -224,13 +229,14 @@ def MainLoop():
 
 
 def Main():
+    global lastFrame
     try:
         MainLoop()
     except Exception as e:
         utils.printErr(e)
         logging.exception(e)
     finally:
-        Cleanup()
+        Cleanup(lastFrame)
 
 
 if __name__ == '__main__':
@@ -260,6 +266,6 @@ if __name__ == '__main__':
         print('Possible values = ' + ','.join(predefined_routines.keys()))
         print('Examples:')
         print('python main.py --debug true --routine Loop_Level_By_Name --target "level EX-L" --count 10')
-        Cleanup()
+        Cleanup(None)
     else:
         Main()

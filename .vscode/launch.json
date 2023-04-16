@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Guild_Coop",
+            "name": "HeavenBurnsRedDaily",
             "type": "python",
             "request": "launch",
             "program": "main.py",
@@ -14,11 +14,11 @@
                 "--debug",
                 "true",
                 "--routine",
-                "Guild_Coop"
+                "HeavenBurnsRedDaily"
             ]
         },
         {
-            "name": "Debug Loop_Level_By_Name",
+            "name": "ProjectSekaiDaily",
             "type": "python",
             "request": "launch",
             "program": "main.py",
@@ -27,22 +27,7 @@
                 "--debug",
                 "true",
                 "--routine",
-                "Loop_Level_By_Name",
-                "--target",
-                "level 10"
-            ]
-        },
-        {
-            "name": "Debug OpenBlueArchive",
-            "type": "python",
-            "request": "launch",
-            "program": "main.py",
-            "console": "integratedTerminal",
-            "args": [
-                "--debug",
-                "true",
-                "--routine",
-                "OpenBlueArchive"
+                "ProjectSekaiDaily"
             ]
         },
     ]
