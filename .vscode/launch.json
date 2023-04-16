@@ -31,6 +31,19 @@
                 "--target",
                 "level 10"
             ]
-        }
+        },
+        {
+            "name": "Debug OpenBlueArchive",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--debug",
+                "true",
+                "--routine",
+                "OpenBlueArchive"
+            ]
+        },
     ]
 }

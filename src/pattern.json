@@ -1,0 +1,17 @@
+[
+    {
+        "name": "blue_archive icon", 
+        "pattern": "blueArchive.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "heaven_burns_red icon", 
+        "pattern": "heavenBurnsRed.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "project_sekai icon", 
+        "pattern": "projectSekai.png",
+        "threshold": 0.8
+    }
+]

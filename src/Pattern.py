@@ -1,5 +1,7 @@
 import cv2
 import src.utils as utils
+import json
+import hashlib
 
 # Global variables
 existsPatternString = ''
@@ -10,65 +12,17 @@ def LoadPatterns(resourcePrefix):
 
     print(f"Load pattern with prefix: {resourcePrefix}")
 
-    config = [
-        ['start', 'start.png', 0.7],
-        ['story', 'story.png', 0.8],
-        ['event', 'event.png', 0.65],
-        ['coop', 'coop.png', 0.65],
-        ['mission', 'mission.png', 0.8],
-        ['storySkip', 'storySkip.png', 0.6],
-        ['next', 'next.png', 0.8],
-        ['ok', 'ok.png', 0.6],
-        ['log', 'log.png', 0.8],
+    raw = open('src/pattern.json')
+    config = json.load(raw)
 
-        ['skip', 'skip.png', 0.8],  # NOT OK
+    print(config)
+    parse_config = lambda config: [
+            config['name'], 
+            utils.LoadPattern(f"Resources/{resourcePrefix}/{config['pattern']}"), 
+            config['threshold']
+        ]
 
-        ['osouji', 'osouji.png', 0.8],
-        ['osouji2', 'osouji2.png', 0.8],
-        ['osoujiText', 'osoujiText.png', 0.8],
-
-        ['close', 'close.png', 0.6],
-        ['rematch', 'rematch.png', 0.8],
-
-        ['target stage', 'Target/stage.png', 0.8],
-        ['target level', 'Target/level.png', 0.8],
-
-        ['pause', 'pause.png', 0.8],
-
-        ['stage header', 'stageHeader.png', 0.95],
-
-        ['hard', 'Stage/hard.jpg', 0.8],
-        ['normal', 'Stage/normal.jpg', 0.6],
-        ['level 1', 'Stage/level1.jpg', 0.85],
-        ['level 2', 'Stage/level2.jpg', 0.85],
-        ['level 3', 'Stage/level3.jpg', 0.85],
-        ['level 4', 'Stage/level4.jpg', 0.85],
-        ['level 5', 'Stage/level5.jpg', 0.85],
-        ['level 6', 'Stage/level6.jpg', 0.85],
-        ['level 7', 'Stage/level7.jpg', 0.85],
-        ['level 8', 'Stage/level8.jpg', 0.85],
-        ['level 9', 'Stage/level9.jpg', 0.85],
-        ['level 10', 'Stage/level10.jpg', 0.85],
-        ['level EX', 'Stage/level_ex.jpg', 0.85],
-
-        ['Sinoalice Text', 'sinoaliceText.png', 0.85],
-        ['Downloading', 'downloading.png', 0.85],
-        ['Update App', 'dmmUpdate.png', 0.85],
-
-        ['support', 'support.png', 0.8],
-        ['refresh', 'refresh.png', 0.8],
-
-        ['guild Member', 'guildMember.png', 0.8],
-        ['coop stage', 'Target/coopStage.png', 0.8],
-        ['story Level', 'Target/level.png', 0.8],
-        ['story MidStage', 'Target/storyMidStage.png', 0.8],
-        ['story Stage', 'Target/storyStage.png', 0.8],
-
-        ['maintence', 'maintence.png', 0.8],
-        ['cross', 'cross.png', 0.8]
-    ]
-
-    return [[c[0], utils.LoadPattern(f"Resources/{resourcePrefix}/{c[1]}"), c[2]] for c in config]
+    return [ parse_config(c) for c in config]
 
 
 def Detect(frame, pattern, threshold=0.8):
@@ -134,17 +88,12 @@ def DebugDraw(img, frame, logic):
     exists = []
     for idx, (name, pattern, threshold) in enumerate(patterns):
         isExist, val, top_left, bottom_right = Detect(
-            frame, pattern, threshold)
+            frame, pattern, threshold)  
         if isExist:
-            if name[0:5] == ('target level'):
-                cv2.rectangle(img, top_left, bottom_right, white, 2)
-            else:
-                cv2.rectangle(img, top_left, bottom_right,
-                              colors[idx % len(colors)], 2)
+            color_idx = int(hash(name)) % len(colors)
+            cv2.rectangle(img, top_left, bottom_right,
+                              colors[color_idx], 2)
             exists.append(name)
-
-        if name == 'osoujiText':
-            max_val, top_left, bottom_right = DetectTemplate(frame, pattern)
 
     if len(exists) > 0:
         existsPatternString = ', Exists: [' + '], ['.join(exists) + ']'

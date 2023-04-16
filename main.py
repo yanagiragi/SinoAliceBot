@@ -14,21 +14,13 @@ import src.Pattern as Pattern
 from src.Control import Control
 from src.ControlAdb import ControlAdb
 from src.Logic import Logic
-from src.LoopLevelByName import Routine_LoopLevelByName
-from src.LoopStage import Routine_LoopStage
-from src.StartSinoalice import Routine_StartSinoalice
-from src.GuildCoop import Routine_GuildCoop
-from src.GuildStory import Routine_GuildStory
-from src.Guild import Routine_Guild
 from src.Window import Window
 import src.utils as utils
 
-#sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-#sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+from src.Routines.OpenBlueArchive import Routine_OpenBlueArchive
 
 # Const settings
-isDebug = True
-isPc = True
+isPc = False
 
 resizeFactor = 1.0  # scale factor of the screenshot of the window
 debugWindowScaleFactor = 1  # scale factor of the debug window
@@ -36,17 +28,21 @@ debugWindowScaleFactor = 1  # scale factor of the debug window
 toastDuration = 2
 toastIcon = 'Resources/icon/icon.ico'
 
-dmmTitle = 'Myゲーム - DMM GAME PLAYER'
-windowsName = 'SINoALICE'  # 'SM-G955F'
-
 ApplicationName = 'SinoBot'
-ConenctionExecutor = 'D:/_Programs/Programs/_Shortcuts/scrcpy-win64-v1.14/scrcpy.exe --window-height 720 --window-borderless -w'
+dmmTitle = 'Myゲーム - DMM GAME PLAYER'
+
+windowsName = 'SM-G955F'
+resultion = '461x976'
 
 # Global variable
+isDebug = True
 shallQuit = False
 shallPause = False
 toaster = None  # initialized after __init__ == "__main__"
-resultion = '1920x1080'
+
+predefined_routines = [
+    'OpenBlueArchive'
+]
 
 
 def OnKeyPress(event):
@@ -102,15 +98,8 @@ def SetupParser():
     parser.add_argument('--count', default=0, help='level to loop')
     return parser.parse_args()
 
-
-"""
-    Select Your Main Routine:
-    Routine_LoopLevelByImage: Loop Single Level (matched with Resource/Stage/level.PNG), won't terminate
-    Routine_LoopStage: Explore All levels (normal & hard) in a stage, terminates if all levels are looped
-"""
-
-
 def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
+    """
     if targetRoutine == 'Loop_Stage':
         return Routine_LoopStage('Routine.Loop_Stage', control, False)
     elif targetRoutine == 'Loop_Level_By_Image':
@@ -123,10 +112,12 @@ def SelectRoutine(targetRoutine, control, targetLevel=None, targetCount=None):
         return Routine_GuildStory('Routine.Guild_Story', control, False)
     elif targetRoutine == 'Guild':
         return Routine_Guild('Routine.Guild', control, False)
+    """
+    return Routine_OpenBlueArchive('Open Blue Archive', control)
     return None
 
 
-def OpenSinoalice():
+"""def OpenSinoalice():
     window = Window(dmmTitle, resizeFactor)
     control = Control(window, resultion)
     routine = Routine_StartSinoalice('Routine.StartSinoalice', control)
@@ -142,6 +133,7 @@ def OpenSinoalice():
         except Exception as e:
             logging.exception(e)
             window.Close()
+"""
 
 
 """
@@ -151,16 +143,16 @@ Returns shall quit or not
 
 def Tick(window, logic, control) -> bool:
 
-    if shallPause == True:
-        return False
-
-    elif shallQuit == True:
+    if shallQuit is True:
         return True
+
+    elif shallPause is True:
+        return False
 
     tStart = time.time()  # Start Recording
 
     img, error = window.GetScreen()
-    if img == None:
+    if img is None:
         print('Window "{}" Not Found, raw = {}'.format(window.name, error))
         return True
 
@@ -174,7 +166,7 @@ def Tick(window, logic, control) -> bool:
     isDone, logicError = logic.Process(frame)  # Procress Main Logic
     # isDone, logicError = False, None  # Freeze Logic for Debugging
 
-    if isDone == True:
+    if isDone is True:
         print("Done All Tasks! Leaving ...")
         return True
 
@@ -214,7 +206,7 @@ def Tick(window, logic, control) -> bool:
     try:
         print(outputStr, end='\n')
     except Exception as e:
-        print(outputStr.encoding('utf-8'), end='\n')
+        print(outputStr.encoding('utf-8') + f', exception = {e}', end='\n')
     finally:
         return False
 
@@ -223,8 +215,10 @@ def MainLoop():
     global shallQuit
 
     window = Window(windowsName, resizeFactor)
+
     control = Control(window, resultion)  # Create controll instance
     # control = ControlAdb(window) # Create controll instance
+
     routine = SelectRoutine(targetRoutine, control, targetLevel, targetCount)
     logic = Logic(routine, control)  # Create Main Logic
 
@@ -238,9 +232,7 @@ def MainLoop():
                        icon_path=toastIcon)  # Show Notifcation
 
     while not shallQuit:
-        shallQuit = Tick(window, logic, control)
-
-    # window.Close()
+        shallQuit = Tick(window, logic, control) or shallQuit
 
 
 def Main():
@@ -274,7 +266,7 @@ if __name__ == '__main__':
 
     SetupLogger()  # Setup Logger
 
-    if targetRoutine not in ['Loop_Stage', 'Loop_Level_By_Image', 'Loop_Level_By_Name', 'Guild_Coop', 'Guild_Story', 'Guild']:
+    if targetRoutine not in predefined_routines:
         print('Error Arguments. Abort.')
         print('')
         print('Examples:')

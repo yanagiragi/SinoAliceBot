@@ -12,7 +12,6 @@ class Routines(Enum):
     LOOP_SINGLE_LEVEL = 'LOOP LEVEL'
     LOOP_STAGE = 'LOOP STAGE'  # 第一次跑關卡時，跑通整個流程
 
-
 class Logic(Routine):
     def __init__(self, routine, control, optimized=True):
         super().__init__("Main Logic", control, optimized)
