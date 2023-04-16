@@ -65,8 +65,38 @@
         "threshold": 0.8
     },
     {
-        "name": "heaven_burns_red okaeri", 
-        "pattern": "HeavenBurnsRed/okaeri.png",
+        "name": "project_sekai download", 
+        "pattern": "ProjectSekai/download.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "project_sekai later", 
+        "pattern": "ProjectSekai/later.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "project_sekai live", 
+        "pattern": "ProjectSekai/live.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "project_sekai loginBonus", 
+        "pattern": "ProjectSekai/loginBonus.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "project_sekai logo", 
+        "pattern": "ProjectSekai/logo.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "project_sekai skip", 
+        "pattern": "ProjectSekai/skip.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "project_sekai info", 
+        "pattern": "ProjectSekai/info.png",
         "threshold": 0.8
     }
 ]

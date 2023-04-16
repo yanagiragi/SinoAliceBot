@@ -41,8 +41,9 @@ shallPause = False
 toaster = None  # initialized after __init__ == "__main__"
 
 predefined_routines = {
-    'BlueArchiveDaily': lambda control, targetLevel, targetCount: BlueArchiveDaily.Routine_BlueArchiveDaily('Open Blue Archive', control),
-    'HeavenBurnsRedDaily': lambda control, targetLevel, targetCount: HeavenBurnsRedDaily.Routine_HeavenBurnsRedDaily('Open Heaven Burns Red', control)
+    # 'BlueArchiveDaily': lambda control, targetLevel, targetCount: BlueArchiveDaily.Routine_BlueArchiveDaily('Open Blue Archive', control),
+    'HeavenBurnsRedDaily': lambda control, targetLevel, targetCount: HeavenBurnsRedDaily.Routine_HeavenBurnsRedDaily('Open Heaven Burns Red', control),
+    'ProjectSekaiDaily': lambda control, targetLevel, targetCount: ProjectSekaiDaily.Routine_ProjectSekaiDaily('Open Heaven Burns Red', control)
 }
 
 

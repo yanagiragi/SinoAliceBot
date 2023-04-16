@@ -1,4 +1,5 @@
 __all__ = [
     "BlueArchiveDaily",
-    "HeavenBurnsRedDaily"
+    "HeavenBurnsRedDaily",
+    "ProjectSekaiDaily"
 ]

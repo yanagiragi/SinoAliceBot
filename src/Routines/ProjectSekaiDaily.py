@@ -5,7 +5,7 @@ from src.Routine import Routine
 from src.utils import SaveScreenshot
 
 
-class Routine_HeavenBurnsRedDaily(Routine):
+class Routine_ProjectSekaiDaily(Routine):
     def __init__(self, name, control, optimized=True):
         super().__init__(name, control, optimized)
 
@@ -22,41 +22,43 @@ class Routine_HeavenBurnsRedDaily(Routine):
         self.state = State.IDLE
         currentDetected = None
 
-        if self.hasDetected['heaven_burns_red icon'].IsExist:
+        if self.hasDetected['project_sekai icon'].IsExist:
             if self.prevState == State.OS_CLOSE_ALL_TASKS:
                 self.state = State.DONE
             else:
                 self.state = State.OS_HOME
-            currentDetected = self.hasDetected['heaven_burns_red icon']
+            currentDetected = self.hasDetected['project_sekai icon']
 
         elif self.hasDetected['close_all_tasks'].IsExist:
             self.state = State.OS_CLOSE_ALL_TASKS
             currentDetected = self.hasDetected['close_all_tasks']
 
-        elif self.hasDetected['heaven_burns_red criware'].IsExist:
-            self.state = State.HEAVEN_BURNS_RED_APP_HOME
-            currentDetected = self.hasDetected['heaven_burns_red criware']
+        elif self.hasDetected['project_sekai logo'].IsExist:
+            self.state = State.PROJECT_SEKAI_APP_HOME
+            currentDetected = self.hasDetected['project_sekai logo']
 
-        elif self.hasDetected['heaven_burns_red battleResult'].IsExist or \
-                self.hasDetected['heaven_burns_red okaeri'].IsExist or \
-                self.hasDetected['heaven_burns_red home'].IsExist or \
-                self.hasDetected['heaven_burns_red menu'].IsExist:
-            self.state = State.HEAVEN_BURNS_RED_HOME
+        elif self.hasDetected['project_sekai live'].IsExist or \
+                self.hasDetected['project_sekai info'].IsExist:
+            self.state = State.PROJECT_SEKAI_HOME
             currentDetected = None
+
+        elif self.hasDetected['project_sekai later'].IsExist:
+            self.state = State.PROJECT_SEKAI_PLAY_LOGIN
+            currentDetected = self.hasDetected['project_sekai later']
    
-        elif self.hasDetected['heaven_burns_red loginBonus'].IsExist:
-            self.state = State.HEAVEN_BURNS_RED_LOGIN_BONUS
-            currentDetected = self.hasDetected['heaven_burns_red loginBonus']
+        elif self.hasDetected['project_sekai loginBonus'].IsExist:
+            self.state = State.PROJECT_SEKAI_LOGIN_BONUS
+            currentDetected = self.hasDetected['project_sekai skip']
 
-        elif self.hasDetected['heaven_burns_red ok'].IsExist:
-            self.state = State.HEAVEN_BURNS_RED_COMFIRM
-            currentDetected = self.hasDetected['heaven_burns_red ok']
+        elif self.hasDetected['project_sekai skip'].IsExist:
+            self.state = State.PROJECT_SEKAI_COMFIRM
+            currentDetected = self.hasDetected['project_sekai skip']
 
-        elif self.hasDetected['heaven_burns_red downloadAll'].IsExist:
-            self.state = State.HEAVEN_BURNS_RED_DOWNLOAD
-            currentDetected = self.hasDetected['heaven_burns_red downloadAll']
+        elif self.hasDetected['project_sekai download'].IsExist:
+            self.state = State.PROJECT_SEKAI_DOWNLOAD
+            currentDetected = self.hasDetected['project_sekai download']
 
-        if self.prevState == State.HEAVEN_BURNS_RED_HOME and \
+        if self.prevState == State.PROJECT_SEKAI_HOME and \
                 self.state == State.OS_HOME and \
                 self.hasDetected['mission_control'].IsExist:
             self.state = State.OS_ABOUT_TO_CLOSE_ALL_TASKS
@@ -74,23 +76,24 @@ class Routine_HeavenBurnsRedDaily(Routine):
             State.OS_HOME,
             State.OS_CLOSE_ALL_TASKS,
             State.OS_ABOUT_TO_CLOSE_ALL_TASKS,
-            State.HEAVEN_BURNS_RED_LOGIN_BONUS,
-            State.HEAVEN_BURNS_RED_COMFIRM,
-            State.HEAVEN_BURNS_RED_DOWNLOAD,
-            State.HEAVEN_BURNS_RED_APP_HOME,
+            State.PROJECT_SEKAI_APP_HOME,
+            State.PROJECT_SEKAI_LOGIN_BONUS,
+            State.PROJECT_SEKAI_COMFIRM,
+            State.PROJECT_SEKAI_DOWNLOAD,
+            State.PROJECT_SEKAI_PLAY_LOGIN
         ]
 
         if self.state in statesShouldAction:
             self.control.MouseLeftClick(top_left, bottom_right)
             time.sleep(3)
         
-        elif self.state == State.HEAVEN_BURNS_RED_HOME:
+        elif self.state == State.PROJECT_SEKAI_HOME:
             # press mission control button
             self.control.ReturnToHome()
             time.sleep(3)
 
         if self.state != self.prevState:
-            SaveScreenshot(self.frame, 'HBR-', f'-{self.state}') # no unicode support!
+            SaveScreenshot(self.frame, 'PS-', f'-{self.state}') # no unicode support!
         
 
     def GetMessage(self):
