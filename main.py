@@ -34,12 +34,15 @@ dmmTitle = 'Myゲーム - DMM GAME PLAYER'
 windowsName = 'SM-G955F'
 resultion = '461x976'
 
+maxExecutionTime = 60 * 5
+
 # Global variable
 isDebug = True
 shallQuit = False
 shallPause = False
 toaster = None  # initialized after __init__ == "__main__"
 lastFrame = None
+startTime = datetime.datetime.now()
 
 predefined_routines = {
     # 'BlueArchiveDaily': lambda control, targetLevel, targetCount: BlueArchiveDaily.Routine_BlueArchiveDaily('Open Blue Archive', control),
@@ -205,7 +208,7 @@ def Tick(window, logic, control) -> bool:
 
 
 def MainLoop():
-    global shallQuit
+    global shallQuit, startTime
 
     window = Window(windowsName, resizeFactor)
 
@@ -226,6 +229,9 @@ def MainLoop():
 
     while not shallQuit:
         shallQuit = Tick(window, logic, control) or shallQuit
+        if (datetime.datetime.now() - startTime).seconds > maxExecutionTime:
+            print('Reach max execution time!')
+            shallQuit = True
 
 
 def Main():
