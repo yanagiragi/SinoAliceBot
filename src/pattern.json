@@ -15,6 +15,11 @@
         "threshold": 0.8
     },
     {
+        "name": "deemo2 icon", 
+        "pattern": "d2.png",
+        "threshold": 0.8
+    },
+    {
         "name": "close_all_tasks", 
         "pattern": "closeAll.png",
         "threshold": 0.8
@@ -102,6 +107,31 @@
     {
         "name": "project_sekai info", 
         "pattern": "ProjectSekai/info.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "deemo2 confirm", 
+        "pattern": "Deemo2/confirm.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "deemo2 setting", 
+        "pattern": "Deemo2/setting.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "deemo2 stampCard", 
+        "pattern": "Deemo2/stampCard.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "deemo2 close", 
+        "pattern": "Deemo2/close.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "deemo2 echoFace", 
+        "pattern": "Deemo2/echoFace.png",
         "threshold": 0.8
     }
 ]

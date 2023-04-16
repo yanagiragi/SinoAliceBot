@@ -47,7 +47,8 @@ startTime = datetime.datetime.now()
 predefined_routines = {
     # 'BlueArchiveDaily': lambda control, targetLevel, targetCount: BlueArchiveDaily.Routine_BlueArchiveDaily('Open Blue Archive', control),
     'HeavenBurnsRedDaily': lambda control, targetLevel, targetCount: HeavenBurnsRedDaily.Routine_HeavenBurnsRedDaily('Open Heaven Burns Red', control),
-    'ProjectSekaiDaily': lambda control, targetLevel, targetCount: ProjectSekaiDaily.Routine_ProjectSekaiDaily('Open Heaven Burns Red', control)
+    'ProjectSekaiDaily': lambda control, targetLevel, targetCount: ProjectSekaiDaily.Routine_ProjectSekaiDaily('Open Heaven Burns Red', control),
+    'Deemo2Daily': lambda control, targetLevel, targetCount: Deemo2Daily.Routine_Deemo2Daily('Open Deemo2', control)
 }
 
 
