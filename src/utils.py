@@ -53,12 +53,12 @@ def LoadPattern(path):
     # return img_np
 
 
-def SaveScreenshot(frame, prefix = '', postfix = ''):
+def SaveScreenshot(frame, postfix = ''):
     if not os.path.exists('ScreenShots'):
         os.makedirs('ScreenShots')
     now = datetime.now()
     nowStr = datetime.strftime(now, '%Y-%m-%d-%H-%M-%S')
-    outputStr = f'ScreenShots/ScreenShot-{prefix}{nowStr}{postfix}.png'
+    outputStr = f'ScreenShots/ScreenShot-{nowStr}{postfix}.png'
     success = cv2.imwrite(outputStr, frame)
     if success:
         print(f'Save {outputStr}.')

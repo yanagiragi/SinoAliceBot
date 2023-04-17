@@ -90,7 +90,7 @@ class Routine_HeavenBurnsRedDaily(Routine):
             time.sleep(3)
 
         if self.state != self.prevState:
-            SaveScreenshot(self.frame, 'HBR-', f'-{self.state}') # no unicode support!
+            SaveScreenshot(self.frame, f'HBR-{self.state}') # no unicode support!
         
 
     def GetMessage(self):

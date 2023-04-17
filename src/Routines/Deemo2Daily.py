@@ -83,7 +83,7 @@ class Routine_Deemo2Daily(Routine):
             time.sleep(3)
 
         if self.state != self.prevState:
-            SaveScreenshot(self.frame, 'D2-', f'-{self.state}')  # no unicode support! 
+            SaveScreenshot(self.frame, f'D2-{self.state}')  # no unicode support! 
 
     def GetMessage(self):
         return super().GetMessage() + f', state = {self.state.value}'
