@@ -48,6 +48,14 @@ class State(Enum):
     PROJECT_SEKAI_PLAY_LOGIN = 'PS-Play登入',
     DEEMO2_CONFRIM = 'D2-待確認項目',
     DEEMO2_CLOSE = 'D2-待關閉項目',
-    DEEMO2_LOGO = 'D2_Logo',
+    DEEMO2_LOGO = 'D2-Logo',
     DEEMO2_LOGIN_BONUS = 'D2-登入獎勵',
-    DEEMO2_HOME = 'D2-主畫面'
+    DEEMO2_HOME = 'D2-主畫面',
+    SINOALICE_LOGO = 'SA-Logo'
+    SINOALICE_CLOSE = 'SA-待關閉項目',
+    SINOALICE_CANCEL = 'SA-待取消項目'
+    SINOALICE_MISSION_MAIN = 'SA-主要任務'
+    SINOALICE_MISSION_DAILY = 'SA-每日任務'
+    SINOALICE_MISSION_DAILY_NO_REWARD = 'SA-每日任務 (已領取)'
+    SINOALICE_HOME = 'SA-主畫面'
+    SINOALICE_RECEIVE_REWARD = 'SA-領取獎勵'

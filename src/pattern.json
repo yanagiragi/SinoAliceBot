@@ -20,6 +20,11 @@
         "threshold": 0.8
     },
     {
+        "name": "sinoalice icon", 
+        "pattern": "sinoaliceIcon.png",
+        "threshold": 0.8
+    },
+    {
         "name": "close_all_tasks", 
         "pattern": "closeAll.png",
         "threshold": 0.8
@@ -132,6 +137,56 @@
     {
         "name": "deemo2 echoFace", 
         "pattern": "Deemo2/echoFace.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice home", 
+        "pattern": "SinoAlice/home.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice cancel", 
+        "pattern": "SinoAlice/cancel.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice close", 
+        "pattern": "SinoAlice/close.png",
+        "threshold": 0.6
+    },
+    {
+        "name": "sinoalice daily", 
+        "pattern": "SinoAlice/daily.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice daily_no", 
+        "pattern": "SinoAlice/dailyNo.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice get_all", 
+        "pattern": "SinoAlice/getAll.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice mission", 
+        "pattern": "SinoAlice/mission.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice mission_logo", 
+        "pattern": "SinoAlice/missionLogo.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice sent_to_box", 
+        "pattern": "SinoAlice/sentToBox.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice logo", 
+        "pattern": "SinoAlice/logo.png",
         "threshold": 0.8
     }
 ]

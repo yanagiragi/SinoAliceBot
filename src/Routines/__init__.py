@@ -2,5 +2,6 @@ __all__ = [
     "BlueArchiveDaily",
     "HeavenBurnsRedDaily",
     "ProjectSekaiDaily",
-    "Deemo2Daily"
+    "Deemo2Daily",
+    "SinoaliceDaily"
 ]
