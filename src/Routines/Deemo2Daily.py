@@ -37,9 +37,11 @@ class Routine_Deemo2Daily(Routine):
             self.state = State.DEEMO2_CONFRIM
             currentDetected = self.hasDetected['deemo2 confirm']
 
-        elif self.hasDetected['deemo2 stampCard'].IsExist and \
-                self.hasDetected['deemo2 close'].IsExist:
-            self.state = State.DEEMO2_LOGIN_BONUS
+        elif self.hasDetected['deemo2 close'].IsExist:
+            if self.hasDetected['deemo2 stampCard'].IsExist:
+                self.state = State.DEEMO2_LOGIN_BONUS
+            else:
+                self.state = State.DEEMO2_CLOSE
             currentDetected = self.hasDetected['deemo2 close']
 
         elif self.hasDetected['deemo2 setting'].IsExist:
@@ -70,7 +72,8 @@ class Routine_Deemo2Daily(Routine):
             State.OS_ABOUT_TO_CLOSE_ALL_TASKS,
             State.DEEMO2_CONFRIM,
             State.DEEMO2_LOGIN_BONUS,
-            State.DEEMO2_LOGO
+            State.DEEMO2_LOGO,
+            State.DEEMO2_CLOSE
         ]
 
         if self.state in statesShouldAction:

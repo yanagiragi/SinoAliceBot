@@ -47,6 +47,7 @@ class State(Enum):
     PROJECT_SEKAI_DOWNLOAD = 'PS-下載資源',
     PROJECT_SEKAI_PLAY_LOGIN = 'PS-Play登入',
     DEEMO2_CONFRIM = 'D2-待確認項目',
+    DEEMO2_CLOSE = 'D2-待關閉項目',
     DEEMO2_LOGO = 'D2_Logo',
     DEEMO2_LOGIN_BONUS = 'D2-登入獎勵',
     DEEMO2_HOME = 'D2-主畫面'
