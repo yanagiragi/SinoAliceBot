@@ -54,6 +54,7 @@ class State(Enum):
     SINOALICE_LOGO = 'SA-Logo'
     SINOALICE_CLOSE = 'SA-待關閉項目',
     SINOALICE_CANCEL = 'SA-待取消項目'
+    SINOALICE_OK = 'SA-待確認項目'
     SINOALICE_MISSION_MAIN = 'SA-主要任務'
     SINOALICE_MISSION_DAILY = 'SA-每日任務'
     SINOALICE_MISSION_DAILY_NO_REWARD = 'SA-每日任務 (已領取)'

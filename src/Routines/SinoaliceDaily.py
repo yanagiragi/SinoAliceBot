@@ -48,6 +48,10 @@ class Routine_SinoaliceDaily(Routine):
         elif self.hasDetected['sinoalice sent_to_box'].IsExist:
             self.state = State.SINOALICE_RECEIVE_REWARD
             currentDetected = None
+
+        elif self.hasDetected['sinoalice ok'].IsExist:
+            self.state = State.SINOALICE_OK
+            currentDetected = self.hasDetected['sinoalice ok']
    
         elif self.hasDetected['sinoalice mission_logo'].IsExist:
             if self.hasDetected['sinoalice daily'].IsExist:
@@ -89,6 +93,7 @@ class Routine_SinoaliceDaily(Routine):
             State.SINOALICE_MISSION_MAIN,
             State.SINOALICE_MISSION_DAILY,
             State.SINOALICE_HOME,
+            State.SINOALICE_OK
         ]
 
         if self.state in statesShouldAction:

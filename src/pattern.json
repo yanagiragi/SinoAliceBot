@@ -57,7 +57,7 @@
     {
         "name": "heaven_burns_red loginBonus", 
         "pattern": "HeavenBurnsRed/loginBonus.png",
-        "threshold": 0.8
+        "threshold": 0.6
     },
     {
         "name": "heaven_burns_red ok", 
@@ -187,6 +187,11 @@
     {
         "name": "sinoalice logo", 
         "pattern": "SinoAlice/logo.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "sinoalice ok", 
+        "pattern": "SinoAlice/ok.png",
         "threshold": 0.8
     }
 ]
