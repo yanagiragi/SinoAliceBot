@@ -102,7 +102,7 @@ class Routine_SinoaliceDaily(Routine):
             time.sleep(3)
 
         if self.state != self.prevState:
-            SaveScreenshot(self.frame, f'SA-{self.state}') # no unicode support!
+            SaveScreenshot(self.frame, f'-SA-{self.state}') # no unicode support!
 
     def GetMessage(self):
         return super().GetMessage() + f', state = {self.state.value}'

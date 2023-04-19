@@ -93,7 +93,7 @@ class Routine_ProjectSekaiDaily(Routine):
             time.sleep(3)
 
         if self.state != self.prevState:
-            SaveScreenshot(self.frame, f'PS-{self.state}') # no unicode support!
+            SaveScreenshot(self.frame, f'-PS-{self.state}') # no unicode support!
         
 
     def GetMessage(self):

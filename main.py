@@ -89,7 +89,7 @@ def Cleanup(frame=None):
         keywatchProcess.terminate()
     cv2.destroyAllWindows()
     if frame is not None:
-        utils.SaveScreenshot(frame, 'Cleanup-')
+        utils.SaveScreenshot(frame, '-Cleanup')
 
 
 def SigCleanup():
