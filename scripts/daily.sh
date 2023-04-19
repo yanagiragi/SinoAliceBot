@@ -8,6 +8,8 @@
     --window-x=960 --window-y=50 \
     --window-width=461 --window-height=976 ) & pid=$!
 
+sleep 10
+
 python main.py --debug true --routine "ProjectSekaiDaily"
 python main.py --debug true --routine "HeavenBurnsRedDaily"
 python main.py --debug true --routine "Deemo2Daily"
