@@ -26,17 +26,28 @@ Run() {
     kill "${pid}"
 }
 
+SendFailureReport() {
+    echo "Detect Failure, Send Failure Report"
+    local screenshot=$(UploadLatestScreenShot "$(pwd)/ScreenShots")
+    echo "Screenshot = ${screenshot}"
+    SendMail "${SENDGRID_TO_MAIL}" "${SENDGRID_FROM_MAIL}" "Failure Detected" "<p>Screenshot = ${screenshot}</p>" "${SENDGRID_API_KEY}"
+    echo "Send Failure Report Done" 
+}
+
 (
     SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
     cd "${SCRIPTPATH}/../"
     echo "pwd = $(pwd)"
 
+    source "scripts/imgur.sh"
+    source "scripts/utils.sh"
+
     SLEEP_SECONDS="21600"
     while true
     do
         echo "Current Time = $(date '+%Y-%m-%d %T'), "
-        Run || echo "Failed to Run" # TODO: Send mail when failed
+        Run || SendFailureReport
         echo "Done. Next Run = $(date --date="+${SLEEP_SECONDS} seconds" '+%Y-%m-%d %T')"
         sleep "${SLEEP_SECONDS}"
     done

@@ -439,3 +439,4 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 ScreenShots
+scripts/.env.sh
