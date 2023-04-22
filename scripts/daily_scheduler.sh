@@ -34,7 +34,20 @@ SendFailureReport() {
     echo "Send Failure Report Done" 
 }
 
+EchoEnv() {
+    echo "SENDGRID_API_KEY = ${SENDGRID_API_KEY}"
+    echo "SENDGRID_TO_MAIL = ${SENDGRID_TO_MAIL}"
+    echo "SENDGRID_FROM_MAIL = ${SENDGRID_FROM_MAIL}"
+}
+
 (
+    EchoEnv
+
+    if [[ "${SENDGRID_API_KEY}" == "SG.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" || "${SENDGRID_API_KEY}" == "" ]]; then
+        echo "you should call \`source scripts/.env.sh\` before start."
+        exit -1
+    fi
+
     SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
     cd "${SCRIPTPATH}/../"
