@@ -11,7 +11,7 @@ def LoadPatterns(resourcePrefix):
 
     print(f"Load pattern with prefix: {resourcePrefix}")
 
-    raw = open('src/pattern.json')
+    raw = open('Resources/pattern.json')
     config = json.load(raw)
 
     def parse_config(config):
@@ -98,19 +98,6 @@ def DebugDraw(img, frame, logic):
         existsPatternString = ', Exists: [' + '], ['.join(exists) + ']'
     else:
         existsPatternString = ''
-
-    """
-    # stage debugging
-    heightIncrement = (352 - 220)
-    for i in range(3):
-        cv2.rectangle(img, (36, 188 + heightIncrement * i), (315, 266 + heightIncrement * i), cyan, 1)
-        
-    # level
-    heightIncrement = (330 - 252)
-    for i in range(4):
-        cv2.rectangle(img, (22, 252 + heightIncrement * i), (327, 317 + heightIncrement * i), cyan, 1)
-        cv2.rectangle(img, (117, 264 + heightIncrement * i), (144, 278 + heightIncrement * i), cyan, 1)
-    """
 
     img = utils.BGRToRGB(img)
     return img

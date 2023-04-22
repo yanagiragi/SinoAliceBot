@@ -35,23 +35,27 @@ class State(Enum):
     OS_ABOUT_TO_CLOSE_ALL_TASKS = 'OS-已開啟程式 (主畫面過渡)'
     OS_CLOSE_ALL_TASKS = 'OS-已開啟程式'
     OS_HOME = 'OS-主畫面'
+    
     HEAVEN_BURNS_RED_APP_HOME = 'HBD-開始畫面'
     HEAVEN_BURNS_RED_HOME = 'HBD-主畫面',
     HEAVEN_BURNS_RED_LOGIN_BONUS = 'HBD-登入獎勵',
     HEAVEN_BURNS_RED_COMFIRM = 'HBD-待確認項目',
     HEAVEN_BURNS_RED_SKIP = 'HBD-待跳過項目',
     HEAVEN_BURNS_RED_DOWNLOAD = 'HBD-下載資源',
+    
     PROJECT_SEKAI_APP_HOME = 'PS-開始畫面'
     PROJECT_SEKAI_HOME = 'PS-主畫面',
     PROJECT_SEKAI_LOGIN_BONUS = 'PS-登入獎勵',
     PROJECT_SEKAI_COMFIRM = 'PS-待確認項目',
     PROJECT_SEKAI_DOWNLOAD = 'PS-下載資源',
     PROJECT_SEKAI_PLAY_LOGIN = 'PS-Play登入',
+    
     DEEMO2_CONFRIM = 'D2-待確認項目',
     DEEMO2_CLOSE = 'D2-待關閉項目',
     DEEMO2_LOGO = 'D2-Logo',
     DEEMO2_LOGIN_BONUS = 'D2-登入獎勵',
     DEEMO2_HOME = 'D2-主畫面',
+    
     SINOALICE_LOGO = 'SA-Logo'
     SINOALICE_CLOSE = 'SA-待關閉項目',
     SINOALICE_CANCEL = 'SA-待取消項目'

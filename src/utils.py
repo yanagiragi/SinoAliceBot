@@ -23,10 +23,10 @@ def BGRToRGB(img):
     frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
     return frame
 
-# Debug Function
-
-
 def LoadScreenFromImage(path):
+    """
+    Debug Use Function
+    """
     img = cv2.imread(path)
     img_np = np.array(img)
     x, y, c = img_np.shape

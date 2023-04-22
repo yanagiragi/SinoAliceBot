@@ -22,6 +22,4 @@ class IControl(metaclass=ABCMeta):
 
     @abstractmethod
     def OsoujiPathSlides(self, delay=0.05):
-        center = [177, 356]
-        osoujiPaths = [[198, 286], [267, 343], [265, 435], [246, 526], [166, 518], [86, 474], [75, 385], [126, 300]]
         pass
