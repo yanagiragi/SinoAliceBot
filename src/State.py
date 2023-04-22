@@ -39,6 +39,7 @@ class State(Enum):
     HEAVEN_BURNS_RED_HOME = 'HBD-主畫面',
     HEAVEN_BURNS_RED_LOGIN_BONUS = 'HBD-登入獎勵',
     HEAVEN_BURNS_RED_COMFIRM = 'HBD-待確認項目',
+    HEAVEN_BURNS_RED_SKIP = 'HBD-待跳過項目',
     HEAVEN_BURNS_RED_DOWNLOAD = 'HBD-下載資源',
     PROJECT_SEKAI_APP_HOME = 'PS-開始畫面'
     PROJECT_SEKAI_HOME = 'PS-主畫面',

@@ -52,6 +52,10 @@ class Routine_HeavenBurnsRedDaily(Routine):
             self.state = State.HEAVEN_BURNS_RED_COMFIRM
             currentDetected = self.hasDetected['heaven_burns_red ok']
 
+        elif self.hasDetected['heaven_burns_red skip'].IsExist:
+            self.state = State.HEAVEN_BURNS_RED_COMFIRM
+            currentDetected = self.hasDetected['heaven_burns_red skip']
+
         elif self.hasDetected['heaven_burns_red downloadAll'].IsExist:
             self.state = State.HEAVEN_BURNS_RED_DOWNLOAD
             currentDetected = self.hasDetected['heaven_burns_red downloadAll']
@@ -76,6 +80,7 @@ class Routine_HeavenBurnsRedDaily(Routine):
             State.OS_ABOUT_TO_CLOSE_ALL_TASKS,
             State.HEAVEN_BURNS_RED_LOGIN_BONUS,
             State.HEAVEN_BURNS_RED_COMFIRM,
+            State.HEAVEN_BURNS_RED_SKIP,
             State.HEAVEN_BURNS_RED_DOWNLOAD,
             State.HEAVEN_BURNS_RED_APP_HOME,
         ]
