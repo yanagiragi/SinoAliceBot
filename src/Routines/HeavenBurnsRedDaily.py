@@ -33,13 +33,14 @@ class Routine_HeavenBurnsRedDaily(Routine):
             self.state = State.OS_CLOSE_ALL_TASKS
             currentDetected = self.hasDetected['close_all_tasks']
 
-        elif self.hasDetected['heaven_burns_red criware'].IsExist:
-            self.state = State.HEAVEN_BURNS_RED_APP_HOME
-            currentDetected = self.hasDetected['heaven_burns_red criware']
+        elif self.hasDetected['heaven_burns_red inherit'].IsExist:
+            self.state = State.HEAVEN_BURNS_RED_INHERIT
+            currentDetected = self.hasDetected['heaven_burns_red inherit']
 
         elif self.hasDetected['heaven_burns_red battleResult'].IsExist or \
                 self.hasDetected['heaven_burns_red okaeri'].IsExist or \
                 self.hasDetected['heaven_burns_red home'].IsExist or \
+                self.hasDetected['heaven_burns_red arena'].IsExist or \
                 self.hasDetected['heaven_burns_red menu'].IsExist:
             self.state = State.HEAVEN_BURNS_RED_HOME
             currentDetected = None
@@ -59,6 +60,10 @@ class Routine_HeavenBurnsRedDaily(Routine):
         elif self.hasDetected['heaven_burns_red downloadAll'].IsExist:
             self.state = State.HEAVEN_BURNS_RED_DOWNLOAD
             currentDetected = self.hasDetected['heaven_burns_red downloadAll']
+
+        elif self.hasDetected['heaven_burns_red criware'].IsExist:
+            self.state = State.HEAVEN_BURNS_RED_APP_HOME
+            currentDetected = self.hasDetected['heaven_burns_red criware']
 
         if self.prevState == State.HEAVEN_BURNS_RED_HOME and \
                 self.state == State.OS_HOME and \
@@ -83,6 +88,7 @@ class Routine_HeavenBurnsRedDaily(Routine):
             State.HEAVEN_BURNS_RED_SKIP,
             State.HEAVEN_BURNS_RED_DOWNLOAD,
             State.HEAVEN_BURNS_RED_APP_HOME,
+            State.HEAVEN_BURNS_RED_INHERIT,
         ]
 
         if self.state in statesShouldAction:
