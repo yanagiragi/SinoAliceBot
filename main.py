@@ -40,6 +40,7 @@ maxExecutionTime = 60 * 5
 isDebug = True
 shallQuit = False
 shallPause = False
+reachMaximumTime = False
 toaster = None  # initialized after __init__ == "__main__"
 lastFrame = None
 startTime = datetime.datetime.now()
@@ -210,7 +211,7 @@ def Tick(window, logic, control) -> bool:
 
 
 def MainLoop():
-    global shallQuit, startTime
+    global shallQuit, startTime, reachMaximumTime
 
     window = Window(windowsName, resizeFactor)
 
@@ -233,6 +234,7 @@ def MainLoop():
         shallQuit = Tick(window, logic, control) or shallQuit
         if (datetime.datetime.now() - startTime).seconds > maxExecutionTime:
             print('Reach max execution time!')
+            reachMaximumTime = True
             shallQuit = True
 
 
@@ -245,6 +247,8 @@ def Main():
         logging.exception(e)
     finally:
         Cleanup(lastFrame)
+        if reachMaximumTime:
+            sys.exit(1)
 
 
 if __name__ == '__main__':
