@@ -84,7 +84,12 @@
         "pattern": "HeavenBurnsRed/skip.png",
         "threshold": 0.8
     },
-        {
+    {
+        "name": "heaven_burns_red skip_dialog", 
+        "pattern": "HeavenBurnsRed/skipDialog.png",
+        "threshold": 0.8
+    },
+    {
         "name": "heaven_burns_red arena", 
         "pattern": "HeavenBurnsRed/arena.png",
         "threshold": 0.8

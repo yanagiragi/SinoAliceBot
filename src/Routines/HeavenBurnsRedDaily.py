@@ -41,6 +41,7 @@ class Routine_HeavenBurnsRedDaily(Routine):
                 self.hasDetected['heaven_burns_red okaeri'].IsExist or \
                 self.hasDetected['heaven_burns_red home'].IsExist or \
                 self.hasDetected['heaven_burns_red arena'].IsExist or \
+                self.hasDetected['heaven_burns_red skip_dialog'].IsExist or \
                 self.hasDetected['heaven_burns_red menu'].IsExist:
             self.state = State.HEAVEN_BURNS_RED_HOME
             currentDetected = None
