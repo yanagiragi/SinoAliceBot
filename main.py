@@ -138,7 +138,7 @@ Returns shall quit or not
 
 
 def Tick(window, logic, control) -> bool:
-    global lastFrame
+    global lastFrame, startTime, reachMaximumTime
     
     if shallQuit is True:
         return True
@@ -147,6 +147,15 @@ def Tick(window, logic, control) -> bool:
         return False
 
     tStart = time.time()  # Start Recording
+
+    if (datetime.datetime.now() - startTime).seconds > maxExecutionTime:
+            print('Reach max execution time!')
+            reachMaximumTime = True
+            utils.SaveScreenshot(lastFrame, '-reachMaximumTime')
+            # return to os home to avoid affect next routine
+            control.ReturnToHome()
+            time.sleep(3)
+            return True
 
     img, error = window.GetScreen()
     if img is None:
@@ -211,7 +220,7 @@ def Tick(window, logic, control) -> bool:
 
 
 def MainLoop():
-    global shallQuit, startTime, reachMaximumTime
+    global shallQuit
 
     window = Window(windowsName, resizeFactor)
 
@@ -231,11 +240,7 @@ def MainLoop():
                        icon_path=toastIcon)  # Show Notifcation
 
     while not shallQuit:
-        shallQuit = Tick(window, logic, control) or shallQuit
-        if (datetime.datetime.now() - startTime).seconds > maxExecutionTime:
-            print('Reach max execution time!')
-            reachMaximumTime = True
-            shallQuit = True
+        shallQuit = Tick(window, logic, control)
 
 
 def Main():

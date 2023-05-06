@@ -5,7 +5,7 @@ UploadLatestScreenShot() {
     local script_path;
     local screenshot_path;
     local uploaded_link;
-    screenshot_path="$(find ${screenshot_dir_path} -maxdepth 1 -type f | head -n 1)"
+    screenshot_path="$(find ${screenshot_dir_path} -maxdepth 1 -type f -iname "ScreenShot*-reachMaximumTime.png")"
     uploaded_link="$(UploadToImgur ${screenshot_path})"
     echo "${uploaded_link}"
 }
