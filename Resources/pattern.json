@@ -202,10 +202,10 @@
     {
         "name": "sinoalice logo", 
         "pattern": "SinoAlice/logo.png",
-        "threshold": 0.8
+        "threshold": 0.6
     },
     {
-        "name": "sinoalice ok", 
+        "name": "sinoalice ok",
         "pattern": "SinoAlice/ok.png",
         "threshold": 0.8
     }
