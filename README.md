@@ -1,6 +1,8 @@
 # Sinoalice Bot
 
-A Bot for looping level in SinoAlice based on phone remote controls, template matching and hand-crafted mouse macros
+A Bot designed originally for looping level in SinoAlice based on phone remote controls, template matching and hand-crafted mouse macros.
+
+Now support different games via phone remote controls.
 
 ![](https://i.imgur.com/QdDbedk.png)
 
@@ -20,9 +22,8 @@ A Bot for looping level in SinoAlice based on phone remote controls, template ma
 
 ## Run
 
-* Create scrspy instance: ```.\scrcpy.exe --window-height 720 --window-borderless -w```
-
-* Run: ```python main.py [--debug]``` or ```./main.exe [--debug]``` (for built executable)
+* Check scripts for details
+  * for `daily_scheduler.sh`, might need to setup `.env.sh` first. `cp scripts/.env.sample.sh scripts/.env.sh` & setup credentials
 
 ## Build
 
