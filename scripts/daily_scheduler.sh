@@ -3,8 +3,9 @@
 Run() {
     local has_failure=""
     local return_code=""
+    local failed_routines=""
 
-    ( ../scrcpy-win64-v2.0/scrcpy.exe \
+    ( "${SCRCPY}" \
         --stay-awake \
         --turn-screen-off \
         --show-touches \
@@ -20,6 +21,7 @@ Run() {
     if [[ "${return_code}" != "0" ]]; then
         echo "has_failure!"
         has_failure="true"
+        failed_routines="${failed_routines}, HeavenBurnsRedDaily"
     fi
     
     echo "Execute ProjectSekaiDaily"
@@ -28,6 +30,7 @@ Run() {
     if [[ "${return_code}" != "0" ]]; then
         echo "has_failure!"
         has_failure="true"
+        failed_routines="${failed_routines}, ProjectSekaiDaily"
     fi 
 
     echo "Execute Deemo2Daily"
@@ -36,6 +39,7 @@ Run() {
     if [[ "${return_code}" != "0" ]]; then
         echo "has_failure!"
         has_failure="true"
+        failed_routines="${failed_routines}, Deemo2Daily"
     fi
     
     echo "Execute SinoaliceDaily"
@@ -44,11 +48,13 @@ Run() {
     if [[ "${return_code}" != "0" ]]; then
         echo "has_failure!"
         has_failure="true"
+        failed_routines="${failed_routines}, SinoaliceDaily"
     fi
 
     kill "${pid}"
 
     if [[ "${has_failure}" == "true" ]]; then
+        echo "has_failure, failed = [${failed_routines}]"
         SendFailureReport
     fi
 }
@@ -65,6 +71,7 @@ EchoEnv() {
     echo "SENDGRID_API_KEY = ${SENDGRID_API_KEY}"
     echo "SENDGRID_TO_MAIL = ${SENDGRID_TO_MAIL}"
     echo "SENDGRID_FROM_MAIL = ${SENDGRID_FROM_MAIL}"
+    echo "SCRCPY = ${SCRCPY}"
 }
 
 PrepareUpload() {
