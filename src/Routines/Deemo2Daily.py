@@ -19,7 +19,7 @@ class Routine_Deemo2Daily(Routine):
     def QueryState(self):
         super().QueryState()
 
-        self.state = State.IDLE
+        # self.state = State.IDLE
         currentDetected = None
 
         if self.hasDetected['deemo2 icon'].IsExist:
@@ -52,7 +52,7 @@ class Routine_Deemo2Daily(Routine):
         elif self.hasDetected['deemo2 echoFace'].IsExist:
             self.state = State.DEEMO2_HOME
 
-        if self.prevState == State.DEEMO2_HOME and \
+        if (self.prevState == State.DEEMO2_HOME or self.prevState == State.DEEMO2_CLOSE) and \
                 self.state == State.OS_HOME and \
                 self.hasDetected['mission_control'].IsExist:
             self.state = State.OS_ABOUT_TO_CLOSE_ALL_TASKS

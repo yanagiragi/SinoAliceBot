@@ -17,7 +17,7 @@ class Routine_BlueArchiveDaily(Routine):
     def QueryState(self):
         super().QueryState()
         
-        self.state = State.IDLE
+        # self.state = State.IDLE
         currentDetected = None
 
         if self.hasDetected['blue_archive icon'].IsExist:

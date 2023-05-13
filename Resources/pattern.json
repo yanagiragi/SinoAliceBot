@@ -32,7 +32,7 @@
     {
         "name": "mission_control", 
         "pattern": "missionControl.png",
-        "threshold": 0.8
+        "threshold": 0.6
     },
     {
         "name": "heaven_burns_red criware", 

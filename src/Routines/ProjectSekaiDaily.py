@@ -19,7 +19,7 @@ class Routine_ProjectSekaiDaily(Routine):
     def QueryState(self):
         super().QueryState()
     
-        self.state = State.IDLE
+        #self.state = State.IDLE
         currentDetected = None
 
         if self.hasDetected['project_sekai icon'].IsExist:

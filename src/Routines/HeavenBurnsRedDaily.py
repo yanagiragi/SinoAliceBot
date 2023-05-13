@@ -19,7 +19,7 @@ class Routine_HeavenBurnsRedDaily(Routine):
     def QueryState(self):
         super().QueryState()
     
-        self.state = State.IDLE
+        # self.state = State.IDLE
         currentDetected = None
 
         if self.hasDetected['heaven_burns_red icon'].IsExist:
