@@ -52,7 +52,7 @@ class Routine_SinoaliceDaily(Routine):
         elif self.hasDetected['sinoalice ok'].IsExist:
             self.state = State.SINOALICE_OK
             currentDetected = self.hasDetected['sinoalice ok']
-   
+        
         elif self.hasDetected['sinoalice mission_logo'].IsExist:
             if self.hasDetected['sinoalice daily'].IsExist:
                 self.state = State.SINOALICE_MISSION_MAIN
@@ -63,13 +63,14 @@ class Routine_SinoaliceDaily(Routine):
             elif self.hasDetected['sinoalice get_all'].IsExist:
                 self.state = State.SINOALICE_MISSION_DAILY
                 currentDetected = self.hasDetected['sinoalice get_all']
-
+        
         elif self.hasDetected['sinoalice mission'].IsExist:
             self.state = State.SINOALICE_HOME
             currentDetected = self.hasDetected['sinoalice mission']
 
         if (self.prevState == State.SINOALICE_RECEIVE_REWARD or \
-                self.prevState == State.SINOALICE_MISSION_DAILY_NO_REWARD) and \
+                self.prevState == State.SINOALICE_MISSION_DAILY_NO_REWARD or \
+                self.prevState == State.SINOALICE_HOME) and \
                 self.state == State.OS_HOME and \
                 self.hasDetected['mission_control'].IsExist:
             self.state = State.OS_ABOUT_TO_CLOSE_ALL_TASKS
@@ -92,7 +93,7 @@ class Routine_SinoaliceDaily(Routine):
             State.SINOALICE_CLOSE,
             State.SINOALICE_MISSION_MAIN,
             State.SINOALICE_MISSION_DAILY,
-            State.SINOALICE_HOME,
+            # State.SINOALICE_HOME,
             State.SINOALICE_OK
         ]
 
@@ -101,7 +102,8 @@ class Routine_SinoaliceDaily(Routine):
             time.sleep(3)
         
         elif self.state == State.SINOALICE_RECEIVE_REWARD or \
-                self.state == State.SINOALICE_MISSION_DAILY_NO_REWARD:
+                self.state == State.SINOALICE_MISSION_DAILY_NO_REWARD or \
+                self.state == State.SINOALICE_HOME: # return to home without get daily mission rewards for now
             # press mission control button
             self.control.ReturnToHome()
             time.sleep(3)
