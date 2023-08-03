@@ -208,5 +208,20 @@
         "name": "sinoalice ok",
         "pattern": "SinoAlice/ok.png",
         "threshold": 0.8
+    },
+    {
+        "name": "blue_archive rating",
+        "pattern": "BlueArchive/homeRating.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "blue_archive event block",
+        "pattern": "BlueArchive/eventBlock.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "blue_archive announcement",
+        "pattern": "BlueArchive/announcement.png",
+        "threshold": 0.8
     }
 ]

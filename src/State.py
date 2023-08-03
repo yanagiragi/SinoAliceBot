@@ -66,3 +66,8 @@ class State(Enum):
     SINOALICE_MISSION_DAILY_NO_REWARD = 'SA-每日任務 (已領取)'
     SINOALICE_HOME = 'SA-主畫面'
     SINOALICE_RECEIVE_REWARD = 'SA-領取獎勵'
+
+    BLUE_ARCHIVE_APP_HOME = 'BA-開始畫面'
+    BLUE_ARCHIVE_TITLE = 'BA-標題畫面'
+    BLUE_ARCHIVE_ADS = 'BA-廣告'
+    BLUE_ARCHIVE_HOME = 'BA-主畫面'

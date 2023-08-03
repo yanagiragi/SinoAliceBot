@@ -51,6 +51,15 @@ Run() {
         failed_routines="${failed_routines}, SinoaliceDaily"
     fi
 
+    echo "Execute BlueArchive"
+    python main.py --debug true --routine "BlueArchiveDaily"
+    return_code=$?
+    if [[ "${return_code}" != "0" ]]; then
+        echo "has_failure!"
+        has_failure="true"
+        failed_routines="${failed_routines}, BlueArchiveDaily"
+    fi
+
     kill "${pid}"
 
     if [[ "${has_failure}" == "true" ]]; then
@@ -63,7 +72,7 @@ SendFailureReport() {
     echo "Detect Failure, Send Failure Report"
     local screenshot=$(UploadLatestScreenShot "$(pwd)/ScreenShots")
     echo "Screenshot = ${screenshot}"
-    SendMail "${SENDGRID_TO_MAIL}" "${SENDGRID_FROM_MAIL}" "Failure Detected" "<p>Screenshot = ${screenshot}</p>" "${SENDGRID_API_KEY}"
+    SendMail "${SENDGRID_TO_MAIL}" "${SENDGRID_FROM_MAIL}" "Failure Detected: $(date '+%Y-%m-%d %T')" "<p>Screenshot = ${screenshot}</p>" "${SENDGRID_API_KEY}"
     echo "Send Failure Report Done" 
 }
 
