@@ -27,6 +27,18 @@ class Routine_BlueArchiveDaily(Routine):
                 self.state = State.OS_HOME
             currentDetected = self.hasDetected['blue_archive icon']
 
+        elif self.hasDetected['blue_archive daily login reward'].IsExist:
+            self.state = State.BLUE_ARCHIVE_LOGIN_BONUS
+            currentDetected = self.hasDetected['blue_archive daily login reward']
+
+        elif self.hasDetected['blue_archive additional login reward'].IsExist:
+            self.state = State.BLUE_ARCHIVE_ADDITIONAL_LOGIN_BOUNS
+            currentDetected = self.hasDetected['blue_archive additional login reward']
+
+        elif self.hasDetected['blue_archive close'].IsExist:
+            self.state = State.BLUE_ARCHIVE_ANNOUNCEMENT
+            currentDetected = self.hasDetected['blue_archive close']
+
         elif self.hasDetected['close_all_tasks'].IsExist:
             self.state = State.OS_CLOSE_ALL_TASKS
             currentDetected = self.hasDetected['close_all_tasks']
@@ -62,7 +74,10 @@ class Routine_BlueArchiveDaily(Routine):
             State.OS_CLOSE_ALL_TASKS,
             State.OS_ABOUT_TO_CLOSE_ALL_TASKS,
             State.BLUE_ARCHIVE_APP_HOME,
-            State.BLUE_ARCHIVE_TITLE
+            State.BLUE_ARCHIVE_TITLE,
+            State.BLUE_ARCHIVE_LOGIN_BONUS,
+            State.BLUE_ARCHIVE_ADDITIONAL_LOGIN_BOUNS,
+            State.BLUE_ARCHIVE_ANNOUNCEMENT
         ]
 
         if self.state in statesShouldAction:

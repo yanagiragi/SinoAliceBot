@@ -223,5 +223,20 @@
         "name": "blue_archive announcement",
         "pattern": "BlueArchive/announcement.png",
         "threshold": 0.8
+    },
+    {
+        "name": "blue_archive daily login reward",
+        "pattern": "BlueArchive/dailyLoginReward.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "blue_archive additional login reward",
+        "pattern": "BlueArchive/additionalLoginReward.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "blue_archive close",
+        "pattern": "BlueArchive/close.png",
+        "threshold": 0.8
     }
 ]
