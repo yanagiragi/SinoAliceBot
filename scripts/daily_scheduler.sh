@@ -128,12 +128,18 @@ Backup() {
     source "scripts/utils.sh"
 
     SLEEP_SECONDS="21600"
+    RUN_AT_START="${RUN_AT_START:-true}"
     while true
     do
-        echo "Current Time = $(date '+%Y-%m-%d %T'), "
-        Run
-        Backup
-        echo "Done. Next Run = $(date --date="+${SLEEP_SECONDS} seconds" '+%Y-%m-%d %T')"
+        echo "Current Time = $(date '+%Y-%m-%d %T')"
+        if [[ "${RUN_AT_START}" == "true" ]]; then
+            Run
+            Backup
+            echo "Done. Next Run = $(date --date="+${SLEEP_SECONDS} seconds" '+%Y-%m-%d %T')"
+        else
+            echo "Disable run at start. Next Run = $(date --date="+${SLEEP_SECONDS} seconds" '+%Y-%m-%d %T')"
+        fi
+        RUN_AT_START="true"        
         sleep "${SLEEP_SECONDS}"
     done
 )
