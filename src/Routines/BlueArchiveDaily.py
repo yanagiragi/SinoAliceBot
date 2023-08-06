@@ -2,7 +2,7 @@ import time
 
 from src.State import State
 from src.Routine import Routine
-
+from src.utils import SaveScreenshot
 
 class Routine_BlueArchiveDaily(Routine):
     def __init__(self, name, control, optimized=True):
@@ -77,6 +77,9 @@ class Routine_BlueArchiveDaily(Routine):
             # press mission control button
             self.control.ReturnToHome()
             time.sleep(3)
+
+        if self.state != self.prevState:
+            SaveScreenshot(self.frame, f'BA-{self.state}')  # no unicode support!
 
     def GetMessage(self):
         return super().GetMessage() + f', state = {self.state.value}'
