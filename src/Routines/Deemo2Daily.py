@@ -41,6 +41,13 @@ class Routine_Deemo2Daily(Routine):
             self.state = State.DEEMO2_CONFRIM
             currentDetected = self.hasDetected['deemo2 confirm']
 
+        elif self.hasDetected['deemo2 Hud UI'].IsExist:
+            if self.hasDetected['deemo2 lottery'].IsExist:
+                self.state = State.DEEMO2_HUD_UI
+                currentDetected = self.hasDetected['deemo2 lottery']
+            else:
+                self.state = State.DEEMO2_HUD_UI_WRT_LOTTERY
+
         elif self.hasDetected['deemo2 close'].IsExist:
             if self.hasDetected['deemo2 stampCard'].IsExist:
                 self.state = State.DEEMO2_LOGIN_BONUS
@@ -53,10 +60,10 @@ class Routine_Deemo2Daily(Routine):
             currentDetected = None
             self.localPosition = [(150, 150), (300, 300)]
 
-        elif self.hasDetected['deemo2 echoFace'].IsExist:
+        elif self.hasDetected['deemo2 echoFace'].IsExist or self.hasDetected['deemo2 progress'].IsExist:
             self.state = State.DEEMO2_HOME
 
-        if (self.prevState == State.DEEMO2_HOME or self.prevState == State.DEEMO2_CLOSE) and \
+        if (self.prevState == State.DEEMO2_HUD_UI or self.prevState == State.DEEMO2_HUD_UI_WRT_LOTTERY) and \
                 self.state == State.OS_HOME and \
                 self.hasDetected['os mission_control'].IsExist:
             self.state = State.OS_ABOUT_TO_CLOSE_ALL_TASKS
@@ -77,16 +84,27 @@ class Routine_Deemo2Daily(Routine):
             State.DEEMO2_CONFRIM,
             State.DEEMO2_LOGIN_BONUS,
             State.DEEMO2_LOGO,
-            State.DEEMO2_CLOSE
+            State.DEEMO2_CLOSE,
+            State.DEEMO2_HUD_UI
         ]
 
-        if self.state in statesShouldAction:
+        # already opened lottery UI
+        if self.state == State.DEEMO2_HUD_UI and self.prevState == State.DEEMO2_CLOSE:
+            # press mission control button
+            self.control.ReturnToHome()
+            time.sleep(3)
+
+        elif self.state in statesShouldAction:
             self.control.MouseLeftClick(top_left, bottom_right)
             time.sleep(3)
 
-        elif self.state == State.DEEMO2_HOME:
+        elif self.state == State.DEEMO2_HUD_UI_WRT_LOTTERY:
             # press mission control button
             self.control.ReturnToHome()
+            time.sleep(3)
+
+        elif self.state == State.DEEMO2_HOME:
+            self.control.MouseLeftClick([881, 61], [881, 61])
             time.sleep(3)
 
         if self.state != self.prevState:

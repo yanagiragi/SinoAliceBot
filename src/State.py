@@ -56,6 +56,8 @@ class State(Enum):
     DEEMO2_LOGO = 'D2-Logo',
     DEEMO2_LOGIN_BONUS = 'D2-登入獎勵',
     DEEMO2_HOME = 'D2-主畫面',
+    DEEMO2_HUD_UI = 'D2-HudUI(有戳戳樂)',
+    DEEMO2_HUD_UI_WRT_LOTTERY = 'D2-HudUI(無戳戳樂)',
     
     SINOALICE_LOGO = 'SA-Logo'
     SINOALICE_CLOSE = 'SA-待關閉項目',

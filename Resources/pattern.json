@@ -155,6 +155,21 @@
         "threshold": 0.8
     },
     {
+        "name": "deemo2 Hud UI", 
+        "pattern": "Deemo2/hudUI.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "deemo2 lottery", 
+        "pattern": "Deemo2/lottery.png",
+        "threshold": 0.8
+    },
+    {
+        "name": "deemo2 progress", 
+        "pattern": "Deemo2/progress.png",
+        "threshold": 0.8
+    },
+    {
         "name": "sinoalice home", 
         "pattern": "SinoAlice/home.png",
         "threshold": 0.8
