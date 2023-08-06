@@ -3,20 +3,26 @@ import time
 from src.State import State
 from src.Routine import Routine
 from src.utils import SaveScreenshot
+import src.Pattern as Pattern
+
 
 class Routine_BlueArchiveDaily(Routine):
     def __init__(self, name, control, optimized=True):
         super().__init__(name, control, optimized)
 
     def Reset(self, frame):
+        self.frame = frame
         pass
 
     def Update(self):
         pass
 
+    def GetPatterns(self):
+        return filter(lambda pattern: pattern[0].startswith('blue_archive ') or pattern[0].startswith('os '), Pattern.patterns)
+
     def QueryState(self):
         super().QueryState()
-        
+
         # self.state = State.IDLE
         currentDetected = None
 
@@ -39,9 +45,9 @@ class Routine_BlueArchiveDaily(Routine):
             self.state = State.BLUE_ARCHIVE_ANNOUNCEMENT
             currentDetected = self.hasDetected['blue_archive close']
 
-        elif self.hasDetected['close_all_tasks'].IsExist:
+        elif self.hasDetected['os close_all_tasks'].IsExist:
             self.state = State.OS_CLOSE_ALL_TASKS
-            currentDetected = self.hasDetected['close_all_tasks']
+            currentDetected = self.hasDetected['os close_all_tasks']
 
         elif self.hasDetected['blue_archive rating'].IsExist:
             self.state = State.BLUE_ARCHIVE_TITLE
@@ -57,9 +63,9 @@ class Routine_BlueArchiveDaily(Routine):
 
         if (self.prevState == State.BLUE_ARCHIVE_HOME) and \
                 self.state == State.OS_HOME and \
-                self.hasDetected['mission_control'].IsExist:
+                self.hasDetected['os mission_control'].IsExist:
             self.state = State.OS_ABOUT_TO_CLOSE_ALL_TASKS
-            currentDetected = self.hasDetected['mission_control']
+            currentDetected = self.hasDetected['os mission_control']
 
         # update Local Position
         if currentDetected is not None:

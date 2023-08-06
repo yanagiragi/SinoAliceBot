@@ -227,12 +227,13 @@ def MainLoop():
     control = Control(window, resultion)  # Create controll instance
     # control = ControlAdb(window) # Create controll instance
 
-    routine = SelectRoutine(targetRoutine, control, targetLevel, targetCount)
-    logic = Logic(routine, control)  # Create Main Logic
-
+    # patterns should be ready before Logic constructor
     patternPrefix = "PC" if isPc else "Android"
     patternPrefix = f'{patternPrefix}/{resultion}'
     Pattern.patterns = Pattern.LoadPatterns(patternPrefix)
+
+    routine = SelectRoutine(targetRoutine, control, targetLevel, targetCount)
+    logic = Logic(routine, control)  # Create Main Logic
 
     window.SetForeground()
 

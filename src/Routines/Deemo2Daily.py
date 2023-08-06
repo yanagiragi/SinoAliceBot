@@ -2,6 +2,7 @@ import time
 
 from src.State import State
 from src.Routine import Routine
+from src import Pattern
 from src.utils import SaveScreenshot
 
 
@@ -16,6 +17,9 @@ class Routine_Deemo2Daily(Routine):
     def Update(self):
         pass
 
+    def GetPatterns(self):
+        return filter(lambda pattern: pattern[0].startswith('deemo2 ') or pattern[0].startswith('os '), Pattern.patterns)
+
     def QueryState(self):
         super().QueryState()
 
@@ -29,9 +33,9 @@ class Routine_Deemo2Daily(Routine):
                 self.state = State.OS_HOME
             currentDetected = self.hasDetected['deemo2 icon']
 
-        elif self.hasDetected['close_all_tasks'].IsExist:
+        elif self.hasDetected['os close_all_tasks'].IsExist:
             self.state = State.OS_CLOSE_ALL_TASKS
-            currentDetected = self.hasDetected['close_all_tasks']
+            currentDetected = self.hasDetected['os close_all_tasks']
 
         elif self.hasDetected['deemo2 confirm'].IsExist:
             self.state = State.DEEMO2_CONFRIM
@@ -54,9 +58,9 @@ class Routine_Deemo2Daily(Routine):
 
         if (self.prevState == State.DEEMO2_HOME or self.prevState == State.DEEMO2_CLOSE) and \
                 self.state == State.OS_HOME and \
-                self.hasDetected['mission_control'].IsExist:
+                self.hasDetected['os mission_control'].IsExist:
             self.state = State.OS_ABOUT_TO_CLOSE_ALL_TASKS
-            currentDetected = self.hasDetected['mission_control']
+            currentDetected = self.hasDetected['os mission_control']
 
         # update Local Position
         if currentDetected is not None:

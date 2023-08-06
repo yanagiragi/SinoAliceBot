@@ -3,6 +3,7 @@ import time
 from abc import ABCMeta, abstractmethod
 
 from src.State import State
+import src.Pattern as Pattern
 import src.utils as utils
 
 class Routine(metaclass=ABCMeta):
@@ -45,6 +46,9 @@ class Routine(metaclass=ABCMeta):
     @abstractmethod
     def GetMessage(self):
         return f', Avg time = {self.averageTimeString}'
+
+    def GetPatterns(self):
+        return Pattern.patterns
 
     """
         return isError, errorMessage

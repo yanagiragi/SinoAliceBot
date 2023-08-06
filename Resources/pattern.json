@@ -25,12 +25,12 @@
         "threshold": 0.8
     },
     {
-        "name": "close_all_tasks", 
+        "name": "os close_all_tasks", 
         "pattern": "closeAll.png",
         "threshold": 0.8
     },
     {
-        "name": "mission_control", 
+        "name": "os mission_control", 
         "pattern": "missionControl.png",
         "threshold": 0.6
     },

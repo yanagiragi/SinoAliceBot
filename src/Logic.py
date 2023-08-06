@@ -1,9 +1,10 @@
 
 import src.Pattern as Pattern
 import src.utils as utils
-from src.State import State
 from src.Routine import Routine
+from src.State import State
 from src.Detection import Detection
+
 
 class Logic(Routine):
     def __init__(self, routine, control, optimized=True):
@@ -11,12 +12,16 @@ class Logic(Routine):
 
         # Set Current Routine
         self.routine = routine
+        self.patterns = list(self.routine.GetPatterns())
+        patterns = ', '.join(map(lambda x: x[0], self.patterns))
+        print(f'Patterns for detection [{len(self.patterns)}] = [{patterns}]')
 
     def Reset(self, frame):
         super().Reset(frame)
 
         # Call Reset() to current routine
         self.routine.Reset(frame)
+        self.patterns = list(self.routine.GetPatterns())
 
     def Update(self):
         super().Update()

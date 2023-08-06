@@ -1,4 +1,5 @@
 import time
+from src import Pattern
 
 from src.State import State
 from src.Routine import Routine
@@ -16,6 +17,9 @@ class Routine_ProjectSekaiDaily(Routine):
     def Update(self):
         pass
 
+    def GetPatterns(self):
+        return filter(lambda pattern: pattern[0].startswith('project_sekai ') or pattern[0].startswith('os '), Pattern.patterns)
+
     def QueryState(self):
         super().QueryState()
     
@@ -29,9 +33,9 @@ class Routine_ProjectSekaiDaily(Routine):
                 self.state = State.OS_HOME
             currentDetected = self.hasDetected['project_sekai icon']
 
-        elif self.hasDetected['close_all_tasks'].IsExist:
+        elif self.hasDetected['os close_all_tasks'].IsExist:
             self.state = State.OS_CLOSE_ALL_TASKS
-            currentDetected = self.hasDetected['close_all_tasks']
+            currentDetected = self.hasDetected['os close_all_tasks']
 
         elif self.hasDetected['project_sekai logo'].IsExist:
             self.state = State.PROJECT_SEKAI_APP_HOME
@@ -60,9 +64,9 @@ class Routine_ProjectSekaiDaily(Routine):
 
         if self.prevState == State.PROJECT_SEKAI_HOME and \
                 self.state == State.OS_HOME and \
-                self.hasDetected['mission_control'].IsExist:
+                self.hasDetected['os mission_control'].IsExist:
             self.state = State.OS_ABOUT_TO_CLOSE_ALL_TASKS
-            currentDetected = self.hasDetected['mission_control']
+            currentDetected = self.hasDetected['os mission_control']
 
         # update Local Position
         if currentDetected is not None:

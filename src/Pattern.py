@@ -85,7 +85,7 @@ def DebugDraw(img, frame, logic):
     img = utils.RGBToBGR(img)
 
     exists = []
-    for idx, (name, pattern, threshold) in enumerate(patterns):
+    for idx, (name, pattern, threshold) in enumerate(logic.patterns):
         isExist, val, top_left, bottom_right = Detect(
             frame, pattern, threshold)  
         if isExist:
