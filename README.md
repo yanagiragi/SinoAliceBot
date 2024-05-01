@@ -6,10 +6,20 @@ Now support different games via phone remote controls.
 
 ![](https://i.imgur.com/QdDbedk.png)
 
-## Dev Environments
+> [!WARNING]  
+> The project has suspended and has moved to [Sinoalice-Bot-v2](https://github.com/yanagiragi/Sinoalice-Bot-v2).
+> 
+> There are several issues with this project:
+> 1. The program is designed for Windows only
+> 2. I don't like at python
+> 3. GUI Desktop is required
+> 4. Poor performances probably due to win32 system call
+> 5. I don't like at python
+> 6. I also sucks at python
 
-* Win10 (64bit)
+## Environments
 
+* Win10 (64bit) **(Windows Only!)**
 * Python 3.7.2 (64 bit)
 
 ## Prerequisites
