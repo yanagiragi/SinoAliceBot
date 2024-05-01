@@ -18,7 +18,7 @@ Now support different games via phone remote controls.
 
 * if failed, you may need to download source code of [pyHook](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyhook) and install manually.
 
-* And also get [Scrspy](https://github.com/Genymobile/scrcpy) relesae files
+* And also get [Scrcpy](https://github.com/Genymobile/scrcpy) relesae files
 
 ## Run
 
