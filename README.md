@@ -12,10 +12,10 @@ Now support different games via phone remote controls.
 > There are several issues with this project:
 > 1. The program is designed for Windows only
 > 2. I don't like at python
-> 3. GUI Desktop is required
+> 3. GUI Desktop is (mostly) required
 > 4. Poor performances probably due to win32 system call
 > 5. I don't like at python
-> 6. I also sucks at python
+> 6. I also suck at python
 
 ## Environments
 
